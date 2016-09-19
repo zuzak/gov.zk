@@ -1,0 +1,31 @@
+extends skeleton
+block login
+block breadcrumb
+  li
+    a(href='/log-in') Account
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-large Log in / create account
+      p.
+        Your account is associated with your IRC nickname.
+      p.
+        Please enter the following command into IRC:
+      p.font-medium.panel /msg NickServ IDENTIFY #{key}
+      p.
+        Once the command has been executed, you can…
+      form(method='POST')
+        input(type='hidden', value=key)
+        input.button(type='submit', value='Proceed to the next step')
+      hr
+      details
+        summary
+          span.summary What's IRC?
+        .panel.panel-border-narrow
+          p.
+              Internet Relay Chat (IRC) is a text-only way of communicating
+              with people over the Internet: think of it as a predecessor to
+              Slack (although it is still widely used).
+          p.
+              One connects to IRC networks and joins channels (chat rooms).
+              In this case, the IRC network is <code>chat.freenode.net</code>.

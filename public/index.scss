@@ -1,0 +1,49 @@
+$path: "/";
+$toolkit-font-stack: "Nunito";
+
+
+@import 'https://fonts.googleapis.com/css?family=Nunito:300';
+
+@import 'govuk-elements';
+@import 'elements/govuk-template-base';
+
+header {
+	background-color: $text-colour;
+	color: $page-colour;
+}
+.header .logo {
+	color: inherit;
+	text-decoration: inherit;
+	text-transform: uppercase;
+}
+.logo:hover {
+	text-decoration: underline;
+}
+.header, .footer {
+	@extend %site-width-container;
+}
+
+footer {
+	background-color: $panel-colour;
+	border-top: 1px solid $secondary-text-colour;
+	color: $secondary-text-colour;
+	box-shadow: 0 50em 0 50em $panel-colour;
+}
+footer a {
+	color: $secondary-text-colour !important;
+}
+
+.accent-bar {
+	background-color: $govuk-blue;
+	height: 0.5em;
+	width: 100%;
+}
+
+.header .login {
+	margin-top: 0.5em;
+	margin-right: 1em;
+	float:right;
+}
+.stack {
+	overflow: scroll;
+}

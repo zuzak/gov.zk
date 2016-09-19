@@ -1,0 +1,13 @@
+extends skeleton
+block content
+  .error
+    h1.heading-xlarge 500: Server Error
+    p Something went wrong. It wasn't your fault.
+    if err
+      details(open)
+        summary
+          span.summary Technical information
+        pre.code.stack= err.stack
+    else
+      p We do not have any more information.
+    a.link-back(href='/') Return to home page

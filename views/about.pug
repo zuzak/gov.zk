@@ -1,0 +1,86 @@
+extends skeleton
+block breadcrumb
+  li
+    a(href='/about-this-website') About
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-large About this website
+      h2.heading-medium Credits
+      details
+        summary
+          span.summary Codebase licence
+        .panel.panel-border-narrow
+          h3.heading-small The MIT Licence
+          p Copyright &copy; 2016
+          p.
+            Permission is hereby granted, free of charge to any person
+            obtaining a copy of this software and associated documentation
+            files (the "Software"), to deal in the Software without restriction,
+            including without limitation the rights to use, copy, modify, merge,
+            publish, distribute, sublicense, and/or sell copies of the Software,
+            and to permit persons to whom the Software is furnished to do so,
+            subject to the following conditions:
+          ul.list.list-bullet
+            li.
+              The above copyright notice and this permission notice
+              shall be included in all copies or substantial portions
+              of the Software.
+          strong.bold-xsmall.
+            The Software is provided "as is", without warranty
+            of any kind, express or implied, including but not
+            limited to the warranties of merchantability,
+            fitness for a particular purpose and
+            noninfringement. In no event shall the authors or
+            copyright holders be liable for any claim, damages
+            or other liability, whether in an action of
+            contract, tort or otherwise, arising from, out of
+            or in connection with the Software or the use or
+            other dealings in the Software.
+      if contributors.length > 0
+        h3.heading-small Contributors
+        p The following people committed the code that runs this site:
+        ul.list.list-bullet
+          for contributor in contributors
+            li #{contributor}
+        p.
+          You can add your own name to this list!
+          If you find something you'd like to improve, fork this repository
+          and submit a pull request. If you need help, ask someone on IRC.
+      h2.heading-medium Third-party credits
+
+      p.
+        The website layout is based upon GOV.UK, which is created by
+        the Government Digital Service, a department of the Cabinet
+        Office. The assets are licensed under the MIT Licence, and are
+        thus freely available.
+
+      details
+        summary
+          span.summary #{Object.keys(dependencies).length} other dependencies
+        table.table-font-xsmall
+          thead
+            tr
+              th Name
+              th Version
+              th Licence
+              th Description
+          tbody
+            for dependency in dependencies
+              if typeof dependency !== 'undefined'
+                if dependency.name
+                  tr
+                    td
+                      if dependency.repositories.length > 0
+                        for repo in dependency.repositories
+                          if repo.substring(0, 4) === 'git+'
+                            - repo = repo.substring(4)
+                          a(href=repo)= dependency.name
+                      else
+                        =dependency.name
+                    td= dependency.versions.join(' / ')
+                    if dependency.licenses.length > 0
+                      td= dependency.licenses.join('/')
+                    else
+                      td &mdash;
+                    td= dependency.description

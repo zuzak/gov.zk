@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    block title
+    block css
+      link(rel='stylesheet', href='/index.css')
+  body
+    header
+      .header
+        .grid-row
+          .column-two-thirds.font-xlarge
+            block header
+              a.logo(href='/') &#9819; gov.zk
+          .columns-one-third
+            block login
+              a.button.login(href='/log-in') Log in
+    #content
+      block banner
+        .accent-bar
+        include banner.pug
+      block breadcrumbs
+        .breadcrumbs
+          ol
+            li
+              a(href="/") Home
+            block breadcrumb
+      block content
+    footer
+      .footer
+        block footer
+          .grid-row
+            p.column-two-thirds
+              span 
+            p.column-one-third
+        a(href='/about-this-website') About this website
