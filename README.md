@@ -1,5 +1,6 @@
 # zuzakistan
 [![Build Status](https://travis-ci.org/zuzak/gov.zk.svg?branch=master)](https://travis-ci.org/zuzak/gov.zk)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0e395a9265e8445596c02a552d6d3281)](https://www.codacy.com/app/douglas/gov-zk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zuzak/gov.zk&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/zuzak/gov.zk/badge.svg?branch=master)](https://coveralls.io/github/zuzak/gov.zk?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
