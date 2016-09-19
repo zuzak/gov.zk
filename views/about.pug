@@ -3,13 +3,13 @@ block breadcrumb
   li
     a(href='/about-this-website') About
 block content
+  h1.heading-large About this website
+  p.lede
+    span The code for this website is available on&nbsp;
+    a(href="//github.com/zuzak/gov.zk") GitHub
+    span .
   .grid-row
     .column-two-thirds
-      h1.heading-large About this website
-      p.lede
-        span The code for this website is available on&nbsp;
-        a(href="//github.com/zuzak/gov.zk") GitHub
-        span .
       h2.heading-medium Credits
       details
         summary
@@ -88,3 +88,21 @@ block content
                     else
                       td &mdash;
                     td= dependency.description
+      h3.heading-medium Git information
+      p This website is currently running on <strong>#{state.branch}</strong>.
+      if state.issues
+        .grid-row
+          .column.column-one-third
+              p.data
+                .bold-xlarge #{state.dirty}
+                .bold-xsmall changed files
+          .column.column-one-third
+              p.data
+                .bold-xlarge #{state.untracked}
+                .bold-xsmall untracked files
+          .column.column-one-third
+              p.data
+                .bold-xlarge #{state.ahead}
+                .bold-xsmall unpushed commits
+      else
+        p The code is synchronised with upstream.

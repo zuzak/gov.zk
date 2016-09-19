@@ -8,10 +8,10 @@
     "validate": "npm ls",
     "lint": "node_modules/standard/bin/cmd.js",
     "lintpretty": "node_modules/standard/bin/cmd.js --verbose | node_modules/snazzy/bin/cmd.js",
-	"coverage-gen": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
-	"coverage-push": "npm run coverage-gen && npm run coverage-coveralls && npm run coverage-codacy",
-	"coverage-coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-	"coverage-codacy": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage"
+    "coverage-gen": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+    "coverage-push": "npm run coverage-gen && npm run coverage-coveralls && npm run coverage-codacy",
+    "coverage-coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coverage-codacy": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage"
   },
   "devDependencies": {
     "codacy-coverage": "^2.0.0",
@@ -28,6 +28,7 @@
   "dependencies": {
     "credits-to": "0.0.2",
     "express": "^4.14.0",
+    "git-state": "^2.5.1",
     "govuk-elements-sass": "^2.0.0",
     "govuk_frontend_toolkit": "^4.18.1",
     "node-sass-middleware": "^0.9.8",
@@ -36,7 +37,7 @@
   },
   "private": true,
   "bugs": {
-	  "url": "https://github.com/zuzak/gov.zk/issues"
+    "url": "https://github.com/zuzak/gov.zk/issues"
   },
   "license": "MIT",
   "repository": "zuzak/gov.zk",
