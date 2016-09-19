@@ -1,5 +1,6 @@
 {
   "main": "server.js",
+  "name": "gov.zk",
   "scripts": {
     "test": "npm run lintpretty && npm run mocha",
     "mocha": "node_modules/mocha/bin/mocha test/*.js",
@@ -34,6 +35,11 @@
     "sort-object": "^3.0.2"
   },
   "private": true,
+  "bugs": {
+	  "url": "https://github.com/zuzak/gov.zk/issues"
+  },
+  "license": "MIT",
+  "repository": "zuzak/gov.zk",
   "pre-commit": [
     "validate",
     "lintpretty",
