@@ -66,7 +66,12 @@ describe('routes', function () {
         done()
       })
   })
-  var routes = ['/', '/log-in', '/about-this-website']
+  var routes = [
+    '/',
+    '/about-this-website',
+    '/hello-world',
+    '/log-in'
+  ]
   for (var i = 0; i < routes.length; i++) {
     var route = routes[i]
     it('route ' + route + ' should 200', function (done) {
