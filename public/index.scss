@@ -30,7 +30,13 @@ footer {
 	box-shadow: 0 50em 0 50em $panel-colour;
 }
 footer a {
+	text-align: center;
+	display: block;
 	color: $secondary-text-colour !important;
+	padding: 1em;
+}
+footer a:hover {
+	color: $text-colour !important;
 }
 
 .accent-bar {
