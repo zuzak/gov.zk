@@ -17,16 +17,7 @@ app.use(sass({
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend_toolkit', 'images')))
 
-require('./routes.js')
-
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).render('500.pug', {err})
-})
-// 404 must be the final route
-app.use(function (req, res, next) {
-  res.status(404).render('404.pug')
-})
+require('./routes')
 
 if (app.get('env') === 'test') {
   // make it easier to develop and test at the same time

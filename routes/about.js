@@ -1,14 +1,10 @@
-var app = require('.')
+var app = require('..')
 var exec = require('child_process').exec
 var creditsto = require('credits-to')
 var sortObj = require('sort-object')
 var gstate = require('git-state')
 var gitHash = require('githash')
-var packagejson = require('./package.json')
-
-app.get('/', function (req, res) {
-  res.render('home.pug')
-})
+var packagejson = require('../package.json')
 
 app.get('/about-this-website', function (req, res) {
   var coreDeps = Object.keys(packagejson.dependencies)
@@ -24,19 +20,6 @@ app.get('/about-this-website', function (req, res) {
       })
     })
   })
-})
-
-app.get('/hello-world', function (req, res) {
-  res.render('hello.pug')
-})
-
-app.get('/log-in', function (req, res) {
-  var key = require('./auth.js').getNewKey(5)
-  res.render('login.pug', { key })
-})
-
-app.post('/log-in', function (req, res) {
-  res.status(501).render('placeholder.pug')
 })
 
 app.get('/500', function (req, res) {
