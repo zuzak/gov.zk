@@ -90,6 +90,12 @@ block content
                     td= dependency.description
       h3.heading-medium Git information
       p This website is currently running on <strong>#{state.branch}</strong>.
+      p
+        span The current Git commit hash is&nbsp;
+        if state.ahead === 0
+          a.code(href='https://github.com/zuzak/gov.zk/commit/' + hash)= hash
+        else
+          span.code= hash
       if state.issues
         .grid-row
           .column.column-one-third
@@ -105,4 +111,4 @@ block content
                 .bold-xlarge #{state.ahead}
                 .bold-xsmall unpushed commits
       else
-        p The code is synchronised with upstream.
+        p There are no outstanding code changes to push upstream.

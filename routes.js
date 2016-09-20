@@ -3,6 +3,7 @@ var exec = require('child_process').exec
 var creditsto = require('credits-to')
 var sortObj = require('sort-object')
 var gstate = require('git-state')
+var gitHash = require('githash')
 
 app.get('/', function (req, res) {
   res.render('home.pug')
@@ -17,7 +18,7 @@ app.get('/about-this-website', function (req, res) {
       dependencies = sortObj(dependencies.npm)
       gstate.check('.', function (err, state) {
         if (err) throw err
-        res.render('about.pug', { contributors, dependencies, state })
+        res.render('about.pug', { contributors, dependencies, state, hash: gitHash() })
       })
     })
   })
