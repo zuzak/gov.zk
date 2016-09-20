@@ -61,7 +61,7 @@ block content
 
       details
         summary
-          span.summary #{Object.keys(dependencies).length} other dependencies
+          span.summary #{Object.keys(dependencies).length} dependencies (#{coreDeps.length} direct)
         table.table-font-xsmall
           thead
             tr
@@ -79,7 +79,11 @@ block content
                         for repo in dependency.repositories
                           if repo.substring(0, 4) === 'git+'
                             - repo = repo.substring(4)
-                          a(href=repo)= dependency.name
+                          if coreDeps.indexOf(dependency.name) !== -1
+                            strong
+                              a(href=repo)= dependency.name
+                          else
+                            a(href=repo)= dependency.name
                       else
                         =dependency.name
                     td= dependency.versions.join(' / ')

@@ -4,12 +4,14 @@ var creditsto = require('credits-to')
 var sortObj = require('sort-object')
 var gstate = require('git-state')
 var gitHash = require('githash')
+var packagejson = require('./package.json')
 
 app.get('/', function (req, res) {
   res.render('home.pug')
 })
 
 app.get('/about-this-website', function (req, res) {
+  var coreDeps = Object.keys(packagejson.dependencies)
   exec('git log --format="%cN" | sort -u', function (err, stdout, stderr) {
     if (err) throw err
     var contributors = stdout.split('\n').filter(String)
@@ -18,7 +20,7 @@ app.get('/about-this-website', function (req, res) {
       dependencies = sortObj(dependencies.npm)
       gstate.check('.', function (err, state) {
         if (err) throw err
-        res.render('about.pug', { contributors, dependencies, state, hash: gitHash() })
+        res.render('about.pug', { contributors, dependencies, state, hash: gitHash(), coreDeps })
       })
     })
   })
