@@ -4,7 +4,7 @@
   "scripts": {
     "test": "npm run lintpretty && npm run mocha",
     "mocha": "NODE_ENV='test' node_modules/mocha/bin/mocha test/*.js",
-    "coverage": "NODE_ENV='test'node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
+    "coverage": "NODE_ENV='test' node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec && xdg-open coverage/lcov-report/index.html&",
     "validate": "npm ls",
     "lint": "node_modules/standard/bin/cmd.js",
     "lintpretty": "node_modules/standard/bin/cmd.js --verbose | node_modules/snazzy/bin/cmd.js",

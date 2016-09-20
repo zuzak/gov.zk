@@ -28,4 +28,8 @@ A contributor might find the following useful:
 * [GOV.UK elements](https://govuk-elements.herokuapp.com/)
 * [GOV.UK frontend toolkit](https://github.com/alphagov/govuk_frontend_toolkit)
 
+### Coverage
+To check the coverage of the tests, invoke `npm run coverage`.
+The report will open in your default browser.
+
 We're not using the GOV.UK template directly.
