@@ -28,7 +28,12 @@ app.use(function (req, res, next) {
   res.status(404).render('404.pug')
 })
 
-app.listen(8080)
+if (app.get('env') === 'test') {
+  // make it easier to develop and test at the same time
+  app.listen(3000)
+} else {
+  app.listen(8080)
+}
 
 process.on('SIGINT', function () {
   process.exit(0)

@@ -3,12 +3,12 @@
   "name": "gov.zk",
   "scripts": {
     "test": "npm run lintpretty && npm run mocha",
-    "mocha": "node_modules/mocha/bin/mocha test/*.js",
-    "coverage": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
+    "mocha": "NODE_ENV='test' node_modules/mocha/bin/mocha test/*.js",
+    "coverage": "NODE_ENV='test'node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
     "validate": "npm ls",
     "lint": "node_modules/standard/bin/cmd.js",
     "lintpretty": "node_modules/standard/bin/cmd.js --verbose | node_modules/snazzy/bin/cmd.js",
-    "coverage-gen": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+    "coverage-gen": "NODE_ENV='test' istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
     "coverage-push": "npm run coverage-gen && npm run coverage-coveralls && npm run coverage-codacy",
     "coverage-coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage-codacy": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage"
