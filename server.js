@@ -4,6 +4,7 @@ var sass = require('node-sass-middleware')
 var app = module.exports = express()
 
 app.set('view engine', 'pug')
+app.locals.pretty = true
 
 /* Static & SCSS setup */
 app.use(sass({
