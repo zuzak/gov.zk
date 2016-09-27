@@ -2,7 +2,8 @@
 var app = require('..')
 var request = require('supertest')
 var path = require('path') // core
-var unlink = require('fs').unlinkSync // core
+var pug = require('pug')
+var fs = require('fs')
 require('should')
 
 describe('index', function () {
@@ -36,7 +37,7 @@ describe('stylesheet compilation', function () {
   before(function () {
     try {
       // rm to ensure that we're not just passing through
-      unlink(path.join(__dirname, 'public', 'index.css')) // Scary!
+      fs.unlinkSync(path.join(__dirname, 'public', 'index.css')) // Scary!
     } catch (e) {
       if (e.code === 'ENOENT') { // file already gone
         return
@@ -134,7 +135,24 @@ describe('authentication system', function (done) {
       auth.markKeyUsed(key)
     }).should.throwError('cannot mark a key used twice')
   })
-  after(function () {
-    unlink('/tmp/authtest.json')
+  after(function (done) {
+    fs.unlink('/tmp/authtest.json', done)
   })
+})
+describe('pug rendering', function () {
+  var f = [
+    '404.pug',
+    '500.pug',
+    'about.pug',
+    'hello.pug',
+    'home.pug',
+    'login.pug',
+    'placeholder.pug'
+  ]
+  for (var i = 0; i < f.length; i++) {
+    var template = f[i]
+    it('should render ' + f[i], function (done) {
+      pug.renderFile('views/' + template, null, done)
+    })
+  }
 })
