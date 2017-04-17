@@ -158,6 +158,11 @@ describe('authentication system', function (done) {
       auth.markKeyUsed(key)
     }).should.throwError('cannot mark a key used twice')
   })
+  it('should throw an error when activating an invalid key', function () {
+    ;(function () {
+      auth.activateKey('!abcdef')
+    }).should.throwError('cannot activate invalid key')
+  })
   after(function (done) {
     fs.unlink('/tmp/authtest.json', done)
   })
