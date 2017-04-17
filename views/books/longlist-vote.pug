@@ -1,0 +1,56 @@
+//- Used for testing: [squeamish ossifrage]
+extends ../skeleton
+block breadcrumb
+  li
+    a(href='/book-club') Book club
+  li
+    a(href='/book-club/long-list') Long list
+block content
+  h1.heading-xlarge Long list
+  .grid-row
+    .column-two-thirds
+      p.lede.
+        The first step in deciding which books to read is to narrow
+        down the many available novels into a smaller list.
+    .grid-row
+      .column-two-thirds
+        table
+          thead
+            tr
+              th
+              th Title
+              th Author
+              th
+          - i = 0
+          for book in books
+            - i++
+            tr
+              if book.isbn
+                td.numeric
+                  a(href='book/'+book.isbn)
+                    if book.upstream && book.upstream.imageLinks.smallThumbnail
+                      img(src=book.upstream.imageLinks.smallThumbnail, style="height:2em")
+                    else
+                      span #{i}
+              else
+                td.numeric #{i}
+              td
+                em #{book.title}
+              td #{book.author}
+              if book.difficult
+                td ☡
+              else
+                td
+      .column-one-third
+        if req.user
+          p.center
+            a(href='long-list/add-a-book').button Add a book
+        else
+          p.font-small.
+            To add your own suggestions, please log in using the link above.
+    if req.user
+      .grid-row
+        .column-two-thirds
+          p
+          p
+            a(href='long-list/add-a-book').button Add a book

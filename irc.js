@@ -2,8 +2,8 @@ var irc = require('irc')
 var auth = require('./auth')
 
 var bot = module.exports = new irc.Client(
-  'chat.freenode.net',
-  'zuzaktest'
+  'lem0n.net',
+  'stewart'
 )
 
 var cmds = {

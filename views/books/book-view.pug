@@ -1,0 +1,44 @@
+//- Used for testing: [squeamish ossifrage]
+extends ../skeleton
+block breadcrumb
+  li
+    a(href='/book-club') Book club
+  li
+    a(href='/book-club/long-list') Long list
+  li #{book.title}
+block content
+  h1.heading-xlarge #{book.title} 
+  .grid-row
+    .column-two-thirds
+      p.lede
+        em #{book.title}
+        span  
+        span was written by #{book.upstream.authors.join(' and ')}, 
+        span and was nominated by 
+        if book.longlistedBy === req.user
+          b you
+        else
+          b #{book.longlistedBy}
+        span .
+      p #{book.upstream.description}
+      if book.difficult
+        .panel.panel-border-wide
+          p This book has been marked as a long or difficult read.
+    .column-one-third
+      if book.upstream.imageLinks
+        img(src=book.upstream.imageLinks.thumbnail)
+  .grid-row
+    .column-two-thirds.body-xsmall
+      h2.heading-medium Metadata
+      table
+        tr
+          th Published date
+          td #{book.upstream.publishedDate}
+        tr
+          th Page count
+          td #{book.upstream.pageCount}
+        tr
+          th Published
+          td #{book.upstream.publisher}
+  a.link-back(href='/book-club/long-list') Return to long list
+

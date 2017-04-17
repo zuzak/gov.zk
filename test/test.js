@@ -52,6 +52,8 @@ describe('stylesheet compilation', function () {
   })
 })
 describe('routes', function () {
+  /*
+   * commented out as we now redirect 404s to login (maybe we shouldn't)
   it('should 404 on non-existent', function (done) {
     request(app)
       .get('/404')
@@ -66,6 +68,7 @@ describe('routes', function () {
         done()
       })
   })
+  */
   var routes = [
     '/log-out',
     '/',
