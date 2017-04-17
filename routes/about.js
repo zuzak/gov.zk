@@ -16,7 +16,7 @@ app.get('/about-this-website', function (req, res) {
       dependencies = sortObj(dependencies.npm)
       gstate.check('.', function (err, state) {
         if (err) throw err
-        res.render('about.pug', { contributors, dependencies, state, hash: gitHash(), coreDeps })
+        res.render('about.pug', { contributors, dependencies, state, hash: gitHash(), coreDeps, req })
       })
     })
   })

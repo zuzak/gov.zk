@@ -5,6 +5,7 @@ html
       title GOV.ZK
     block css
       link(rel='stylesheet', href='/index.css')
+    block js
   body
     header
       .header
@@ -14,7 +15,12 @@ html
               a.logo(href='/') &#9819; gov.zk
           .columns-one-third
             block login
-              a.button.login(href='/log-in') Log in
+              if req && req.user
+                div.login
+                 span Hello, #{req.user}&nbsp;
+                 a(href='/log-out') (Log out)
+              else
+                a.button.login(href='/log-in') Log in
     #content
       block banner
         .accent-bar
@@ -31,6 +37,5 @@ html
         block footer
           .grid-row
             p.column-two-thirds
-              span 
             p.column-one-third.center
               a(href='/about-this-website') About this website

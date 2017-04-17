@@ -3,6 +3,8 @@ block title
   title Log in to GOV.ZK
 block login
   //- hide login button
+block js
+  script(src="login.js")
 block breadcrumb
   li
     a(href='/log-in') Account
@@ -14,12 +16,15 @@ block content
         Your account is associated with your IRC nickname.
       p.
         Please enter the following command into IRC:
-      p.font-medium.panel /msg NickServ IDENTIFY #{key}
+      p.font-medium.panel
+        span /msg #{nick} VERIFY
+        span &nbsp;
+        span#js-slug #{key}
       p.
         Once the command has been executed, you can…
       form(method='POST')
-        input(type='hidden', value=key)
-        input.button(type='submit', value='Proceed to the next step', disabled)
+        input(type='hidden', value=key, name='key')
+        input.button#js-proceed(type='submit', value='Proceed to the next step')
       hr
       details
         summary

@@ -16,7 +16,11 @@ module.exports = {
   },
   getNewKey: function () {
     var key = this.genKey(6)
-    this.data.unusedKeys.push(key)
+    if (this.data.unusedKeys.indexOf(key) !== -1) {
+      key = this.getNewKey()
+    } else {
+      this.data.unusedKeys.push(key)
+    }
     return key
   },
   loadFromDisk: function () {
@@ -49,5 +53,17 @@ module.exports = {
   },
   isUsedKey: function (key) {
     return this.data.usedKeys.indexOf(key) !== -1
+  },
+  activateKey: function (key, value) {
+    if (!this.isKey(key)) {
+      throw new Error('cannot activate invalid key')
+    }
+    this.data.keys[key] = value
+    this.markKeyUsed(key)
+  },
+  validateKey: function (key) {
+    var data = this.data.keys[key]
+    delete this.data.keys[key]
+    return data
   }
 }

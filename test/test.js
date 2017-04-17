@@ -81,10 +81,33 @@ describe('routes', function () {
         .expect(200, done)
     })
   }
-  it('should return something on POSTed login', function (done) {
+})
+describe('log in system', function () {
+  var auth = require('../auth.js')
+  it('should fail on POSTed login with no params', function (done) {
     request(app)
       .post('/log-in')
-      .expect(501, done)
+      .expect(400, done)
+  })
+  it('should fail on POSTed login with made-up key', function (done) {
+    request(app)
+      .post('/log-in')
+      .send({key: '!abcdef'}) // excl. mark never going to be part of key
+      .expect(401, done)
+  })
+  it('should fail on POSTed login with generated but unverified key', function (done) {
+    request(app)
+      .post('/log-in')
+      .send({key: auth.getNewKey()})
+      .expect(401, done)
+  })
+  it('should work on POSTed login with verified key', function (done) {
+    var key = auth.getNewKey()
+    auth.activateKey(key, 'test')
+    request(app)
+      .post('/log-in')
+      .send({key})
+      .expect(302, done) // redirect to /
   })
 })
 describe('authentication system', function (done) {
