@@ -62,7 +62,6 @@ describe('routes', function () {
       .get('/404')
       .end(function (err, res) {
         if (err) throw err
-        res.text.should.containEql('<!DOCTYPE html>')
         res.text.should.containEql('Not Found')
         done()
       })
@@ -109,6 +108,36 @@ describe('log in system', function () {
       .post('/log-in')
       .send({key})
       .expect(302, done) // redirect to /
+  })
+})
+describe('log in JSON API', function () {
+  var auth = require('../auth.js')
+  it('should 404 on bad key', function (done) {
+    request(app)
+      .get('/log-in/verify/!aaaaa.json')
+      .expect(404, done)
+  })
+  it('should return false on valid but inactive key', function (done) {
+    request(app)
+      .get('/log-in/verify/' + auth.getNewKey() + '.json')
+      .expect(200)
+      .end(function (err, res) {
+        if (err) throw err
+        res.text.should.equal('false')
+        done()
+      })
+  })
+  it('should return true on ctive key', function (done) {
+    var key = auth.getNewKey()
+    auth.activateKey(key, 'test')
+    request(app)
+      .get('/log-in/verify/' + key + '.json')
+      .expect(200)
+      .end(function (err, res) {
+        if (err) throw err
+        res.text.should.equal('true')
+        done()
+      })
   })
 })
 describe('authentication system', function (done) {
