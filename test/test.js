@@ -68,6 +68,7 @@ describe('routes', function () {
       })
   })
   var routes = [
+    '/log-out',
     '/',
     '/about-this-website',
     '/hello-world',
