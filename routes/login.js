@@ -31,7 +31,6 @@ app.post('/log-in', function (req, res) {
 })
 
 app.get('/log-in/verify/:slug.json', function (req, res) {
-  console.log(auth.isKey(req.params.slug))
   if (auth.isKey(req.params.slug)) {
     if (auth.isUsedKey(req.params.slug)) {
       res.json(true)
