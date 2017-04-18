@@ -20,9 +20,7 @@ block content
         .form-group
           label.form-label(for='book-isbn')
             span International Standard Book Number
-            span.form-hint (if you happen to have it handy)
-
-          input.form-control#book-author(type='text',name='isbn')
+          input.form-control#book-isbn(type='number',name='isbn',maxlength="13",required)
         .form-group
           .multiple-choice
             input#difficult(name='difficult',type='checkbox')
