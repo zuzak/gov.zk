@@ -15,7 +15,7 @@ var booklist = {
   },
   save: function (data) {
     fs.writeFileSync(this.KEYSTORE, JSON.stringify(data, null, '  '))
-  },
+  }
 }
 
 app.get('/book-club', function (req, res) {
@@ -26,10 +26,10 @@ app.get('/book-club/long-list', function (req, res) {
   var books = booklist.load()
   books.sort(function (x, y) {
     x = x.author.split(' ')
-    x = x[x.length-1]
+    x = x[x.length - 1]
 
     y = y.author.split(' ')
-    y = y[y.length-1]
+    y = y[y.length - 1]
 
     if (x < y) return -1
     if (x > y) return 1
@@ -75,6 +75,5 @@ app.get('/book-club/book/:isbn', function (req, res, next) {
       return
     }
   }
-  next();
-
+  next()
 })
