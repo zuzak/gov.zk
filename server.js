@@ -20,7 +20,7 @@ app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend
 
 app.use(require('cookie-parser')())
 app.use(require('body-parser')())
-app.use(require('express-session')({secret: 'kirfrifei'}))
+app.use(require('express-session')({secret: Math.random().toString(36)}))
 app.use(passport.initialize())
 app.use(passport.session())
 
