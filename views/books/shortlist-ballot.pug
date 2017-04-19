@@ -1,10 +1,5 @@
 //- vim:ft=jade
 extends ../skeleton
-block banner
-  .phase-banner-beta
-    p
-      strong.phase-tag Development
-      span This is a mock-up and doesn't do anything
 block breadcrumb
   li
     a(href='/book-club') Book club
@@ -13,80 +8,111 @@ block breadcrumb
 block css
   link(rel='stylesheet', href='/shortlist.css')
 block content
-  - i = 1
+  - i = 0
   for book in books
-    if book.upstream && i == 1
+    if ++i == 1
+      - title = book.title
+      - author = book.author
+      if book.upstream
+        - title = book.upstream.title
+        - author = book.upstream.authors.join(' & ')
       .grid-row
         .column-two-thirds
-            span.font-medium.progress Ballot #{i++} of #{books.length}
+            span.font-medium.progress Ballot #{total - books.length + 1} of #{total}
             h1.heading-xlarge Shortlisting
       .grid-row
         .column-full
-          h2.heading-large.title #{book.upstream.title}
+          h2.heading-large.title #{title}
       .grid-row
         .column-two-thirds
           .grid-row
-            .column-two-thirds
-              p.lede
-                span a #{book.upstream.printType.toLowerCase()}  by 
-                span.author #{book.upstream.authors.join(' & ')}
-              if book.upstream.description
-                p
-                  blockquote #{book.upstream.description}
-            .column-one-third.sidebar
-              if book.upstream.imageLinks
-                img(src=book.upstream.imageLinks.thumbnail)
-              if book.upstream.previewLink
-                p
-                  a(href=book.upstream.previewLink) Preview online
-          form
+            if book.upstream
+              .column-two-thirds
+                  p.lede
+                    span a #{book.upstream.printType.toLowerCase()}  by 
+                    span.author #{author}
+                  if book.upstream.description
+                    p
+                      blockquote #{book.upstream.description}
+                  if book.difficult
+                    p.panel This book has been marked as long or difficult.
+              .column-one-third.sidebar
+                if book.upstream.imageLinks
+                  img(src=book.upstream.imageLinks.thumbnail)
+                if book.upstream.previewLink
+                  p
+                    a(href=book.upstream.previewLink) Preview online
+            else
+              .column-two-thirds
+                p.lede
+                  span by 
+                  span.author #{author}
+                p.notice
+                  i.icon.icon-important
+                  strong We have no information about this book.
+
+          form(method='POST')
+            input(type='hidden',name='author',value=book.author)
+            input(type='hidden',name='title',value=book.title)
             h3.heading-small Do you want to read this book?
             fieldset(required)
               .multiple-choice
                 input#choice1(type='radio',name='verdict',value='yes')
-                label(for='choice1') Yes, I want to read #{book.upstream.title} as part of the book club
+                label(for='choice1') Yes, I want to read #{title} as part of the book club
               .multiple-choice
                 input#choice2(type='radio',name='verdict',value='no')
                 label(for='choice2') No, I don't want to read this book
             h3.heading-small Have you read this book before?
             fieldset
               .multiple-choice
-                input#cb1(type='checkbox')
-                label(for='cb1') I have already read #{book.upstream.title}
+                input#cb1(type='checkbox',name='alreadyRead')
+                label(for='cb1') I have already read #{title}
               .multiple-choice
-                input#cb2(type='checkbox')
-                label(for='cb2') I have access to a copy of #{book.upstream.title}
+                input#cb2(type='checkbox',name='haveCopy')
+                label(for='cb2') I have access to a copy of #{title}
             p.submit
-              input(type='submit',disabled,value='Cast ballot as '+req.user).button
-        .column-one-third
-          .grid-row
-            table
-              if book.isbn
-                tr
-                  th
-                    abbr(title="International Standard Book Number") ISBN
-                  td #{book.isbn}
-              if book.upstream.publisheDate
-                tr
-                  th Published date
-                  td #{book.upstream.publishedDate}
-              if book.upstream.publisher
-                tr
-                  th Publisher
-                  td #{book.upstream.publisher}
-              if book.upstream.pageCount
-                tr
-                  th Pages
-                  td #{book.upstream.pageCount}
-              if book.upstream.categories
-                tr(rowspan=book.upstream.categories.length)
-                - j = 0
-                for category in book.upstream.categories
-                  - j++
-                  if j !== 0
-                    th Categories
-                  td #{category}
-              if book.longlistedBy
-                tr
-                  th Longlister
-                  td #{book.longlistedBy}
+              input(type='submit',value='Cast ballot as '+req.user).button
+        if book.upstream
+          .column-one-third
+            .grid-row
+              table
+                if book.isbn
+                  tr
+                    th
+                      abbr(title="International Standard Book Number") ISBN
+                    td #{book.isbn}
+                if book.upstream.publishedDate
+                  tr
+                    th Published date
+                    td #{book.upstream.publishedDate}
+                if book.upstream.publisher
+                  tr
+                    th Publisher
+                    td #{book.upstream.publisher}
+                if book.upstream.pageCount
+                  tr
+                    th Pages
+                    td #{book.upstream.pageCount}
+                if book.upstream.categories
+                  tr(rowspan=book.upstream.categories.length)
+                  - j = 0
+                  for category in book.upstream.categories
+                    - j++
+                    if j !== 0
+                      th Categories
+                    td #{category}
+                if book.upstream.language
+                  tr
+                    th Language 
+                    if book.upstream.language === 'en'
+                      td English
+                    else
+                      td #{book.upstream.language}
+                if book.upstream.maturityRating
+                  tr
+                    th Classification
+                    td #{book.upstream.maturityRating.replace('_', ' ').toLowerCase()}
+                if book.longlistedBy
+                  tr
+                    th Longlister
+                    td #{book.longlistedBy}

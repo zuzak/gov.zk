@@ -28,7 +28,7 @@ var cmds = {
   }
 }
 
-for (var j = 0; i < bots.length; i++) {
+for (var j = 0; j < bots.length; j++) {
   bots[j].addListener('pm', function (nick, message) {
     var msg = message.split(' ')
     var cmd = msg.shift().toUpperCase()

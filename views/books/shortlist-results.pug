@@ -1,0 +1,96 @@
+//- vim:ft=jade
+extends ../skeleton
+block breadcrumb
+  li
+    a(href='/book-club') Book club
+  li
+    a(href='/book-club/short-list') Short list
+block content
+  - electorCount = Object.keys(electorate).length
+  - max = books.length * electorCount
+  .grid-row
+    .column-full
+      h1.heading-xlarge Short list results
+  .grid-row
+    .column-two-thirds
+      table
+        thead
+          tr
+            th(colspan="2") Flags
+            th Candidate
+            th.numeric Approvals
+            th.numeric
+              abbr(title="Satisifaction Approval Voting") SAV
+        if results.length == 0
+          tr
+            td(colspan="5",style="text-align:center") Awaiting first ballot…
+        for result in results
+          tr
+            td
+              if result.longlistedBy === req.user
+                abbr.green(title="You nominated this")  &#9998;
+            td
+              if result.difficult
+                abbr.red(title="Marked difficult") &#9936;
+            td
+              strong
+                a(href='/book-club/book/' + result.isbn) #{result.title}
+              br
+              span  #{result.author}
+            td.numeric #{result.approve.length}
+            td.numeric
+              - x = 0
+              for approver in result.approve
+                - x += 1/electorate[approver]
+              if x == 0
+                span —
+              else
+                span #{Math.round(x*100)/100}
+
+
+    .column-one-third
+      table
+        thead
+          tr
+            th Elector
+            th.numeric Votes
+        - sum = 0
+        for elector in Object.keys(electorate)
+          tr
+            td #{elector}
+            - sum += electorate[elector]
+            if electorate[elector] == 0
+              td.numeric Nil
+            else
+              if electorate[elector] == books.length
+                td.numeric Complete
+              else
+                td.numeric #{electorate[elector]} of #{books.length}
+      p
+      p.
+        The shortlist is created using the <a href="//en.wikipedia.org/wiki/Approval_voting">Approval Voting</a>
+        electoral system.
+
+        It is a simple way to vote on a large number of candidates without having to rank them
+        individually.
+
+        The winner is the candidate with the most number of approvals (yes votes).
+      p.
+        For comparison, the results of <a href="//en.wikipedia.org/wiki/Satisfaction_approval_voting">satisfaction approval voting</a>
+        are also provided.
+
+        This is similar to approval voting, except that each elector has one vote shared between all
+        their approvals, so each approval from a voter that votes five times is worth one fifth; and
+        a voter who votes ten times has their approval worth one tenth. This attempts to ensure that
+        each voter is satisfied with at least one winning candidate.
+      if sum !== max
+        p.
+          Votes shown are provisional, as not everybody who has submitted a book to the longlist, or
+          begun voting on the shortlist, has completed their ballots.
+      else
+        p.
+          Everybody that has submitted a book to the longlist, or begun voting on the shortlist, has
+          completed their ballots.
+  .grid-row
+     .column-full
+       p #{sum} of #{max} votes returned.

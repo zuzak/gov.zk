@@ -15,14 +15,15 @@ block content
       p.font-small.
         This longlist is an initial, longer list from which a
         shortlist will be extracted. Accordingly, feel free to add
-        any books that could be good to read: the less appropriate
-        novels will be filtered away later, so don't worry too much.
+        any texts that could be good to read: the less appropriate
+        items will be filtered away later, so don't worry too much.
       p.panel.
-        Books without a <span class="green">✓</span> have problems
-        with metadata and cause difficulties with the shortlisting process.
-        Please add or change the ISBN of these books to a different
-        edition so the images and other metadata is available.
-    if req.user
+        Books with a <span class="red">✗</span> have problems
+        with metadata.
+      if state == 'SHORTLIST'
+        p.font-small.
+          These texts can now be <a href="/book-club/short-list">voted on</a>.
+    if req.user && state == 'LONGLIST'
       .grid-row
         .column-two-thirds
           p
@@ -93,7 +94,7 @@ block content
                         input(type='hidden',name='author',value=book.author)
                         input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
                         input(type='submit',value='Add ISBN').button
-    if req.user
+    if req.user && state == 'LONGLIST'
       .grid-row
         .column-two-thirds
           p
