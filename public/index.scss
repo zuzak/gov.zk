@@ -1,8 +1,9 @@
 $path: "/";
-$toolkit-font-stack: "Nunito";
+$toolkit-font-stack: "Rubik";
 
 
 @import 'https://fonts.googleapis.com/css?family=Nunito:300';
+@import 'https://fonts.googleapis.com/css?family=Rubik:300';
 
 @import 'govuk-elements';
 @import 'elements/govuk-template-base';
@@ -53,3 +54,5 @@ footer a:hover {
 .stack {
 	overflow: scroll;
 }
+.red { color: $error-colour }
+.green { color: $grass-green }

@@ -1,10 +1,18 @@
 var irc = require('irc')
 var auth = require('./auth')
 
-var bot = module.exports = new irc.Client(
+var networks = [
   'lem0n.net',
-  'stewart'
-)
+  'chat.freenode.net'
+]
+
+var bots = module.exports = []
+for (var i = 0; i < networks.length; i++) {
+  bots.push(new irc.Client(
+    networks[i],
+    'gov-zk'
+  ))
+}
 
 var cmds = {
   'VERIFY': function (nick, args) {
@@ -20,14 +28,16 @@ var cmds = {
   }
 }
 
-bot.addListener('pm', function (nick, message) {
-  var msg = message.split(' ')
-  var cmd = msg.shift().toUpperCase()
+for (var j = 0; i < bots.length; i++) {
+  bots[j].addListener('pm', function (nick, message) {
+    var msg = message.split(' ')
+    var cmd = msg.shift().toUpperCase()
 
-  var str = 'Unrecognized command.'
+    var str = 'Unrecognized command.'
 
-  if (cmds[cmd]) {
-    str = cmds[cmd](nick, msg)
-  }
-  bot.say(nick, str)
-})
+    if (cmds[cmd]) {
+      str = cmds[cmd](nick, msg)
+    }
+    this.say(nick, str)
+  })
+}

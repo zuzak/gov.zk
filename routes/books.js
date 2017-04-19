@@ -1,5 +1,6 @@
 var app = require('..')
 var isbn = require('node-isbn')
+var shuffle = require('shuffle-array')
 var fs = require('fs')
 
 var booklist = {
@@ -19,7 +20,21 @@ var booklist = {
 }
 
 app.get('/book-club', function (req, res) {
-  res.status(501).render('books/index.pug', { req })
+  var books = booklist.load()
+  var longlist = books.length
+  var longlist_problem_count = 0
+  var longlist_participants = []
+  for (var i = 0; i < longlist; i++) {
+    if (longlist_participants.indexOf(books[i].longlistedBy) === -1) {
+      longlist_participants.push(books[i].longlistedBy)
+    }
+    if (!books[i].upstream || !books[i].upstream.imageLinks || !books[i].upstream.description || !books[i].upstream.imageLinks.thumbnail) {
+      longlist_problem_count++
+    }
+  }
+  longlist_participants.sort()
+
+  res.render('books/index.pug', { req, longlist: booklist.load().length, participants: longlist_participants, longlist_problem_count })
 })
 
 app.get('/book-club/long-list', function (req, res) {
@@ -38,8 +53,30 @@ app.get('/book-club/long-list', function (req, res) {
   res.render('books/longlist.pug', { req, books })
 })
 
+app.get('/book-club/short-list', function (req, res) {
+  var books = booklist.load()
+  shuffle(books)
+  res.render('books/shortlist.pug', { req, books })
+})
+
 app.get('/book-club/long-list/add-a-book', function (req, res) {
   res.render('books/longlist-add.pug', { req })
+})
+
+app.post('/book-club/long-list', function (req, res) {
+  // ISBN editing
+  var books = booklist.load()
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].author !== req.body.author) continue
+    if (books[i].title !== req.body.title) continue
+
+    delete books[i].upstream
+    books[i].isbn = req.body.isbn
+
+    booklist.save(books)
+    return res.redirect('/book-club/book/' + req.body.isbn)
+  }
+  res.status(400).send('couldn\'t find right book')
 })
 
 app.post('/book-club/long-list/add-a-book', function (req, res) {

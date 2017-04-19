@@ -16,10 +16,11 @@ block content
         Your account is associated with your IRC nickname.
       p.
         Please enter the following command into IRC:
-      p.font-medium.panel
-        span /msg #{nick} VERIFY
-        span &nbsp;
-        span#js-slug #{key}
+      for nick in nicks
+        p.font-medium.panel
+          span /msg #{nick} VERIFY
+          span &nbsp;
+          span#js-slug #{key}
       p.
         Once the command has been executed, you can…
       form(method='POST')
@@ -36,4 +37,3 @@ block content
               Slack (although it is still widely used).
           p.
               One connects to IRC networks and joins channels (chat rooms).
-              In this case, the IRC network is <code>jfc.im</code>.

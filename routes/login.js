@@ -4,7 +4,14 @@ var irc = require('../irc.js')
 
 app.get('/log-in', function (req, res) {
   var key = auth.getNewKey(5)
-  res.render('login.pug', { key, nick: irc.nick, req })
+  var nicks = []
+  for (var i = 0; i < irc.length; i++) {
+    if (nicks.indexOf(irc[i].nick) === -1) {
+      nicks.push(irc[i].nick)
+    }
+  }
+
+  res.render('login.pug', { key, nicks, req })
 })
 
 app.get('/log-out', function (req, res) {
