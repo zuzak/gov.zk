@@ -5,9 +5,15 @@
 [![Coverage Status](https://coveralls.io/repos/github/zuzak/gov.zk/badge.svg?branch=master)](https://coveralls.io/github/zuzak/gov.zk?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
+An intranet for a small Internet community that sometimes likes to pretend to be a tiny enclave in rural Wales.
+Features include login via Internet Relay Chat, and a somewhat overengineered method to decide the next novel in our book club.
+
+## Screenshot
+![Book detail](http://i.imgur.com/hRKhPkv.png)
 ## Installation
 ```
 $ npm install
+$ npm start
 ```
 ## Deployment
 For the full effect:
