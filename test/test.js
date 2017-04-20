@@ -4,6 +4,7 @@ var request = require('supertest')
 var path = require('path') // core
 var pug = require('pug')
 var fs = require('fs')
+var recurse = require('recursive-readdir-sync')
 require('should')
 
 describe('index', function () {
@@ -201,19 +202,11 @@ describe('authentication system', function (done) {
   })
 })
 describe('pug rendering', function () {
-  var f = [
-    '404.pug',
-    '500.pug',
-    'about.pug',
-    'hello.pug',
-    'home.pug',
-    'login.pug',
-    'placeholder.pug'
-  ]
+  var f = recurse('views')
   for (var i = 0; i < f.length; i++) {
     var template = f[i]
     it('should render ' + f[i], function (done) {
-      pug.renderFile('views/' + template, null, done)
+      pug.renderFile(template, null, done)
     })
   }
 })
