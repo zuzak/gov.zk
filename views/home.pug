@@ -1,11 +1,20 @@
 //- Used for testing: [squeamish ossifrage]
 extends skeleton
+block css
+  link(rel="stylesheet",href="home.css")
+block breadcrumbs
 block content
+  .hero
+    .grid-row
+      .column-two-thirds
+        h1.heading-xlarge Welcome to gov.zk
+        span.font-small for even made up countries need intranets
+      .column-one-third.black-nav
+        h2.heading-small Useful links
+        ul.list.list-bullet.font-small
+          li
+            a(href='//gsi.zuzakistan.com') Access the GSI
+          li
+            a(href='/book-club') Book club
   .grid-row
-    .column-two-thirds
-      h1.heading-xlarge Welcome to gov.zk
-      ul.list.list-bullet
-        li
-          a(href='//gsi.zuzakistan.com') Access the GSI
-        li
-          a(href='/book-club') Book club
+    p.placeholder(lang="la") locum tenens

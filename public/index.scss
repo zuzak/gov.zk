@@ -1,5 +1,6 @@
 $path: "/";
 $toolkit-font-stack: "Telex";
+$un-blue: #4b92db;
 
 
 @import 'https://fonts.googleapis.com/css?family=Telex';
@@ -41,7 +42,7 @@ footer a:hover {
 }
 
 .accent-bar {
-	background-color: $govuk-blue;
+	background-color: $un-blue;
 	height: 0.5em;
 	width: 100%;
 }
@@ -56,3 +57,4 @@ footer a:hover {
 }
 .red { color: $error-colour }
 .green { color: $grass-green }
+.grid-row { margin: 0 0 !important; }
