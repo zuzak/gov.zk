@@ -12,11 +12,16 @@ $un-blue: #4b92db;
 header {
 	background-color: $text-colour;
 	color: $page-colour;
+  min-height: 3em;
 }
 .header .logo {
 	color: inherit;
 	text-decoration: inherit;
 	text-transform: uppercase;
+}
+.logo {
+  display:inline-block;
+  padding-top: 0.1em;
 }
 .logo:hover {
 	text-decoration: underline;
