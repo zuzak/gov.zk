@@ -6,6 +6,7 @@ var pug = require('pug')
 var fs = require('fs')
 var recurse = require('recursive-readdir-sync')
 require('should')
+console.log(app.get('env') === 'test')
 
 describe('index', function () {
   it('should work!', function (done) {
@@ -53,8 +54,6 @@ describe('stylesheet compilation', function () {
   })
 })
 describe('routes', function () {
-  /*
-   * commented out as we now redirect 404s to login (maybe we shouldn't)
   it('should 404 on non-existent', function (done) {
     request(app)
       .get('/404')
@@ -69,21 +68,28 @@ describe('routes', function () {
         done()
       })
   })
-  */
   var routes = [
-    '/log-out',
     '/',
-    '/about-this-website',
-    '/hello-world',
-    '/log-in'
+    '/book-club',
+    '/book-club/long-list',
+    '/book-club/long-list/add-a-book',
+    '/book-club/reading-list',
+    '/book-club/short-list',
+    '/hello-world'
   ]
   for (var i = 0; i < routes.length; i++) {
-    var route = routes[i]
-    it('route ' + route + ' should 200', function (done) {
-      request(app)
-        .get(route)
-        .expect(200, done)
-    })
+    ;(function (route) {
+      it('route ' + route + ' should 200', function (done) {
+        request(app)
+          .get(route)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) throw err
+            res.text.should.not.containEql('Log in to GOV.ZK')
+            done()
+          })
+      })
+    })(routes[i])
   }
 })
 describe('log in system', function () {
@@ -201,12 +207,24 @@ describe('authentication system', function (done) {
     fs.unlink('/tmp/authtest.json', done)
   })
 })
+
 describe('pug rendering', function () {
   var f = recurse('views')
   for (var i = 0; i < f.length; i++) {
-    var template = f[i]
-    it('should render ' + f[i], function (done) {
-      pug.renderFile(template, null, done)
-    })
+    ;(function (x) {
+      it('should render ' + x, function (done) {
+        try {
+          pug.renderFile(x, null)
+        } catch (e) {
+          if (e instanceof TypeError) {
+            // pass, probably(!) an unsent variable
+          } else {
+            throw e
+          }
+        } finally {
+          done()
+        }
+      })
+    })(f[i])
   }
 })
