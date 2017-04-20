@@ -4,7 +4,12 @@ var shuffle = require('shuffle-array')
 var fs = require('fs')
 var irc = require('../irc.js')
 
-var state = JSON.parse(fs.readFileSync('data/admin.json')).state || 'LONGLIST'
+var state
+try {
+  state = JSON.parse(fs.readFileSync('data/admin.json')).state
+} catch (e) {
+  if (e.code === 'ENOENT') state = 'LONGLIST'
+}
 
 var booklist = {
   KEYSTORE: 'data/books.json',
