@@ -26,5 +26,10 @@ block content
             label(for='choice2') Disable longlist additions and allow shortlist voting
               if state == 'SHORTLIST'
                 span  (active)
+          .multiple-choice
+            input#choice3(type='radio',name='state',value='READING_LIST')
+            label(for='choice3') Disable voting and promulgate the reading list
+              if state == 'READING_LIST'
+                span  (active)
         p.submit
           input(type='submit',value='Update state').button
