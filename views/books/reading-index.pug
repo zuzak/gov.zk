@@ -1,0 +1,79 @@
+//- vim:ft=jade
+extends ../skeleton
+block breadcrumb
+  li
+    a(href='/book-club') Book club
+  li
+    a(href='/book-club/reading-list') Reading list
+block css
+    link(rel='stylesheet', href='/readinglist.css')
+block content
+  .grid-row
+    .column-two-thirds
+        h1.heading-xlarge Reading list
+  - i = 0
+  if books.length == 0
+    p.lede  No books have yet been selected for the reading list. Check back later.
+  for book in books
+    if book.upstream
+      - title = book.upstream.title
+      - author = book.upstream.authors.join(' & ')
+    .grid-row.book-item
+      .column-one-third.sidebar
+        if book.upstream.imageLinks
+          img(src=book.upstream.imageLinks.thumbnail)
+        p
+          a(href='https://www.amazon.co.uk/s/?url=search-alias%3Dstripbooks&field-keywords='+encodeURIComponent(book.isbn)).
+            Search on Amazon
+      .column-two-thirds
+         h2.heading-medium #{book.upstream.title}
+         p.lede
+           span a #{book.upstream.printType.toLowerCase()}  by 
+           span.author #{author}
+         table
+           thead
+             tr
+               th Name
+               th Status
+           if book.status
+             for person in Object.keys(book.status)
+               tr
+                 th #{person}
+                 if book.status[person]
+                   td #{book.status[person][book.status[person].length - 1].status}
+                 else
+                   td Awaiting confirmation
+           else
+             tr
+               td(colspan="2").center Awaiting readers
+         details
+           summary.summary.heading-small Update status
+           .panel.panel-border-narrow
+              form(method='POST')
+                input(type='hidden',name='isbn', value=book.isbn)
+                h3.heading-small Update status
+                fieldset(required)
+                  .multiple-choice
+                    input#choice1(type='radio',name='status',value='acknowledged')
+                    label(for='choice1').form-label I'm going to read this book but haven't got a copy yet
+                  .multiple-choice
+                    input#choice2(type='radio',name='status',value='ordered')
+                    label(for='choice2').form-label I've ordered a copy but it hasn't yet arrived
+                  .multiple-choice
+                    input#choice3(type='radio',name='status',value='arrived')
+                    label(for='choice3').form-label I have a copy of the book but I haven't started reading
+                  .multiple-choice(data-target='pageCount')
+                    input#choice4(type='radio',name='status',value='started')
+                    label(for='choice4').form-label I have started reading the book
+                  .panel.panel-border-narrow.js-hidden#pageCount
+                    label.form-label(for='pages') I'm up to page:
+                    input(type='number', name='pages').form-control
+                  .multiple-choice
+                    input#choice5(type='radio',name='status',value='finished')
+                    label(for='choice5').form-label I finished reading the book
+                  .multiple-choice
+                    input#choice6(type='radio',name='status',value='stalled')
+                    label(for='choice6').form-label I gave up reading the book
+                p
+                  input(type='submit',value='Update status').button
+    hr

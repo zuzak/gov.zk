@@ -32,21 +32,23 @@ block content
         .bold-xlarge #{longlist}
         .bold-xsmall longlisted books
       p.data
-        .bold-xlarge #{longlist_problem_count}
+        .bold-xlarge #{longlistProblemCount}
         .bold-xsmall longlisted books with problems
       p.data
         .bold-xlarge #{participants.length}
-        .bold-xsmall participants over 2 channels
+        .bold-xsmall participants over #{networkCount} IRC networks
       p.data
-        .bold-xlarge #{shortlist_votes}
+        .bold-xlarge #{shortlistVotes}
         .bold-xsmall shortlist votes
   .grid-row
     .column-two-thirds
       hr
-      h2.heading-small Useful links
+      h2.heading-small Lists
       p.font-small
         ul
           li
-            a(href='/book-club/long-list') Longlist
+            a(href='/book-club/long-list') Long list
           li
-            a(href='/book-club/short-list') Shortlist
+            a(href='/book-club/short-list') Short list
+          li
+            a(href='/book-club/reading-list') Reading list

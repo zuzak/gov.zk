@@ -1,0 +1,30 @@
+//- vim:ft=jade
+extends ../skeleton
+block breadcrumb
+  li
+    a(href='/book-club') Book club
+  li
+    a(href='/book-club/admin') Administration
+block css
+  link(rel='stylesheet', href='/index.css')
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-large Administration
+
+      h2.heading-medium Book club state
+      p The book club is currently in <strong>#{state}</strong> mode.
+      form(method='POST')
+        fieldset(required)
+          .multiple-choice
+            input#choice1(type='radio',name='state',value='LONGLIST')
+            label(for='choice1') Allow longlist contributions and disable shortlist voting
+              if state == 'LONGLIST'
+                span  (active)
+          .multiple-choice
+            input#choice2(type='radio',name='state',value='SHORTLIST')
+            label(for='choice2') Disable longlist additions and allow shortlist voting
+              if state == 'SHORTLIST'
+                span  (active)
+        p.submit
+          input(type='submit',value='Update state').button

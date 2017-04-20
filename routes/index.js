@@ -10,6 +10,7 @@ require('./login.js')
 
 require('./about.js')
 require('./books.js')
+require('./reading.js')
 require('./misc.js')
 
 // this must be last:

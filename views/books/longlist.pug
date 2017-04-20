@@ -61,9 +61,11 @@ block content
                   if book.upstream.imageLinks && book.upstream.imageLinks.thumbnail && book.upstream.description
                     if book.longlistedBy === req.user
                       td.green ✓
-                      td (yours)
+                      td
+                        strong #{book.longlistedBy}
                     else
-                      td(colspan="2").green ✓
+                      td.green ✓
+                      td #{book.longlistedBy}
                   else
                     //- bad upstream
                     td.red ✗

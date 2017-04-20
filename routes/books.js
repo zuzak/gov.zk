@@ -2,8 +2,9 @@ var app = require('..')
 var isbn = require('node-isbn')
 var shuffle = require('shuffle-array')
 var fs = require('fs')
+var irc = require('../irc.js')
 
-var state = 'LONGLIST' // LONGLIST SHORTLIST
+var state = JSON.parse(fs.readFileSync('data/admin.json')).state || 'LONGLIST'
 
 var booklist = {
   KEYSTORE: 'data/books.json',
@@ -24,24 +25,44 @@ var booklist = {
 app.get('/book-club', function (req, res) {
   var books = booklist.load()
   var longlist = books.length
-  var longlist_problem_count = 0
-  var longlist_participants = []
-  var shortlist_votes = 0
+  var longlistProblemCount = 0
+  var longlistParticipants = []
+  var shortlistVotes = 0
   for (var i = 0; i < longlist; i++) {
-    if (longlist_participants.indexOf(books[i].longlistedBy) === -1) {
-      longlist_participants.push(books[i].longlistedBy)
+    if (longlistParticipants.indexOf(books[i].longlistedBy) === -1) {
+      longlistParticipants.push(books[i].longlistedBy)
     }
     if (!books[i].upstream || !books[i].upstream.imageLinks || !books[i].upstream.description || !books[i].upstream.imageLinks.thumbnail) {
-      longlist_problem_count++
+      longlistProblemCount++
     }
     if (books[i].approve) {
-      shortlist_votes += books[i].approve.length
-      shortlist_votes += books[i].disapprove.length
+      shortlistVotes += books[i].approve.length
+      shortlistVotes += books[i].disapprove.length
     }
   }
-  longlist_participants.sort()
+  longlistParticipants.sort()
 
-  res.render('books/index.pug', { req, longlist: booklist.load().length, participants: longlist_participants, longlist_problem_count, shortlist_votes, state })
+  res.render('books/index.pug', { req, longlist: booklist.load().length, participants: longlistParticipants, longlistProblemCount, shortlistVotes, state, networkCount: irc.length })
+})
+
+app.get('/book-club/admin', function (req, res) {
+  var admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  if (admin.admins.indexOf(req.user) === -1) {
+    return res.status(403).send('not allowed')
+  }
+  res.render('books/admin.pug', { req: req, state })
+})
+
+app.post('/book-club/admin', function (req, res) {
+  var admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  if (admin.admins.indexOf(req.user) === -1) {
+    return res.status(403).send('not allowed')
+  }
+  if (req.body.state) {
+    admin.state = state = req.body.state
+    fs.writeFileSync('data/admin.json', JSON.stringify(admin, null, '    '))
+  }
+  return res.redirect('/book-club')
 })
 
 app.get('/book-club/long-list', function (req, res) {
@@ -70,7 +91,7 @@ app.get('/book-club/short-list', function (req, res) {
     }
     slate.push(books[i])
   }
-  if (slate.length > 0 && state == 'SHORTLIST') {
+  if (slate.length > 0 && state === 'SHORTLIST') {
     shuffle(slate)
     res.render('books/shortlist-ballot.pug', { req, books: slate, total: books.length })
   } else {
@@ -92,7 +113,7 @@ app.get('/book-club/short-list', function (req, res) {
       return b.approve.length - a.approve.length
     })
 
-    res.render('books/shortlist-results.pug', { req, results, electorate, books})
+    res.render('books/shortlist-results.pug', {req, results, electorate, books, state})
   }
 })
 
@@ -145,16 +166,24 @@ app.get('/book-club/long-list/add-a-book', function (req, res) {
   }
 })
 
+function replaceIsbn (books, author, title, newIsbn) {
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].author !== author) continue
+    if (books[i].title !== title) continue
+
+    delete books[i].upstream
+    books[i].isbn = newIsbn
+
+    return books
+  }
+  return null
+}
+
 app.post('/book-club/long-list', function (req, res) {
   // ISBN editing
   var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].author !== req.body.author) continue
-    if (books[i].title !== req.body.title) continue
-
-    delete books[i].upstream
-    books[i].isbn = req.body.isbn
-
+  books = replaceIsbn(books, req.body.author, req.body.title, req.body.isbn)
+  if (books) {
     booklist.save(books)
     return res.redirect('/book-club/book/' + req.body.isbn)
   }
@@ -187,6 +216,8 @@ app.get('/book-club/book/:isbn', function (req, res, next) {
       } else {
         isbn.resolve(req.params.isbn, function (err, book) {
           if (err) {
+            var newbooks = replaceIsbn(books, books[i].author, books[i].title, null)
+            if (newbooks) booklist.save(books)
             return res.status(404).render('error.pug', {err})
           }
           books[i].upstream = book
