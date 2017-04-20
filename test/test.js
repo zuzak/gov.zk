@@ -68,6 +68,11 @@ describe('routes', function () {
         done()
       })
   })
+  it('should 403 on protected routes', function (done) {
+    request(app)
+      .get('/book-club/admin')
+      .expect(403, done)
+  })
   var routes = [
     '/',
     '/book-club',
