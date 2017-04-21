@@ -12,45 +12,19 @@ block css
 block content
   .grid-row
     .column-two-thirds
-        h1.heading-xlarge Reading list
-  - i = 0
-  if books.length == 0
-  for book in books
-    - i++
-    if book.upstream
-      - title = book.upstream.title
-      - author = book.upstream.authors.join(' & ')
-    .grid-row.book-item
-      .column-one-third.sidebar
-        if book.upstream.imageLinks
-          img(src=book.upstream.imageLinks.thumbnail)
-        p
-          a(href='https://www.amazon.co.uk/s/?url=search-alias%3Dstripbooks&field-keywords='+encodeURIComponent(book.isbn)).
-            Search on Amazon
-      .column-two-thirds
-        h2.heading-medium
-          a(href='/book-club/book/'+book.isbn) #{book.upstream.title}
-        p.lede
-          span a #{book.upstream.printType.toLowerCase()}  by 
-          span.author #{author}
-        table
-          thead
-            tr
-              th Name
-              th Status
-          if book.status
-            for person in Object.keys(book.status)
-              tr
-                th #{person}
-                if book.status[person]
-                  td #{book.status[person][book.status[person].length - 1].status}
-                else
-                  td Awaiting confirmation
-          else
-            tr
-              td(colspan="2").center Awaiting readers
-        include reading-form.pug
-    if i !== books.length
-      hr
-  else
-    p.lede  No books have yet been selected for the reading list. Check back later.
+       h1.heading-xlarge Reading list
+       p.lede The following books have been selected by the community to be read.
+  .grid-row
+    .column-two-thirds.books
+      for book in books
+          div.book
+            if book.upstream
+              if book.upstream.imageLinks
+                a(href='/book-club/book/'+book.isbn)
+                  img(src=book.upstream.imageLinks.thumbnail)
+            p
+              a(href='/book-club/book/'+book.isbn).title.font-small #{book.title}
+            p
+              a(href='/book-club/book/'+book.isbn).author.font-xsmall #{book.author}
+      else
+        p There are no books on the reading list.
