@@ -1,0 +1,17 @@
+table
+  thead
+    tr
+      th Name
+      th Status
+      if book.status
+        for person in Object.keys(book.status)
+          tr
+            th #{person}
+            if book.status[person]
+              - status = book.status[person][book.status[person].length - 1].status
+              td(class='reading-'+status)  #{status}
+            else
+              td Awaiting confirmation
+      else
+        tr
+          td(colspan="2").center Awaiting readers

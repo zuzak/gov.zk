@@ -55,7 +55,7 @@ app.get('/book-club/admin', function (req, res) {
   if (admin.admins.indexOf(req.user) === -1) {
     return res.status(403).send('not allowed')
   }
-  res.render('books/admin.pug', { req: req, state })
+  res.render('books/admin.pug', { req: req, state, books: booklist.load() })
 })
 
 app.post('/book-club/admin', function (req, res) {
@@ -66,6 +66,22 @@ app.post('/book-club/admin', function (req, res) {
   if (req.body.state) {
     admin.state = state = req.body.state
     fs.writeFileSync('data/admin.json', JSON.stringify(admin, null, '    '))
+    return res.redirect('/book-club')
+  }
+  if (req.body.readingList) {
+    console.log('a')
+    var books = booklist.load()
+    for (var i = 0; i < books.length; i++) {
+      if (req.body.title !== books[i].title) continue
+      if (req.body.author !== books[i].author) continue
+      if (req.body.isbn !== books[i].isbn) continue
+      console.log('b')
+
+      console.log(books[i])
+      books[i].readingList = true
+      booklist.save(books)
+      return res.redirect('/book-club/reading-list')
+    }
   }
   return res.redirect('/book-club')
 })
@@ -131,8 +147,8 @@ app.post('/book-club/short-list', function (req, res) {
     if (bl[i].author !== req.body.author) continue
     if (bl[i].title !== req.body.title) continue
 
-    if (!bl[i].approve) bl[i].approve = []
-    if (!bl[i].dispprove) bl[i].disapprove = []
+//    if (!bl[i].approve) bl[i].approve = []
+ //   if (!bl[i].dispprove) bl[i].disapprove = []
 
     if (req.body.verdict === 'yes') {
       bl[i].approve.push(req.user)
@@ -234,4 +250,33 @@ app.get('/book-club/book/:isbn', function (req, res, next) {
     }
   }
   next()
+})
+
+app.get('/book-club/reading-list', function (req, res) {
+  var books = booklist.load()
+  var readingList = []
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].readingList) readingList.push(books[i])
+  }
+  res.render('books/reading-index.pug', { req, books: readingList })
+})
+
+app.post('/book-club/reading-list', function (req, res) {
+  var b = booklist.load()
+  for (var i = 0; i < b.length; i++) {
+    if (b[i].isbn !== req.body.isbn) continue
+
+    if (!b[i].status) b[i].status = {}
+    if (!b[i].status[req.user]) b[i].status[req.user] = []
+
+    b[i].status[req.user].push({
+      'status': req.body.status,
+      'pages': req.body.pages,
+      'ts': Date.now()
+    })
+
+    booklist.save(b)
+    return res.redirect('/book-club/reading-list')
+  }
+  throw new Error('book not found')
 })

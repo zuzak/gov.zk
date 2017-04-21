@@ -22,31 +22,33 @@ block content
   .grid-row
     .column-two-thirds
       .grid-row
-        if book.upstream
-          .column-two-thirds
-              p.lede
-                span a #{book.upstream.printType.toLowerCase()}  by 
-                span.author #{author}
-              if book.upstream.description
-                p
-                  blockquote #{book.upstream.description}
-              if book.difficult
-                p.panel This book has been marked as long or difficult.
-          .column-one-third.sidebar
-            if book.upstream.imageLinks
-              img(src=book.upstream.imageLinks.thumbnail)
-            if book.upstream.previewLink
-              p
-                a(href=book.upstream.previewLink) Preview online
-        else
-          .column-two-thirds
+        .column-two-thirds
+          if book.upstream
+            p.lede
+              span a #{book.upstream.printType.toLowerCase()}  by 
+              span.author #{author}
+            if book.upstream.description
+              p #{book.upstream.description}
+          else
             p.lede
               span by 
               span.author #{author}
             p.notice
               i.icon.icon-important
               strong We have no information about this book.
+          if book.difficult
+            p.panel This book has been marked as long or difficult.
+        .column-one-third.sidebar
+          if book.upstream.imageLinks
+            img(src=book.upstream.imageLinks.thumbnail)
+          if book.upstream.previewLink
+            p
+              a(href=book.upstream.previewLink) Preview online
       .grid-row
+        if book.readingList
+          p.panel.font-medium.reading-list On the reading list
+          include reading-form.pug
+          include reading-table.pug
         if book.approve
           h2.heading-medium Ballot results
           table

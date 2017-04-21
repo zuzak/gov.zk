@@ -7,3 +7,10 @@ form { clear:both; border: 3px solid black; padding-left: 1em; margin-top: 1em}
 .submit{margin-top:1em}
 .phase-tag { background-color: $error-colour !important;}
 .sidebar {text-align: center;}
+.reading-list { color: $yellow; font-weight: bold; }
+.reading-acknowledged { color: $mauve; padding-left: 0em; }
+.reading-ordered { color: $turquoise; padding-left: 1em;  }
+.reading-arrived { color: $fuschia; padding-left: 2em }
+.reading-started { color: $green; padding-left: 3em }
+.reading-finished { color: $mellow-red; padding-left: 4em }
+.reading-stalled { color: $red; padding-left: 5em }

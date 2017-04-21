@@ -1,0 +1,31 @@
+if book.readingList
+  details
+    summary.summary.heading-small Update status
+    .panel.panel-border-narrow
+       form(method='POST',action='/book-club/reading-list')
+         input(type='hidden',name='isbn', value=book.isbn)
+         h3.heading-small Update status
+         fieldset(required)
+           .multiple-choice
+             input#choice1(type='radio',name='status',value='acknowledged')
+             label(for='choice1').form-label I'm going to read this book but haven't got a copy yet
+           .multiple-choice
+             input#choice2(type='radio',name='status',value='ordered')
+             label(for='choice2').form-label I've ordered a copy but it hasn't yet arrived
+           .multiple-choice
+             input#choice3(type='radio',name='status',value='arrived')
+             label(for='choice3').form-label I have a copy of the book but I haven't started reading
+           .multiple-choice(data-target='pageCount')
+             input#choice4(type='radio',name='status',value='started')
+             label(for='choice4').form-label I have started reading the book
+           .panel.panel-border-narrow.js-hidden#pageCount
+             label.form-label(for='pages') I'm up to page:
+             input(type='number', name='pages').form-control
+           .multiple-choice
+             input#choice5(type='radio',name='status',value='finished')
+             label(for='choice5').form-label I finished reading the book
+           .multiple-choice
+             input#choice6(type='radio',name='status',value='stalled')
+             label(for='choice6').form-label I gave up reading the book
+         p
+           input(type='submit',value='Update status').button

@@ -26,6 +26,10 @@ block content
           begin on Friday, in order for final book selection to be ready for the start of May 2017.
       else
         if state == 'SHORTLIST'
+          p Voting is now open for the shortlist. Please note that votes are not anonymous.
+          p.
+            We are using the "approval" voting system. You can vote for any number of candidates.
+            The candidates with the most "yes" votes wins.
           a(href='/book-club/short-list').button.button-start Vote on the long list
         else
           a(href='/book-club/reading-list').button.button-start View the reading list

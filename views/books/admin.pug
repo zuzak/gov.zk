@@ -35,3 +35,28 @@ block content
                 span  (active)
         p.submit
           input(type='submit',value='Update state').button
+  .grid-row
+    .column-full
+      table
+        thead
+          tr
+            th Book
+            th Author
+            th Approvals
+            th Actions
+        for book in books
+          tr
+            td
+              a(href='/book-club/book/'+book.isbn) #{book.title}
+            td #{book.author}
+            if book.approve
+              td.numeric #{book.approve.length}
+            else
+              td.numeric —
+            td
+              if !book.readingList
+                form(method='POST')
+                  input(type='hidden',name='title',value=book.title)
+                  input(type='hidden',name='author',value=book.author)
+                  input(type='hidden',name='isbn',value=book.isbn)
+                  input(type='submit',name='readingList',value='Add to reading list').button
