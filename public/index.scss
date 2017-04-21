@@ -63,3 +63,5 @@ footer a:hover {
 .red { color: $error-colour }
 .green { color: $grass-green }
 .grid-row { margin: 0 0 !important; }
+.center { text-align: center; }
+.unanimous::before { content: "★ "}

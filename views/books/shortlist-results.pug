@@ -39,7 +39,10 @@ block content
                 a(href='/book-club/book/' + result.isbn) #{result.title}
               br
               span  #{result.author}
-            td.numeric #{result.approve.length}
+            if result.approve.length === electorCount
+              td.numeric(title="Unanimous approval").unanimous #{result.approve.length}
+            else
+              td.numeric(title=result.approve.join(', ')) #{result.approve.length}
             td.numeric
               - x = 0
               for approver in result.approve
@@ -47,7 +50,7 @@ block content
               if x == 0
                 span —
               else
-                span #{Math.round(x*100)/100}
+                span #{Math.round(x*1000)}
 
 
     .column-one-third

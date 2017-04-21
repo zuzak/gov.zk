@@ -1,46 +1,127 @@
-//- Used for testing: [squeamish ossifrage]
+//- vim:ft=jade
 extends ../skeleton
 block title
-  title #{book.title}
+  title Shortlist Ballot
 block breadcrumb
   li
     a(href='/book-club') Book club
+  li Book
   li
-    a(href='/book-club/long-list') Long list
-  li #{book.title}
+    a #{book.isbn}
+block css
+  link(rel='stylesheet', href='/shortlist.css')
 block content
-  h1.heading-xlarge #{book.title} 
+  - title = book.title
+  - author = book.author
+  if book.upstream
+    - title = book.upstream.title
+    - author = book.upstream.authors.join(' & ')
+  .grid-row
+    .column-full
+      h1.heading-xlarge.title #{title}
   .grid-row
     .column-two-thirds
-      p.lede
-        em #{book.title}
-        span  
-        span was written by #{book.upstream.authors.join(' and ')}, 
-        span and was nominated by 
-        if book.longlistedBy === req.user
-          b you
+      .grid-row
+        if book.upstream
+          .column-two-thirds
+              p.lede
+                span a #{book.upstream.printType.toLowerCase()}  by 
+                span.author #{author}
+              if book.upstream.description
+                p
+                  blockquote #{book.upstream.description}
+              if book.difficult
+                p.panel This book has been marked as long or difficult.
+          .column-one-third.sidebar
+            if book.upstream.imageLinks
+              img(src=book.upstream.imageLinks.thumbnail)
+            if book.upstream.previewLink
+              p
+                a(href=book.upstream.previewLink) Preview online
         else
-          b #{book.longlistedBy}
-        span .
-      p #{book.upstream.description}
-      if book.difficult
-        .panel.panel-border-wide
-          p This book has been marked as a long or difficult read.
-    .column-one-third
-      if book.upstream.imageLinks
-        img(src=book.upstream.imageLinks.thumbnail)
-  .grid-row
-    .column-two-thirds.body-xsmall
-      h2.heading-medium Metadata
-      table
-        tr
-          th Published date
-          td #{book.upstream.publishedDate}
-        tr
-          th Page count
-          td #{book.upstream.pageCount}
-        tr
-          th Published
-          td #{book.upstream.publisher}
-  a.link-back(href='/book-club/long-list') Return to long list
+          .column-two-thirds
+            p.lede
+              span by 
+              span.author #{author}
+            p.notice
+              i.icon.icon-important
+              strong We have no information about this book.
+      .grid-row
+        if book.approve
+          h2.heading-medium Ballot results
+          table
+            thead
+              tr
+                th Voter
+                th Approval
+                th Already read
+                th Owns copy
+            - ballots = book.approve.concat(book.disapprove).sort()
+            if ballots.indexOf(req.user) === -1
+              tr
+                td(colspan=4).center You must vote before you can see the ballots for this book.
+            else
+              for name in ballots
+                tr
+                  th
+                    span #{name}
+                    if name == book.longlistedBy
+                      abbr(title="Longlister").green &nbsp;✎
+                  if book.approve.indexOf(name) !== -1
+                    td.green ☑  Yes
+                  else
+                    td.red No
+                  if book.alreadyRead && book.alreadyRead.indexOf(name) !== -1
+                    td Yes
+                  else
+                    td No
+                  if book.haveCopy && book.haveCopy.indexOf(name) !== -1
+                    td Yes
+                  else
+                    td No
 
+
+    if book.upstream
+      .column-one-third
+        .grid-row
+          table
+            if book.isbn
+              tr
+                th
+                  abbr(title="International Standard Book Number") ISBN
+                td #{book.isbn}
+            if book.upstream.publishedDate
+              tr
+                th Published date
+                td #{book.upstream.publishedDate}
+            if book.upstream.publisher
+              tr
+                th Publisher
+                td #{book.upstream.publisher}
+            if book.upstream.pageCount
+              tr
+                th Pages
+                td #{book.upstream.pageCount}
+            if book.upstream.categories
+              tr(rowspan=book.upstream.categories.length)
+              - j = 0
+              for category in book.upstream.categories
+                - j++
+                if j !== 0
+                  th Categories
+                td #{category}
+            if book.upstream.language
+              tr
+                th Language 
+                if book.upstream.language === 'en'
+                  td English
+                else
+                  td #{book.upstream.language}
+            if book.upstream.maturityRating
+              tr
+                th Classification
+                td #{book.upstream.maturityRating.replace('_', ' ').toLowerCase()}
+            if book.longlistedBy
+              tr
+                th Longlister
+                td #{book.longlistedBy}
