@@ -40,11 +40,11 @@ html
               a.logo(href='/') &#9819; gov.zk
           .columns-one-third
             block login
-            //-
               if req && req.user
-                div.login
-                 span Hello, #{req.user}&nbsp;
-                 a(href='/log-out') (Log out)
+                //-
+                  div.login
+                   span Hello, #{req.user}&nbsp;
+                   a(href='/log-out') (Log out)
               else
                 a.button.login(href='/log-in') Log in
     #content
