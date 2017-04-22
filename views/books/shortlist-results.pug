@@ -109,24 +109,17 @@ block content
           their approvals, so each approval from a voter that votes five times is worth one fifth; and
           a voter who votes ten times has their approval worth one tenth. This attempts to ensure that
           each voter is satisfied with at least one winning candidate.
-      if sum !== max
-        if state == 'LONGLIST'
-          p Voting is not yet open.
-        else
-          if state == 'SHORTLIST'
+      if state.allowVoting
+        if sum !== max
             p.
               Votes shown are provisional, as not everybody who has submitted a book to the longlist, or
               begun voting on the shortlist, has completed their ballots.
-          else
-            p Polls are closed.
-      else
-        p.
-          Everybody that has submitted a book to the longlist, or begun voting on the shortlist, has
-          completed their ballots.
-        if state !== 'SHORTLIST'
-          p Voting is now closed.
         else
-          p Results are provisional, awaiting close of poll.
+          p.
+            Everybody that has submitted a book to the longlist, or begun voting on the shortlist, has
+            completed their ballots.
+      else
+        p Polls are closed.
   .grid-row
      .column-full
        p #{sum} of #{max} votes returned.

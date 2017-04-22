@@ -8,7 +8,11 @@ var state
 try {
   state = JSON.parse(fs.readFileSync('data/admin.json')).state
 } catch (e) {
-  if (e.code === 'ENOENT') state = 'LONGLIST'
+  if (e.code === 'ENOENT') state = {
+    addToLonglist: true,
+    allowVoting: false,
+    advertise: 'LONGLIST'
+  }
 }
 
 var booklist = {
@@ -60,11 +64,19 @@ app.get('/book-club/admin', function (req, res) {
 
 app.post('/book-club/admin', function (req, res) {
   var admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  console.log(req.body)
   if (admin.admins.indexOf(req.user) === -1) {
     return res.status(403).send('not allowed')
   }
-  if (req.body.state) {
-    admin.state = state = req.body.state
+  if (req.body.changeState) {
+    if (req.body.advertise) {
+      admin.state.advertise = state.advertise = req.body.advertise
+    }
+    admin.state.addToLonglist = state.addToLonglist = Boolean(req.body.addToLonglist)
+    admin.state.allowVoting = state.allowVoting = Boolean(req.body.allowVoting)
+
+    console.log(admin.state)
+
     fs.writeFileSync('data/admin.json', JSON.stringify(admin, null, '    '))
     return res.redirect('/book-club')
   }
@@ -112,7 +124,7 @@ app.get('/book-club/short-list', function (req, res) {
     }
     slate.push(books[i])
   }
-  if (slate.length > 0 && state === 'SHORTLIST') {
+  if (slate.length > 0 && state.allowVoting) {
     shuffle(slate)
     res.render('books/shortlist-ballot.pug', { req, books: slate, total: books.length })
   } else {
@@ -139,7 +151,7 @@ app.get('/book-club/short-list', function (req, res) {
 })
 
 app.post('/book-club/short-list', function (req, res) {
-  if (state !== 'SHORTLIST') {
+  if (state.allowVoting) {
     return res.status(403).render('placeholder.pug')
   }
   var bl = booklist.load()
@@ -180,8 +192,8 @@ app.post('/book-club/short-list', function (req, res) {
 })
 
 app.get('/book-club/long-list/add-a-book', function (req, res) {
-  if (state !== 'LONGLIST') {
-    res.status(403).render('placeholder.pug')
+  if (state.addToLonglist) {
+    res.status(403).render('placeholder.pug', { req })
   } else {
     res.render('books/longlist-add.pug', { req })
   }
@@ -212,7 +224,7 @@ app.post('/book-club/long-list', function (req, res) {
 })
 
 app.post('/book-club/long-list/add-a-book', function (req, res) {
-  if (state !== 'LONGLIST') {
+  if (state.addToLonglist) {
     return res.status(403).render('placeholder.pug')
   }
   var book = req.body
@@ -250,6 +262,25 @@ app.get('/book-club/book/:isbn', function (req, res, next) {
     }
   }
   next()
+})
+
+app.get('/book-club/book/:isbn/edit', function (req, res) {
+  var books = booklist.load()
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].isbn === req.params.isbn) {
+      res.render('books/book-desc.pug', {book: books[i], req})
+    }
+  }
+})
+app.post('/book-club/book/:isbn/edit', function (req, res) {
+  var books = booklist.load()
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].isbn === req.params.isbn) {
+      if (req.body.desc) books[i].desc = req.body.desc
+      booklist.save(books)
+      res.redirect('/book-club/book/'+req.params.isbn)
+    }
+  }
 })
 
 app.get('/book-club/reading-list', function (req, res) {

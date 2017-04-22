@@ -2,14 +2,18 @@ table
   thead
     tr
       th Name
-      th Status
+      th(colspan="2") Status
       if book.status
         for person in Object.keys(book.status)
           tr
             th #{person}
             if book.status[person]
-              - status = book.status[person][book.status[person].length - 1].status
-              td(class='reading-'+status)  #{status}
+              - obj = book.status[person][book.status[person].length - 1]
+              td(class='reading-'+obj.status)  #{obj.status}
+              if obj.pages
+                td #{obj.pages} / #{book.pages}
+              else
+                td
             else
               td Awaiting confirmation
       else

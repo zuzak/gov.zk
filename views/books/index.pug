@@ -50,13 +50,17 @@ block content
         .bold-xsmall shortlist votes
   .grid-row
     .column-two-thirds
-      hr
-      h2.heading-small Lists
-      p.font-small
-        ul
-          li
-            a(href='/book-club/long-list') Long list
-          li
-            a(href='/book-club/short-list') Short list
-          li
-            a(href='/book-club/reading-list') Reading list
+      h2.heading-small Other actions
+      ul
+        li.font-small
+          if state.addToLonglist
+            a(href='/book-club/long-list') Add books to the long list
+          else
+            a(href='/book-club/long-list') View the long list
+        li.font-small
+          if state.allowVoting
+            a(href='/book-club/short-list') Vote on the short list
+          else
+            a(href='/book-club/short-list') View the short list
+        li.font-small
+          a(href='/book-club/reading-list') View the reading list

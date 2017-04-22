@@ -1,7 +1,7 @@
 //- vim:ft=jade
 extends ../skeleton
 block title
-  title Shortlist Ballot
+  title #{book.title}
 block breadcrumb
   li
     a(href='/book-club') Book club
@@ -47,8 +47,9 @@ block content
       .grid-row
         if book.readingList
           p.panel.font-medium.reading-list On the reading list
-          include reading-form.pug
+          h2.heading-medium Reading status
           include reading-table.pug
+          include reading-form.pug
         if book.approve
           h2.heading-medium Ballot results
           table
@@ -127,3 +128,12 @@ block content
               tr
                 th Longlister
                 td #{book.longlistedBy}
+        .grid-row
+          p
+          p.font-xxsmall.right
+            a(href='/book-club/book/' + book.isbn + '/edit')
+              if book.desc
+                span Edit note
+              else
+                span Add note
+          p.font-xsmall  #{book.desc}

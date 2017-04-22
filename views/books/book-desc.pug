@@ -1,0 +1,19 @@
+//- Used for testing: [squeamish ossifrage]
+extends ../skeleton
+block title
+  title Add to Longlist
+block breadcrumb
+  li
+    a(href='/book-club') Book club
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge Edit note
+      p.lede Editing #{book.title} by #{book.author}
+      form(method='POST')
+        label.form-label(for='desc') Note contents
+        textarea#desc(name='desc',cols='24',rows='5').form-control #{book.desc}
+        p.form-group
+          input.button(type='submit',value='Edit description')
+  a.link-back(href='/book-club/book/'+book.isbn) Return to #{book.title}
+

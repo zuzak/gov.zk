@@ -17,5 +17,6 @@ h1 { margin-bottom: 0.2em !important;}
 }
 
 .login { display: none; }
-.placeholder{ padding-top: 6em; text-align: center; color: $border-colour}
+$placeholder-height: 9em;
+.placeholder{ padding-top: $placeholder-height + 6em; padding-bottom: $placeholder-height; text-align: center; color: $border-colour}
 .phase-banner-alpha, .phase-banner-beta { display: none; }

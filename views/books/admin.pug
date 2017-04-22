@@ -10,33 +10,43 @@ block breadcrumb
 block css
   link(rel='stylesheet', href='/index.css')
 block content
+  pre.code #{JSON.stringify(state)}
   .grid-row
     .column-two-thirds
       h1.heading-large Administration
 
       h2.heading-medium Book club state
-      p The book club is currently in <strong>#{state}</strong> mode.
       form(method='POST')
+        h3.heading-small Permissions
+        fieldset
+          .multiple-choice
+            input#choice4(type='checkbox', name='allowVoting')
+            label(for='choice4') Allow voting on the shortlist
+          .multiple-choice
+            input#choice5(type='checkbox', name='addToLonglist')
+            label(for='choice5') Allow adding books to the longlist
+        h3.heading-small Advertising
         fieldset(required)
           .multiple-choice
-            input#choice1(type='radio',name='state',value='LONGLIST')
-            label(for='choice1') Allow longlist contributions and disable shortlist voting
+            input#choice1(type='radio',name='advertise',value='LONGLIST')
+            label(for='choice1') Promote adding to the longlist
               if state == 'LONGLIST'
                 span  (active)
           .multiple-choice
-            input#choice2(type='radio',name='state',value='SHORTLIST')
-            label(for='choice2') Disable longlist additions and allow shortlist voting
+            input#choice2(type='radio',name='advertise',value='SHORTLIST')
+            label(for='choice2') Promote voting on the shortlist
               if state == 'SHORTLIST'
                 span  (active)
           .multiple-choice
-            input#choice3(type='radio',name='state',value='READING_LIST')
-            label(for='choice3') Disable voting and promulgate the reading list
+            input#choice3(type='radio',name='advertise',value='READING_LIST')
+            label(for='choice3') Promote viewing the reading list
               if state == 'READING_LIST'
                 span  (active)
         p.submit
-          input(type='submit',value='Update state').button
+          input(type='submit',value='Update state',name='changeState').button
   .grid-row
     .column-full
+      h2.heading-medium Book states
       table
         thead
           tr

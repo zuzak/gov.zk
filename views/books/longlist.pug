@@ -12,25 +12,36 @@ block content
   .grid-row
     .column-two-thirds
       p.lede.
-        The first step in deciding which books to read is to narrow
+        The first step in deciding which books to read was to narrow
         down the many available novels into a smaller list.
-      p.font-small.
-        This longlist is an initial, longer list from which a
-        shortlist will be extracted. Accordingly, feel free to add
-        any texts that could be good to read: the less appropriate
-        items will be filtered away later, so don't worry too much.
+      if state.advertise == 'LONGLIST'
+        p.font-small.
+          This longlist is an initial, longer list from which a
+          shortlist will be extracted. Accordingly, feel free to add
+          any texts that could be good to read: the less appropriate
+          items will be filtered away later, so don't worry too much.
+      else
+        p.font-small.
+          This long list is an initial, longer list from which
+          a shortlist was extracted.
       p.panel.
         Books with a <span class="red">✗</span> have problems
         with metadata.
-      if state == 'SHORTLIST'
-        p.font-small.
-          These texts can now be <a href="/book-club/short-list">voted on</a>.
-    if req.user && state == 'LONGLIST'
+    if state.allowVoting
+      .grid-row
+        .column-two-thirds
+          p.font-small.
+            These texts can now be <a href="/book-club/short-list">voted on</a>.
+    if req.user && state.addToLonglist
       .grid-row
         .column-two-thirds
           p
           p
             a(href='long-list/add-a-book').button Add a book
+    else
+      .grid-row
+        .column-two-thirds
+          p Adding new books is currently disabled.
     .grid-row
       .column-full
         table
