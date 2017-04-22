@@ -2,7 +2,8 @@ table
   thead
     tr
       th Name
-      th(colspan="2") Status
+      th Status
+      th Progress
       if book.status
         for person in Object.keys(book.status)
           tr
@@ -11,9 +12,13 @@ table
               - obj = book.status[person][book.status[person].length - 1]
               td(class='reading-'+obj.status)  #{obj.status}
               if obj.pages
-                td #{obj.pages} / #{book.pages}
+                td #{obj.pages} / #{book.upstream.pageCount}
               else
-                td
+                if obj.freeform
+                  td 
+                    em #{obj.freeform}
+                else
+                  td
             else
               td Awaiting confirmation
       else

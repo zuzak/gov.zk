@@ -309,6 +309,7 @@ app.post('/book-club/reading-list', function (req, res) {
     b[i].status[req.user].push({
       'status': req.body.status,
       'pages': req.body.pages,
+      'freeform': req.body.freeform,
       'ts': Date.now()
     })
 

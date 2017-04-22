@@ -20,7 +20,11 @@ if book.readingList
              label(for='choice4').form-label I have started reading the book
            .panel.panel-border-narrow.js-hidden#pageCount
              label.form-label(for='pages') I'm up to page:
-             input(type='number', name='pages').form-control
+              .grid-row
+                .inline
+                 input(style="width:25%",type='number', size='3', name='pages', placeholder='page number').form-control
+                 span &nbsp;or
+                 input(type='text', width="100%" name='freeform', placeholder='freeform text').form-control
            .multiple-choice
              input#choice5(type='radio',name='status',value='finished')
              label(for='choice5').form-label I finished reading the book
