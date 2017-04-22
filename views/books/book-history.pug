@@ -1,0 +1,37 @@
+//- vim:ft=jade
+extends ../skeleton
+block breadcrumb
+  li
+    a(href='/') Home
+  li
+    a(href='/book-club') Book club
+  li
+    a(href='/book-club/book/'+book.isbn) #{book.title}
+  li History
+  li #{user}
+block title
+  title #{book.title} history for #{user}
+block css
+  link(rel='stylesheet', href='/shortlist.css')
+block content
+  .grid-row
+    span.heading-large History for #{user}
+    p.lede for #{book.title}
+
+    table
+      thead
+        tr
+          th Time
+          th Status
+          th Pages
+          th Freeform
+      for status in book.status[user]
+        tr
+          td #{new Date(status.ts).toUTCString()}
+          td(class='reading-'+status.status) #{status.status}
+          td #{status.pages}
+          if status.freeform
+            td #{status.freeform}
+          else
+            td
+

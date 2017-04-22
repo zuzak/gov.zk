@@ -270,6 +270,18 @@ app.get('/book-club/book/:isbn', function (req, res, next) {
   next()
 })
 
+app.get('/book-club/book/:isbn/:user', function (req, res, next) {
+  var books = booklist.load()
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].isbn === req.params.isbn) {
+      if (books[i].status && books[i].status[req.user]) {
+        return res.render('books/book-history.pug', {req: req, book: books[i], user: req.params.user})
+      }
+    }
+  }
+  next();
+})
+
 app.get('/book-club/book/:isbn/edit', function (req, res) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {

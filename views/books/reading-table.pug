@@ -7,7 +7,8 @@ table
       if book.status
         for person in Object.keys(book.status)
           tr
-            th #{person}
+            td 
+              a(href='/book-club/book/'+book.isbn+'/'+person) #{person}
             if book.status[person]
               - obj = book.status[person][book.status[person].length - 1]
               td(class='reading-'+obj.status)  #{obj.status}
