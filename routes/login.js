@@ -29,7 +29,11 @@ app.post('/log-in', function (req, res) {
         if (err) {
           throw err
         }
-        res.redirect('/')
+        if (req.body.returnTo) {
+          res.redirect(req.body.returnTo)
+        } else {
+          res.redirect('/')
+        }
       })
     } else {
       res.sendStatus(401)
