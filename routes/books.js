@@ -36,6 +36,7 @@ app.get('/book-club', function (req, res) {
   var longlist = books.length
   var longlistProblemCount = 0
   var longlistParticipants = []
+  var readingListCount = 0
   var shortlistVotes = 0
   for (var i = 0; i < longlist; i++) {
     if (longlistParticipants.indexOf(books[i].longlistedBy) === -1) {
@@ -48,10 +49,13 @@ app.get('/book-club', function (req, res) {
       shortlistVotes += books[i].approve.length
       shortlistVotes += books[i].disapprove.length
     }
+    if (books[i].readingList) {
+      readingListCount++
+    }
   }
   longlistParticipants.sort()
 
-  res.render('books/index.pug', { req, longlist: booklist.load().length, participants: longlistParticipants, longlistProblemCount, shortlistVotes, state, networkCount: irc.length })
+  res.render('books/index.pug', { req, longlist: booklist.load().length, participants: longlistParticipants, longlistProblemCount, shortlistVotes, state, networkCount: irc.length, readingListCount })
 })
 
 app.get('/book-club/admin', function (req, res) {

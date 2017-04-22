@@ -14,7 +14,7 @@ block content
         There are lots of books in the world, but only some are worth reading.
         We need to narrow them down.
 
-      if state == 'LONGLIST'
+      if state.advertise == 'LONGLIST'
         a(href='/book-club/long-list').button.button-start Contribute to the long list
         p
 
@@ -25,14 +25,21 @@ block content
           The <a href="/book-club/short-list">shortlisting process</a> will
           begin on Friday, in order for final book selection to be ready for the start of May 2017.
       else
-        if state == 'SHORTLIST'
+        if state.advertise == 'SHORTLIST'
           p Voting is now open for the shortlist. Please note that votes are not anonymous.
           p.
             We are using the "approval" voting system. You can vote for any number of candidates.
             The candidates with the most "yes" votes wins.
           a(href='/book-club/short-list').button.button-start Vote on the long list
-        else
+        else if state.advertise == 'READING_LIST'
           a(href='/book-club/reading-list').button.button-start View the reading list
+
+
+        if state.addToLonglist
+          p
+          p.
+            You can also <a href="/book-list/long-list">add books to the long list</a>
+            ready for the next voting round.
 
 
     .column-one-third
@@ -48,19 +55,20 @@ block content
       p.data
         .bold-xlarge #{shortlistVotes}
         .bold-xsmall shortlist votes
+      if readingListCount
+        p.data
+        .bold-xlarge #{readingListCount}
+        .bold-xsmall books on reading list
   .grid-row
     .column-two-thirds
       h2.heading-small Other actions
       ul
-        li.font-small
-          if state.addToLonglist
-            a(href='/book-club/long-list') Add books to the long list
-          else
-            a(href='/book-club/long-list') View the long list
-        li.font-small
-          if state.allowVoting
-            a(href='/book-club/short-list') Vote on the short list
-          else
-            a(href='/book-club/short-list') View the short list
-        li.font-small
-          a(href='/book-club/reading-list') View the reading list
+        if state.advertise !== 'SHORTLIST'
+          li.font-small
+            if state.allowVoting
+              a(href='/book-club/short-list') Vote on the short list
+            else
+              a(href='/book-club/short-list') View the short list
+        if state.advertise !== 'READING_LIST'
+          li.font-small
+            a(href='/book-club/reading-list') View the reading list
