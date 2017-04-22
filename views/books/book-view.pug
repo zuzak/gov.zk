@@ -130,10 +130,10 @@ block content
                 td #{book.longlistedBy}
         .grid-row
           p
-          p.font-xxsmall.right
+          p.font-xsmall  #{book.desc}
+          p.font-xxsmall
             a(href='/book-club/book/' + book.isbn + '/edit')
               if book.desc
                 span Edit note
               else
                 span Add note
-          p.font-xsmall  #{book.desc}
