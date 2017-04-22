@@ -21,11 +21,13 @@ block content
           span /msg #{nick} VERIFY
           span &nbsp;
           span#js-slug #{key}
-      p.
-        Once the command has been executed, you can…
-      form(method='POST')
-        input(type='hidden', value=key, name='key')
-        input.button#js-proceed(type='submit', value='Proceed to the next step')
+      div#js-loginPrompt
+        p.
+          Once the command has been executed, you can…
+        form(method='POST')#js-form
+          input(type='hidden', value=key, name='key')
+          input(type='hidden', value=req.query.returnTo, name='returnTo')
+          input.button#js-proceed(type='submit', value='Proceed to the next step')
       hr
       details
         summary

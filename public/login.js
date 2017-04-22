@@ -1,7 +1,12 @@
 /* eslint-env browser */
+var HIDE = false
 window.addEventListener('load', function (event) {
-  var btn = document.getElementById('js-proceed')
-  btn.disabled = true
+  if (HIDE) {
+    document.getElementById('js-loginPrompt').style.visibility = 'hidden'
+  } else {
+    var btn = document.getElementById('js-proceed')
+    btn.disabled = true
+  }
 
   window.setTimeout(poll, 500)
 })
@@ -22,6 +27,7 @@ function poll () {
   get('/log-in/verify/' + key + '.json', function (data) {
     if (data === 'true') {
       document.getElementById('js-proceed').disabled = false
+      document.getElementById('js-proceed').click()
     } else {
       window.setTimeout(poll, 500)
     }
