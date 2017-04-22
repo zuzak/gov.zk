@@ -8,10 +8,12 @@ var state
 try {
   state = JSON.parse(fs.readFileSync('data/admin.json')).state
 } catch (e) {
-  if (e.code === 'ENOENT') state = {
-    addToLonglist: true,
-    allowVoting: false,
-    advertise: 'LONGLIST'
+  if (e.code === 'ENOENT') {
+    state = {
+      addToLonglist: true,
+      allowVoting: false,
+      advertise: 'LONGLIST'
+    }
   }
 }
 
@@ -196,7 +198,7 @@ app.post('/book-club/short-list', function (req, res) {
 })
 
 app.get('/book-club/long-list/add-a-book', function (req, res) {
-  if (state.addToLonglist) {
+  if (!state.addToLonglist) {
     res.status(403).render('placeholder.pug', { req })
   } else {
     res.render('books/longlist-add.pug', { req })
@@ -282,7 +284,7 @@ app.post('/book-club/book/:isbn/edit', function (req, res) {
     if (books[i].isbn === req.params.isbn) {
       if (req.body.desc) books[i].desc = req.body.desc
       booklist.save(books)
-      res.redirect('/book-club/book/'+req.params.isbn)
+      res.redirect('/book-club/book/' + req.params.isbn)
     }
   }
 })
