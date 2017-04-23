@@ -4,6 +4,9 @@ var sass = require('node-sass-middleware')
 var app = module.exports = express()
 var passport = require('passport')
 
+var session = require('express-session')
+var JsonSession = require('express-session-json')(session) // TODO something better
+
 app.set('view engine', 'pug')
 app.locals.pretty = true
 
@@ -20,7 +23,13 @@ app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend
 
 app.use(require('cookie-parser')())
 app.use(require('body-parser')())
-app.use(require('express-session')({secret: 'jkshdjakhsjdhajskdhjsakk'}))
+app.use(session({
+  secret: 'jkshdjakhsjdhajskdhjsakk',
+  resave: false,
+  saveUninitialized: false,
+  store: new JsonSession()
+}))
+
 app.use(passport.initialize())
 app.use(passport.session())
 

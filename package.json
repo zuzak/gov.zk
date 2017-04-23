@@ -33,6 +33,7 @@
     "credits-to": "0.0.2",
     "express": "^4.14.0",
     "express-session": "^1.15.2",
+    "express-session-json": "0.0.8",
     "git-state": "^2.5.1",
     "githash": "0.0.4",
     "govuk-elements-sass": "^3.0.2",
