@@ -52,7 +52,6 @@
   "license": "MIT",
   "repository": "zuzak/gov.zk",
   "pre-commit": [
-    "validate",
     "lintpretty",
     "mocha"
   ]
