@@ -138,7 +138,7 @@ app.get('/book-club/short-list', function (req, res) {
 
       for (var k = 0; k < currentBook.approve.length; k++) {
         if (!electorate[currentBook.approve[k]]) {
-          electorate[currentBook.approve[k]] = {"total": 1, "approve": 1, "disapprove": 0}
+          electorate[currentBook.approve[k]] = {'total': 1, 'approve': 1, 'disapprove': 0}
         } else {
           electorate[currentBook.approve[k]].approve++
           electorate[currentBook.approve[k]].total++
@@ -146,7 +146,7 @@ app.get('/book-club/short-list', function (req, res) {
       }
       for (var n = 0; n < currentBook.disapprove.length; n++) {
         if (!electorate[currentBook.disapprove[n]]) {
-          electorate[currentBook.disapprove[n]] = {"total": 1, "approve": 0, "disapprove": 1}
+          electorate[currentBook.disapprove[n]] = {'total': 1, 'approve': 0, 'disapprove': 1}
         } else {
           electorate[currentBook.disapprove[n]].disapprove++
           electorate[currentBook.disapprove[n]].total++
@@ -155,24 +155,23 @@ app.get('/book-club/short-list', function (req, res) {
       results.push(books[j])
     }
 
-    var max_sav = 0
+    var maxSAV = 0
     for (var voter in electorate) {
       if (electorate.hasOwnProperty(voter)) {
-        max_sav += 1 / electorate[voter].approve
+        maxSAV += 1 / electorate[voter].approve
       }
     }
 
-    for (var i = 0; i < results.length; i++) {
+    for (i = 0; i < results.length; i++) {
       results[i].sav = 0
-      for (var approveIndex = 0; approveIndex < results[i].approve.length; approveIndex++ )  {
+      for (var approveIndex = 0; approveIndex < results[i].approve.length; approveIndex++) {
         results[i].sav += (1 / electorate[results[i].approve[approveIndex]].approve)
       }
-      results[i].scaledSav = Math.round((results[i].sav / max_sav) * 100)
+      results[i].scaledSav = Math.round((results[i].sav / maxSAV) * 100)
     }
 
-
     results.sort(function (a, b) {
-      return b.approve.length*1000 - a.approve.length*1000 + b.sav - a.sav
+      return b.approve.length * 1000 - a.approve.length * 1000 + b.sav - a.sav
       // return b.approve.length - a.approve.length
     })
 
@@ -311,7 +310,7 @@ app.get('/book-club/book/:isbn/:user', function (req, res, next) {
       }
     }
   }
-  next();
+  next()
 })
 
 app.get('/book-club/book/:isbn/edit', function (req, res) {
