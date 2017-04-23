@@ -96,7 +96,8 @@ block content
               tr
                 th
                   abbr(title="International Standard Book Number") ISBN
-                td #{book.isbn}
+                td
+                  a(href='https://www.amazon.co.uk/s/r&field-isbn='+book.isbn) #{book.isbn}
             if book.upstream.publishedDate
               tr
                 th Published date
