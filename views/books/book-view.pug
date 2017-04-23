@@ -47,7 +47,10 @@ block content
               a(href=book.upstream.previewLink) Preview online
       .grid-row
         if book.readingList
-          p.panel.font-medium.reading-list On the reading list
+          p.panel.font-medium.reading-list
+            span On the reading list
+            if typeof book.readingList === 'string'
+              span &nbsp;(#{book.readingList})
           h2.heading-medium Reading status
           include reading-table.pug
           include reading-form.pug
