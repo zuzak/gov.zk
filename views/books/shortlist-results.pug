@@ -51,6 +51,10 @@ block content
               - unanimousBooks++
               td.numeric(title="Unanimous approval by entire electorate").unanimous #{result.approve.length}
             else
+              if result.approve.length === electorCount
+                - unanimousBooks++
+                td.numeric(title="Unanimous approval by entire electorate").unanimous #{result.approve.length}
+              else
                 if result.approve.length > 0 && result.disapprove.length === 0
                   td.numeric(title="No dissents").almost-unanimous #{result.approve.length}
                 else
@@ -72,21 +76,25 @@ block content
           tr
             th Elector
             th.numeric Votes
+            th.numeric
+              abbr(title="Approvals") Appr.
         - sum = 0
         for elector in Object.keys(electorate)
+          - sum += electorate[elector].total
           tr
             td #{elector}
-            - sum += electorate[elector]
-            if electorate[elector] == 0
+            if electorate[elector].total == 0
               td.numeric Nil
             else
-              if electorate[elector] == books.length
+              if electorate[elector].total == books.length
                 td.numeric Complete
-              else if electorate[elector] > books.length
-                td.numeric.red #{electorate[elector]} of #{books.length}
+              else if electorate[elector].total > books.length
+                td.numeric.red #{electorate[elector].total} of #{books.length}
               else
-                td.numeric #{electorate[elector]} of #{books.length}
+                td.numeric #{electorate[elector].total} of #{books.length}
+            td.numeric(title=electorate[elector].approve+' approvals') #{Math.round((electorate[elector].approve/electorate[elector].total)*100)}%
 
+      p #{sum} of #{max} votes returned.
       p
         .data
           span.data-item.bold-xlarge #{unanimousBooks}
@@ -122,4 +130,3 @@ block content
         p Polls are closed.
   .grid-row
      .column-full
-       p #{sum} of #{max} votes returned.

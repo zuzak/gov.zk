@@ -135,16 +135,28 @@ app.get('/book-club/short-list', function (req, res) {
     shuffle(slate)
     res.render('books/shortlist-ballot.pug', { req, books: slate, total: books.length })
   } else {
-    var results = []
-    var electorate = {}
+    var results = [] // list of books that have been voted on
+    var electorate = {} // stats on each voter
     for (var j = 0; j < books.length; j++) { // probably worth merging with the other loop?
-      if (!electorate[books[j].longlistedBy]) {
-        electorate[books[j].longlistedBy] = 0
+      var currentBook = books[j]
+      if (!currentBook.approve) continue
+      if (!currentBook.disapprove) continue
+
+      for (var k = 0; k < currentBook.approve.length; k++) {
+        if (!electorate[currentBook.approve[k]]) {
+          electorate[currentBook.approve[k]] = {"total": 1, "approve": 1, "disapprove": 0}
+        } else {
+          electorate[currentBook.approve[k]].approve++
+          electorate[currentBook.approve[k]].total++
+        }
       }
-      if (!books[j].approve) continue
-      var voters = books[j].approve.concat(books[j].disapprove)
-      for (var k = 0; k < voters.length; k++) {
-        electorate[voters[k]] ? electorate[voters[k]]++ : electorate[voters[k]] = 1
+      for (var n = 0; n < currentBook.disapprove.length; n++) {
+        if (!electorate[currentBook.disapprove[n]]) {
+          electorate[currentBook.disapprove[n]] = {"total": 1, "approve": 0, "disapprove": 1}
+        } else {
+          electorate[currentBook.disapprove[n]].disapprove++
+          electorate[currentBook.disapprove[n]].total++
+        }
       }
       results.push(books[j])
     }
