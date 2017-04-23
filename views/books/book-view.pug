@@ -124,6 +124,17 @@ block content
               tr
                 th Classification
                 td #{book.upstream.maturityRating.replace('_', ' ').toLowerCase()}
+            if book.upstream.oclc
+              if book.upstream.oclc.dewey
+                tr
+                  th
+                    abbr(title="Dewey Decimal Classification") Dewey Dec'l
+                  td.callNumber #{book.upstream.oclc.dewey}
+              if book.upstream.oclc.congress
+                tr
+                  th
+                    abbr(title="Library of Congress Classification") LOCC
+                  td.callNumber #{book.upstream.oclc.congress}
             if book.longlistedBy
               tr
                 th Longlister
