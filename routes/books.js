@@ -71,7 +71,6 @@ app.get('/book-club/admin', function (req, res) {
 
 app.post('/book-club/admin', function (req, res) {
   var admin = JSON.parse(fs.readFileSync('data/admin.json'))
-  console.log(req.body)
   if (admin.admins.indexOf(req.user) === -1) {
     return res.status(403).send('not allowed')
   }
@@ -82,21 +81,16 @@ app.post('/book-club/admin', function (req, res) {
     admin.state.addToLonglist = state.addToLonglist = Boolean(req.body.addToLonglist)
     admin.state.allowVoting = state.allowVoting = Boolean(req.body.allowVoting)
 
-    console.log(admin.state)
-
     fs.writeFileSync('data/admin.json', JSON.stringify(admin, null, '    '))
     return res.redirect('/book-club')
   }
   if (req.body.readingList) {
-    console.log('a')
     var books = booklist.load()
     for (var i = 0; i < books.length; i++) {
       if (req.body.title !== books[i].title) continue
       if (req.body.author !== books[i].author) continue
       if (req.body.isbn !== books[i].isbn) continue
-      console.log('b')
 
-      console.log(books[i])
       books[i].readingList = true
       booklist.save(books)
       return res.redirect('/book-club/reading-list')
