@@ -161,8 +161,25 @@ app.get('/book-club/short-list', function (req, res) {
       results.push(books[j])
     }
 
+    var max_sav = 0
+    for (var voter in electorate) {
+      if (electorate.hasOwnProperty(voter)) {
+        max_sav += 1 / electorate[voter].approve
+      }
+    }
+
+    for (var i = 0; i < results.length; i++) {
+      results[i].sav = 0
+      for (var approveIndex = 0; approveIndex < results[i].approve.length; approveIndex++ )  {
+        results[i].sav += (1 / electorate[results[i].approve[approveIndex]].approve)
+      }
+      results[i].scaledSav = Math.round((results[i].sav / max_sav) * 100)
+    }
+
+
     results.sort(function (a, b) {
-      return b.approve.length - a.approve.length
+      return b.approve.length*1000 - a.approve.length*1000 + b.sav - a.sav
+      // return b.approve.length - a.approve.length
     })
 
     res.render('books/shortlist-results.pug', {req, results, electorate, books, state})

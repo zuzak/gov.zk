@@ -22,20 +22,19 @@ block content
             th(colspan="4") Flags
             th Candidate
             th.numeric Approvals
-            //-
-              th.numeric
-                abbr(title="Satisifaction Approval Voting") SAV
+            th.numeric
+              abbr(title="Satisifaction Approval Voting") SAV
         if results.length == 0
           tr
             td(colspan="7",style="text-align:center") Awaiting first ballot…
         for result in results
           tr
             td
+              if result.readingList
+                abbr.green.font-large(title="This book is on the reading list") ✓
+            td
               if result.longlistedBy === req.user
                 abbr.green(title="You nominated this")  &#9998;
-            td
-              if result.readingList
-                abbr.green(title="This book is on the reading list") ✓
             td
               if result.difficult
                 abbr.red(title="Marked difficult") &#9936;
@@ -47,9 +46,10 @@ block content
                 a(href='/book-club/book/' + result.isbn) #{result.title}
               br
               span  #{result.author}
-            if result.approve.length === electorCount
-              - unanimousBooks++
-              td.numeric(title="Unanimous approval by entire electorate").unanimous #{result.approve.length}
+
+            if result.approve.length == 0
+              td.numeric —
+              td.numeric —
             else
               if result.approve.length === electorCount
                 - unanimousBooks++
@@ -59,17 +59,8 @@ block content
                   td.numeric(title="No dissents").almost-unanimous #{result.approve.length}
                 else
                   td.numeric(title=result.approve.join(', ')) #{result.approve.length}
-            //-
-              td.numeric
-                - x = 0
-                for approver in result.approve
-                  - x += 1/electorate[approver]
-                if x == 0
-                  span —
-                else
-                  span #{Math.round(x*1000)}
-
-
+              - sav = (result.scaledSav/100*Object.keys(electorate).length).toFixed(2)
+              td.numeric #{sav}
     .column-one-third
       table
         thead
@@ -99,7 +90,6 @@ block content
         .data
           span.data-item.bold-xlarge #{unanimousBooks}
           span.data-item.bold-xsmall unanimous books
-      p
       p.
         The shortlist is created using the <a href="//en.wikipedia.org/wiki/Approval_voting">Approval Voting</a>
         electoral system.
@@ -108,15 +98,23 @@ block content
         individually.
 
         The winner is the candidate with the most number of approvals (yes votes).
-      //-
-        p.
-          For comparison, the results of <a href="//en.wikipedia.org/wiki/Satisfaction_approval_voting">satisfaction approval voting</a>
-          are also provided.
+      hr
+      p.
+        For comparison, the results of <a href="//en.wikipedia.org/wiki/Satisfaction_approval_voting">satisfaction approval voting</a>
+        are also provided.
 
-          This is similar to approval voting, except that each elector has one vote shared between all
-          their approvals, so each approval from a voter that votes five times is worth one fifth; and
-          a voter who votes ten times has their approval worth one tenth. This attempts to ensure that
-          each voter is satisfied with at least one winning candidate.
+        This is similar to approval voting, except that each elector has one vote shared between all
+        their approvals, so each approval from a voter that votes five times is worth one fifth; and
+        a voter who votes ten times has their approval worth one tenth.
+      p.
+        This has the effect of looking at how "satisfied" a voter is with an outcome: it tends to
+        return more diverse candidates than vanilla approval voting (which is usually only used for
+        single-winner elections).
+
+      p.
+        SAV ususally results in an unwieldy irrational number, so the results displayed have been scaled
+        to be a value between 0 and #{Object.keys(electorate).length}.
+      hr
       if state.allowVoting
         if sum !== max
             p.
