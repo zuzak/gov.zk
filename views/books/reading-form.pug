@@ -7,7 +7,7 @@ if book.readingList
          h3.heading-small Update status
          fieldset(required)
            .multiple-choice
-             input#choice1(type='radio',name='status',value='acknowledged')
+             input#choice1(type='radio',name='status',value='acknowledged',required)
              label(for='choice1').form-label I'm going to read this book but haven't got a copy yet
            .multiple-choice
              input#choice2(type='radio',name='status',value='ordered')
