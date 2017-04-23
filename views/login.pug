@@ -17,7 +17,7 @@ block content
       p.
         Please enter the following command into IRC:
       for nick in nicks
-        p.font-medium.panel
+        p.font-medium.panel#js-prompt
           span /msg #{nick} VERIFY
           span &nbsp;
           span#js-slug #{key}
@@ -27,7 +27,7 @@ block content
         form(method='POST')#js-form
           input(type='hidden', value=key, name='key')
           input(type='hidden', value=req.query.returnTo, name='returnTo')
-          input.button#js-proceed(type='submit', value='Proceed to the next step')
+          input.button#js-proceed(type='submit', value='Bake a cookie')
       hr
       details
         summary

@@ -28,6 +28,8 @@ function poll () {
     if (data === 'true') {
       document.getElementById('js-proceed').disabled = false
       document.getElementById('js-proceed').click()
+      document.getElementById('js-prompt').classList.add('green')
+      document.getElementById('js-prompt').innerHTML = '✓ Verified'
     } else {
       window.setTimeout(poll, 500)
     }
