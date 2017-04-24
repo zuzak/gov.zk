@@ -253,8 +253,8 @@ app.post('/book-club/long-list', function (req, res) {
 })
 
 app.post('/book-club/long-list/add-a-book', function (req, res) {
-  if (state.addToLonglist) {
-    return res.status(403).render('placeholder.pug')
+  if (!state.addToLonglist) {
+    return res.status(403).render('placeholder.pug', req)
   }
   var book = req.body
   book.difficult = book.difficult === 'on'
