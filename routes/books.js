@@ -171,7 +171,23 @@ app.get('/book-club/short-list', function (req, res) {
     }
 
     results.sort(function (a, b) {
-      return b.approve.length * 1000 - a.approve.length * 1000 + b.sav - a.sav
+      var count = 0
+      count -= a.approve.length * 1000
+      count -= a.sav
+      if (a.alreadyRead) count += a.alreadyRead.length / 10
+      if (a.difficult) count += 1/100
+      if (a.readingList) count -= 1/100
+
+      count += b.approve.length * 1000
+      count += b.sav
+      if (b.alreadyRead) count -= b.alreadyRead.length / 10
+      if (b.difficult) count -= 1/100
+      if (b.readingList) count += 1/100
+
+      if (a.title < b.title) count -= 1/1000
+      if (a.title > b.title) count += 1/1000
+
+      return count
       // return b.approve.length - a.approve.length
     })
 

@@ -8,7 +8,7 @@ if book.readingList
          fieldset(required)
            .multiple-choice
              input#choice1(type='radio',name='status',value='acknowledged',required)
-             label(for='choice1').form-label I'm going to read this book but haven't got a copy yet
+             label(for='choice1').form-label I'm going to read the book but haven't got a copy yet
            .multiple-choice
              input#choice2(type='radio',name='status',value='ordered')
              label(for='choice2').form-label I've ordered a copy but it hasn't yet arrived
@@ -17,7 +17,7 @@ if book.readingList
              label(for='choice3').form-label I have a copy of the book but I haven't started reading
            .multiple-choice(data-target='pageCount')
              input#choice4(type='radio',name='status',value='started')
-             label(for='choice4').form-label I have started reading the book
+             label(for='choice4').form-label I have started reading #{title} 
            .panel.panel-border-narrow.js-hidden#pageCount
              label.form-label(for='pages') I'm up to page:
               .grid-row
@@ -27,9 +27,12 @@ if book.readingList
                  input(type='text', width="100%" name='freeform', placeholder='freeform text').form-control
            .multiple-choice
              input#choice5(type='radio',name='status',value='finished')
-             label(for='choice5').form-label I finished reading the book
+             label(for='choice5').form-label I finished #{title}
            .multiple-choice
              input#choice6(type='radio',name='status',value='stalled')
-             label(for='choice6').form-label I gave up reading the book
+             label(for='choice6').form-label I gave up reading #{title}
+           .multiple-choice
+             input#choice7(type='radio',name='status',value='reject')
+             label(for='choice7').form-label I'm not going to read #{title}
          p
            input(type='submit',value='Update status').button

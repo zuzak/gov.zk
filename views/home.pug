@@ -7,14 +7,40 @@ block content
   .hero
     .grid-row
       .column-two-thirds
-        h1.heading-xlarge Welcome to Zuzakistan
-        span.font-small for even made up countries need intranets
+        h1.heading-xlarge Croeso i Sŵsacistan
+        span.font-small.fortune #{String(fortune).replace('--','—')}
+        //
+          span.font-small for even made up countries need intranets
       .column-one-third.black-nav
-        h2.heading-small Useful links
+        h2.heading-small Popular activities
         ul.list.list-bullet.font-small
           li
             a(href='//gsi.zuzakistan.com') Access the GSI
           li
-            a(href='/book-club') Book club
-  .grid-row
-    p.placeholder a world without knowledge is no world at all
+            a(href='/book-club') Join the book club
+          li
+            a(href='//webm.website') Watch some videos
+  .grid-row.main-body
+    .column-one-third
+      h3.heading-medium
+        a(href='/book-club') Book club
+      ul.font-small
+        li
+          a(href='/book-club/long-list') Edit the long list
+        li
+          a(href='/book-club/short-list') Vote on the short list
+        li
+          a(href='/book-club/reading-list') Read the reading list
+      h3.heading-medium Administration
+      ul.font-small
+        li
+          a(href='//github.com/zuzak/gov.zk') View source code
+        li
+          a(href='//github.com/zuzak/gov.zk/issues/new') Report a problem
+        li
+          if req.user
+            a(href='/log-out') Log out of gov.zk
+          else
+            a(href='/log-in') Log in to gov.zk
+    .column-two-thirds
+        p.placeholder dim byd yma

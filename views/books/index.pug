@@ -21,9 +21,6 @@ block content
         p.
           The first step is to create a long list of books so we have something to work with.
           We can then work on narrowing them down.
-        p.
-          The <a href="/book-club/short-list">shortlisting process</a> will
-          begin on Friday, in order for final book selection to be ready for the start of May 2017.
       else
         if state.advertise == 'SHORTLIST'
           p Voting is now open for the shortlist. Please note that votes are not anonymous.
@@ -35,6 +32,10 @@ block content
           a(href='/book-club/reading-list').button.button-start View the reading list
 
 
+        if state.allowVoting && state.advertise !== 'SHORTLIST'
+          p
+          p.
+            If you haven't already, you can also <a href="/book-club/short-list">vote on the long list</a>.
         if state.addToLonglist
           p
           p.
@@ -61,14 +62,13 @@ block content
         .bold-xsmall books on reading list
   .grid-row
     .column-two-thirds
-      h2.heading-small Other actions
-      ul
-        if state.advertise !== 'SHORTLIST'
-          li.font-small
-            if state.allowVoting
-              a(href='/book-club/short-list') Vote on the short list
-            else
-              a(href='/book-club/short-list') View the short list
-        if state.advertise !== 'READING_LIST'
-          li.font-small
-            a(href='/book-club/reading-list') View the reading list
+      if state.advertise == 'LONGLIST'
+        h2.heading-small Other actions
+        ul
+          if state.advertise !== 'SHORTLIST'
+            if !state.allowVoting
+              li.font-small
+                a(href='/book-club/short-list') View the short list
+          if state.advertise !== 'READING_LIST'
+            li.font-small
+              a(href='/book-club/reading-list') View the reading list

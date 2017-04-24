@@ -16,7 +16,11 @@ h1 { margin-bottom: 0.2em !important;}
   a { color: white !important }
 }
 
+.main-body li { padding: 0.2em; }
+.main-body h3 { margin-left: 0.2em; margin-bottom: 0.1em }
+
 //.login { display: none; }
-$placeholder-height: 9em;
-.placeholder{ padding-top: $placeholder-height + 6em; padding-bottom: $placeholder-height; text-align: center; color: $border-colour}
+$placeholder-height: 6em;
+.placeholder{ padding-top: $placeholder-height + 6em; padding-bottom: $placeholder-height; color: $border-colour; text-align: center}
+.fortune { white-space: pre }
 .phase-banner-alpha, .phase-banner-beta { display: none; }

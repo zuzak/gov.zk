@@ -19,12 +19,29 @@ app.get('/log-out', function (req, res) {
   res.redirect('/')
 })
 
+var validUsernames = [
+  'zuzak',
+  'boolton',
+  'danhedron',
+  'golem',
+  'bjarnboi',
+  'andreas',
+  'meddyg',
+  'kragniz',
+  'samstudio8',
+  'spaceinvader',
+  'neko'
+]
+
 app.post('/log-in', function (req, res) {
   if (!req.body.key) {
     res.sendStatus(400)
   } else {
     var username = auth.validateKey(req.body.key)
     if (username) {
+      if (validUsernames.indexOf(username) === -1) {
+        return res.status(403).render('error.pug', { msg: 'Your username is not on the whitelist.', req})
+      }
       req.login(username, function (err) {
         if (err) {
           throw err

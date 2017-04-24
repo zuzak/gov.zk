@@ -19,7 +19,7 @@ block content
       table
         thead
           tr
-            th(colspan="4") Flags
+            th(colspan="3") Flags
             th Candidate
             th.numeric Approvals
             th.numeric
@@ -29,18 +29,18 @@ block content
             td(colspan="7",style="text-align:center") Awaiting first ballot…
         for result in results
           tr
-            td
-              if result.readingList
-                abbr.green.font-large(title="This book is on the reading list") ✓
-            td
-              if result.longlistedBy === req.user
-                abbr.green(title="You nominated this")  &#9998;
-            td
-              if result.difficult
-                abbr.red(title="Marked difficult") &#9936;
-            td
-              if result.alreadyRead && result.alreadyRead.length > 0
-                abbr.read(title="Someone has already read this") 📖 
+            if result.readingList
+              td(colspan="3").center.green Selected #{result.readingList}
+            else
+              td
+                if result.longlistedBy === req.user
+                  abbr.green(title="You nominated this")  &#9998;
+              td
+                if result.difficult
+                  abbr.red(title="Marked difficult") &#9936;
+              td
+                if result.alreadyRead && result.alreadyRead.length > 0
+                  abbr.read(title="Someone has already read this") 📖 
             td
               strong
                 a(href='/book-club/book/' + result.isbn) #{result.title}
