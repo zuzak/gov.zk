@@ -196,8 +196,8 @@ app.get('/book-club/short-list', function (req, res) {
 })
 
 app.post('/book-club/short-list', function (req, res) {
-  if (state.allowVoting) {
-    return res.status(403).render('placeholder.pug')
+  if (!state.allowVoting) {
+    return res.status(403).render('placeholder.pug', req)
   }
   var bl = booklist.load()
   for (var i = 0; i < bl.length; i++) {
