@@ -5,7 +5,12 @@ app.all('*', function (req, res, next) {
     // cannot easily test things behind a login redir, so disable for tests
     return next()
   }
-  if (req.params['0'] === '/' || req.params['0'].startsWith('/log-in') || req.params['0'].startsWith('/about-this-website')) {
+  if (
+      req.params['0'] === '/' ||
+      req.params['0'].startsWith('/log-in') ||
+      req.params['0'].startsWith('/change-lang') ||
+      req.params['0'].startsWith('/about-this-website')
+      ) {
     next()
   } else {
     if (req.isAuthenticated()) {

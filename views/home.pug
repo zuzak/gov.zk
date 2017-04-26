@@ -7,40 +7,40 @@ block content
   .hero
     .grid-row
       .column-two-thirds
-        h1.heading-xlarge Croeso i Sŵsacistan
-        span.font-small.fortune #{String(fortune).replace('--','—')}
+        h1.heading-xlarge #{__('welcome')}
+        span.font-small.fortune #{String(fortune).replace(/--/g,'—')}
         //
           span.font-small for even made up countries need intranets
       .column-one-third.black-nav
-        h2.heading-small Popular activities
+        h2.heading-small #{__('homepage-nav-header')}
         ul.list.list-bullet.font-small
           li
-            a(href='//gsi.zuzakistan.com') Access the GSI
+            a(href='//gsi.zuzakistan.com') #{__('homepage-gsi-link')}
           li
-            a(href='/book-club') Join the book club
+            a(href='/book-club') #{__('homepage-bookclub-link')}
           li
-            a(href='//webm.website') Watch some videos
+            a(href='//webm.website') #{__('homepage-webm-link')}
   .grid-row.main-body
     .column-one-third
       h3.heading-medium
-        a(href='/book-club') Book club
+        a(href='/book-club') #{__('book-club')}
       ul.font-small
         li
-          a(href='/book-club/long-list') Edit the long list
+          a(href='/book-club/long-list') #{__('long-list-link')}
         li
-          a(href='/book-club/short-list') Vote on the short list
+          a(href='/book-club/short-list') #{__('short-list-link')}
         li
-          a(href='/book-club/reading-list') Read the reading list
-      h3.heading-medium Administration
+          a(href='/book-club/reading-list') #{__('reading-list-link')}
+      h3.heading-medium #{__('homepage-governance-header')}
       ul.font-small
         li
-          a(href='//github.com/zuzak/gov.zk') View source code
+          a(href='//github.com/zuzak/gov.zk') #{__('source-link')}
         li
-          a(href='//github.com/zuzak/gov.zk/issues/new') Report a problem
+          a(href='//github.com/zuzak/gov.zk/issues/new') #{__('issues-link')}
         li
           if req.user
-            a(href='/log-out') Log out of gov.zk
+            a(href='/log-out') #{__('logout-long')}
           else
-            a(href='/log-in') Log in to gov.zk
+            a(href='/log-in') #{__('login-long')}
     .column-two-thirds
-        p.placeholder dim byd yma
+        p.placeholder #{__('placeholder')}

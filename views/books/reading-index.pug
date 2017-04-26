@@ -1,19 +1,19 @@
 //- vim:ft=jade
 extends ../skeleton
 block title
-  title Reading List
+  title #{__('reading-list')}
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href='/book-club') #{__('book-club')}
   li
-    a(href='/book-club/reading-list') Reading list
+    a(href='/book-club/reading-list') #{__('reading-list')}
 block css
     link(rel='stylesheet', href='/readinglist.css')
 block content
   .grid-row
     .column-two-thirds
-       h1.heading-xlarge Reading list
-       p.lede The following books have been selected by the community to be read.
+      h1.heading-xlarge #{__('reading-list')}
+        p.lede #{__('reading-list-lede')}
   .grid-row
     .column-two-thirds.books
       for book in books
@@ -27,6 +27,6 @@ block content
             p
               a(href='/book-club/book/'+book.isbn).author.font-xsmall #{book.author}
       else
-        p There are no books on the reading list.
+        p #{__('reading-list-no-books')}
       p
-        a.link-back(href='/book-club') Back
+        a.link-back(href='/book-club') #{__('back')}

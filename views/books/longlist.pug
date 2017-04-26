@@ -1,12 +1,10 @@
 //- Used for testing: [squeamish ossifrage]
 extends ../skeleton
-block title
-  title GOV.ZK Longlist
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href='/book-club') #{__('book-club')}
   li
-    a(href='/book-club/long-list') Long list
+    a(href='/book-club/long-list') #{__('long-list')}
 block content
   h1.heading-xlarge Long list
   .grid-row
@@ -37,20 +35,20 @@ block content
         .column-two-thirds
           p
           p
-            a(href='long-list/add-a-book').button Add a book
+            a(href='long-list/add-a-book').button #{__('longlist-add-book')}
     else
       .grid-row
         .column-two-thirds
-          p Adding new books is currently disabled.
+          p #{__('longlist-add-book-disabled')}
     .grid-row
       .column-full
         table
           thead
             tr
               th
-              th Title
-              th Author
-              th(colspan="2") Status
+                th #{__('longlist-title')}
+              th #{__('longlist-author')}
+              th(colspan="2") #{__('longlist-status')}
           - i = 0
           for book in books
             - i++
@@ -85,33 +83,33 @@ block content
                     td
                       details
                         summary
-                          span.summary Edit ISBN
+                          span.summary #{__('longlist-edit-isbn-header')}
                         form(method='POST')
                           // label(for='isbn'+i) ISBN
                           input(type='hidden',name='title',value=book.title)
                           input(type='hidden',name='author',value=book.author)
                           input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
-                          input(type='submit',value='Edit ISBN').button
+                          input(type='submit',value=__('longlist-edit-isbn-button')).button
                 else
                   //- no upstream
                   td.red ✗
                   td
-                    a(href='book/'+book.isbn) Get data
+                    a(href='book/'+book.isbn) #{__('longlist-getdata')}
               else
                   td.red ✗
                   td
                     details
                       summary
-                        span.summary Add ISBN
+                        span.summary #{__('longlist-add-isbn-header')}
                       form(method='POST')
                         // label(for='isbn'+i) ISBN
                         input(type='hidden',name='title',value=book.title)
                         input(type='hidden',name='author',value=book.author)
                         input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
-                        input(type='submit',value='Add ISBN').button
+                        input(type='submit',value=__('longlist-add-isbn-button')).button
     if req.user && state == 'LONGLIST'
       .grid-row
         .column-two-thirds
           p
           p
-            a(href='long-list/add-a-book').button Add a book
+            a(href='long-list/add-a-book').button #{__('longlist-add-book')}

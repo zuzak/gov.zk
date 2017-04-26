@@ -4,10 +4,10 @@ block title
   title #{book.title}
 block breadcrumb
   li
-    a(href='/book-club') Book club
-  li Book
+    a(href='/book-club') #{__('book-club')}
+  li #{__('book')}
   li
-    a #{book.isbn}
+    a #{book.title}
 block css
   link(rel='stylesheet', href='/shortlist.css')
 block content
@@ -24,9 +24,7 @@ block content
       .grid-row
         .column-two-thirds
           if book.upstream
-            p.lede
-              span a #{book.upstream.printType.toLowerCase()}  by&nbsp;
-              span.author #{author}
+            p.lede #{__('book-' + book.upstream.printType.toLowerCase() + '-by', {author: author})} 
             if book.upstream.description
               for paragraph in book.upstream.description.split('\n')
                 p #{paragraph}
@@ -36,37 +34,37 @@ block content
               span.author #{author}
             p.notice
               i.icon.icon-important
-              strong We have no information about this book.
+              strong #{__('book-noinfo')}
           if book.difficult
-            p.panel This book has been marked as long or difficult.
+            p.panel #{__('book-difficult')}
         .column-one-third.sidebar
           if book.upstream.imageLinks
             img(src=book.upstream.imageLinks.thumbnail)
           if book.upstream.previewLink
             p
-              a(href=book.upstream.previewLink) Preview online
+              a(href=book.upstream.previewLink) #{__('book-preview')}
       .grid-row
         if book.readingList
           p.panel.font-medium.reading-list
-            span On the reading list
+            span #{__('book-onreadinglist')}
             if typeof book.readingList === 'string'
               span &nbsp;(#{book.readingList})
-          h2.heading-medium Reading status
+          h2.heading-medium #{__('book-readingstatus')}
           include reading-table.pug
           include reading-form.pug
         if book.approve
-          h2.heading-medium Ballot results
+          h2.heading-medium #{__('book-ballot-title')}
           table
             thead
               tr
-                th Voter
-                th Approval
-                th Already read
-                th Owns copy
+                th #{__('book-ballot-voter')}
+                th #{__('book-ballot-approval')}
+                th #{__('book-ballot-already-read')}
+                th #{__('book-ballot-owns-copy')}
             - ballots = book.approve.concat(book.disapprove).sort()
             if ballots.indexOf(req.user) === -1
               tr
-                td(colspan=4).center You must vote before you can see the ballots for this book.
+                td(colspan=4).center #{__('book-nballot-notvotedyet')}
             else
               for name in ballots
                 tr
@@ -75,17 +73,17 @@ block content
                     if name == book.longlistedBy
                       abbr(title="Longlister").green &nbsp;✎
                   if book.approve.indexOf(name) !== -1
-                    td.green ☑  Yes
+                    td.green ☑  #{__('book-ballot-approval-yes')}
                   else
-                    td.red No
+                    td.red #{__('book-ballot-approval-no')}
                   if book.alreadyRead && book.alreadyRead.indexOf(name) !== -1
-                    td Yes
+                    td #{__('book-ballot-already-read-yes')}
                   else
-                    td No
+                    td #{__('book-ballot-already-read-no')}
                   if book.haveCopy && book.haveCopy.indexOf(name) !== -1
-                    td Yes
+                    td #{__('book-ballot-owns-copy-yes')}
                   else
-                    td No
+                    td #{__('book-ballot-owns-copy-no')}
 
 
     if book.upstream
@@ -95,20 +93,20 @@ block content
             if book.isbn
               tr
                 th
-                  abbr(title="International Standard Book Number") ISBN
+                  abbr(title=__('book-isbn')) #{__('book-isbn-abbrev')}
                 td
                   a(href='https://www.amazon.co.uk/s/r&field-isbn='+book.isbn) #{book.isbn}
             if book.upstream.publishedDate
               tr
-                th Published date
+                th #{__('book-publishedDate')}
                 td #{book.upstream.publishedDate}
             if book.upstream.publisher
               tr
-                th Publisher
+                th #{__('book-publisher')}
                 td #{book.upstream.publisher}
             if book.upstream.pageCount
               tr
-                th Pages
+                th #{__('book-pagecount')}
                 td #{book.upstream.pageCount}
             if book.upstream.categories
               tr(rowspan=book.upstream.categories.length)
@@ -116,33 +114,28 @@ block content
               for category in book.upstream.categories
                 - j++
                 if j !== 0
-                  th Categories
+                  th #{__('book-categories')}
                 td #{category}
             if book.upstream.language
               tr
-                th Language 
-                if book.upstream.language === 'en'
-                  td English
-                else
-                  td #{book.upstream.language}
+                th #{__('book-language')}
+                td #{__('book-language-'+ book.upstream.language)}
             if book.upstream.maturityRating
               tr
-                th Classification
-                td #{book.upstream.maturityRating.replace('_', ' ').toLowerCase()}
+                th #{__('book-maturity-rating')}
+                td #{__('book-maturity-rating-'+book.upstream.maturityRating.replace('_', '-').toLowerCase())}
             if book.upstream.oclc
               if book.upstream.oclc.dewey
                 tr
-                  th
-                    abbr(title="Dewey Decimal Classification") Dewey Dec'l
+                  th #{__('book-dewey')}
                   td.callNumber #{book.upstream.oclc.dewey}
               if book.upstream.oclc.congress
                 tr
-                  th
-                    abbr(title="Library of Congress Classification") LOCC
+                  th #{__('book-congress')}
                   td.callNumber #{book.upstream.oclc.congress}
             if book.longlistedBy
               tr
-                th Longlister
+                th #{__('book-longlisted-by')}
                 td #{book.longlistedBy}
         .grid-row
           p
@@ -150,6 +143,6 @@ block content
           p.font-xxsmall
             a(href='/book-club/book/' + book.isbn + '/edit')
               if book.desc
-                span Edit note
+                span #{__('book-edit-note')}
               else
-                span Add note
+                span #{__('book-add-note')}

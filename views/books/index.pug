@@ -1,21 +1,18 @@
 //- Used for testing: [squeamish ossifrage]
 extends ../skeleton
 block title
-  title Book club
+  title #{__('book-club')}
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href='/book-club') #{__('book-club')}
 block content
   .grid-row
     .column-two-thirds
-      h1.heading-xlarge Book club
-      p.lede.
-        We need to decide on a book to read.
-        There are lots of books in the world, but only some are worth reading.
-        We need to narrow them down.
+      h1.heading-xlarge #{__('book-club')}
+      p.lede #{__('book-club-lede')}
 
       if state.advertise == 'LONGLIST'
-        a(href='/book-club/long-list').button.button-start Contribute to the long list
+        a(href='/book-club/long-list').button.button-start #{'long-list-link'}
         p
 
         p.
@@ -23,13 +20,12 @@ block content
           We can then work on narrowing them down.
       else
         if state.advertise == 'SHORTLIST'
-          p Voting is now open for the shortlist. Please note that votes are not anonymous.
-          p.
-            We are using the "approval" voting system. You can vote for any number of candidates.
-            The candidates with the most "yes" votes wins.
-          a(href='/book-club/short-list').button.button-start Vote on the long list
+          p #{__('shortlist-voting-open')}
+          p #{__('shortlist-voting-anonwarning')}
+          p #{__('shortlist-voting-instructions')}
+          a(href='/book-club/short-list').button.button-start #{__('short-list-link')}
         else if state.advertise == 'READING_LIST'
-          a(href='/book-club/reading-list').button.button-start View the reading list
+          a(href='/book-club/reading-list').button.button-start #{__('reading-list-link')}
 
 
         if state.allowVoting && state.advertise !== 'SHORTLIST'
@@ -46,29 +42,29 @@ block content
     .column-one-third
       p.data
         .bold-xlarge #{longlist}
-        .bold-xsmall longlisted books
+        .bold-xsmall #{__('stat-longlisted-books')}
       p.data
         .bold-xlarge #{longlistProblemCount}
-        .bold-xsmall longlisted books with problems
+        .bold-xsmall #{__('stat-longlist-problems')}
       p.data
         .bold-xlarge #{participants.length}
         .bold-xsmall participants over #{networkCount} IRC networks
       p.data
         .bold-xlarge #{shortlistVotes}
-        .bold-xsmall shortlist votes
+        .bold-xsmall #{__('stat-shortlist-votes')}
       if readingListCount
         p.data
         .bold-xlarge #{readingListCount}
-        .bold-xsmall books on reading list
+        .bold-xsmall #{__('stat-readinglist-count')}
   .grid-row
     .column-two-thirds
       if state.advertise == 'LONGLIST'
-        h2.heading-small Other actions
+        h2.heading-small #{__('other-actions')}
         ul
           if state.advertise !== 'SHORTLIST'
             if !state.allowVoting
               li.font-small
-                a(href='/book-club/short-list') View the short list
+                a(href='/book-club/short-list') #{__('short-list-link-ro')}
           if state.advertise !== 'READING_LIST'
             li.font-small
-              a(href='/book-club/reading-list') View the reading list
+              a(href='/book-club/reading-list') #{__('reading-list-link')}

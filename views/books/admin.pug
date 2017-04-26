@@ -4,56 +4,56 @@ block title
   title GOV.ZK Admin
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href='/book-club') #{__('book-club')}
   li
-    a(href='/book-club/admin') Administration
+    a(href='/book-club/admin') #{__('administration')}
 block css
   link(rel='stylesheet', href='/index.css')
 block content
   pre.code #{JSON.stringify(state)}
   .grid-row
     .column-two-thirds
-      h1.heading-large Administration
+      h1.heading-large #{__('administration')}
 
-      h2.heading-medium Book club state
+      h2.heading-medium #{__('admin-state')}
       form(method='POST')
-        h3.heading-small Permissions
+        h3.heading-small #{__('admin-permissions')}
         fieldset
           .multiple-choice
             input#choice4(type='checkbox', name='allowVoting')
-            label(for='choice4') Allow voting on the shortlist
+            label(for='choice4') #{__('admin-permissions-allowvoting')}
           .multiple-choice
             input#choice5(type='checkbox', name='addToLonglist')
-            label(for='choice5') Allow adding books to the longlist
-        h3.heading-small Advertising
+            label(for='choice5') #{__('admin-permissions-addtolonglist')}
+        h3.heading-small #{__('admin-advertising')}
         fieldset(required)
           .multiple-choice
             input#choice1(type='radio',name='advertise',value='LONGLIST')
-            label(for='choice1') Promote adding to the longlist
+            label(for='choice1') #{__('admin-advertising-longlist')}
               if state == 'LONGLIST'
                 span  (active)
           .multiple-choice
             input#choice2(type='radio',name='advertise',value='SHORTLIST')
-            label(for='choice2') Promote voting on the shortlist
+            label(for='choice2') #{__('admin-advertising-shortlist')}
               if state == 'SHORTLIST'
                 span  (active)
           .multiple-choice
             input#choice3(type='radio',name='advertise',value='READING_LIST')
-            label(for='choice3') Promote viewing the reading list
+            label(for='choice3') #{__('admin-advertising-readinglist')}
               if state == 'READING_LIST'
                 span  (active)
         p.submit
-          input(type='submit',value='Update state',name='changeState').button
+          input(type='submit',value=__('admin-advertising-submit'),name='changeState').button
   .grid-row
     .column-full
-      h2.heading-medium Book states
+      h2.heading-medium #{__('admin-bookstates')}
       table
         thead
           tr
-            th Book
-            th Author
-            th Approvals
-            th Actions
+            th #{__('admin-book')}
+            th #{__('admin-author')}
+            th #{__('admin-approvals')}
+            th #{__('admin-actions')}
         for book in books
           tr
             td
@@ -69,4 +69,4 @@ block content
                   input(type='hidden',name='title',value=book.title)
                   input(type='hidden',name='author',value=book.author)
                   input(type='hidden',name='isbn',value=book.isbn)
-                  input(type='submit',name='readingList',value='Add to reading list').button
+                  input(type='submit',name='readingList',value=__('admin-addtoreadinglist')).button

@@ -6,6 +6,7 @@ var passport = require('passport')
 
 var session = require('express-session')
 var JsonSession = require('express-session-json')(session) // TODO something better
+var i18n = require('i18n')
 
 app.set('view engine', 'pug')
 app.locals.pretty = true
@@ -38,6 +39,17 @@ passport.serializeUser(function (user, done) {
 })
 passport.deserializeUser(function (user, done) {
   done(null, user)
+})
+
+app.use(i18n.init)
+i18n.configure({
+  cookie: 'i18nlang',
+  directory: __dirname + '/i18n',
+  autoReload: true,
+  syncFiles: true,
+  register: global,
+  queryParameter: 'uselang',
+  fallbacks: {'cy': 'en'}
 })
 
 require('./routes')

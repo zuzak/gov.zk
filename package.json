@@ -38,6 +38,7 @@
     "githash": "0.0.4",
     "govuk-elements-sass": "^3.0.2",
     "govuk_frontend_toolkit": "^5.2.0",
+    "i18n": "^0.8.3",
     "irc": "^0.5.2",
     "node-isbn": "^1.2.0",
     "node-sass-middleware": "^0.9.8",

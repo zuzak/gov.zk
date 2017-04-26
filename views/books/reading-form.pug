@@ -1,38 +1,37 @@
 if book.readingList
   details
-    summary.summary.heading-small Update status
+    summary.summary.heading-small #{__('reading-update-header')}
     .panel.panel-border-narrow
        form(method='POST',action='/book-club/reading-list')
          input(type='hidden',name='isbn', value=book.isbn)
-         h3.heading-small Update status
          fieldset(required)
            .multiple-choice
              input#choice1(type='radio',name='status',value='acknowledged',required)
-             label(for='choice1').form-label I'm going to read the book but haven't got a copy yet
+             label(for='choice1').form-label #{__('reading-update-acknowledged')}
            .multiple-choice
              input#choice2(type='radio',name='status',value='ordered')
-             label(for='choice2').form-label I've ordered a copy but it hasn't yet arrived
+             label(for='choice2').form-label #{__('reading-update-ordered')}
            .multiple-choice
              input#choice3(type='radio',name='status',value='arrived')
-             label(for='choice3').form-label I have a copy of the book but I haven't started reading
+             label(for='choice3').form-label #{__('reading-update-arrived')}
            .multiple-choice(data-target='pageCount')
              input#choice4(type='radio',name='status',value='started')
-             label(for='choice4').form-label I have started reading #{title} 
+             label(for='choice4').form-label #{__('reading-update-started')}
            .panel.panel-border-narrow.js-hidden#pageCount
-             label.form-label(for='pages') I'm up to page:
+             label.form-label(for='pages') #{__('reading-update-uptopage')}
               .grid-row
                 .inline
-                 input(style="width:25%",type='number', size='3', name='pages', placeholder='page number').form-control
-                 span &nbsp;or
-                 input(type='text', width="100%" name='freeform', placeholder='freeform text').form-control
+                 input(style="width:25%",type='number', size='3', name='pages', placeholder=__('reading-update-page-number')).form-control
+                 span &nbsp;#{__('or')}
+                 input(type='text', width="100%" name='freeform', placeholder=__('reading-update-freeform')).form-control
            .multiple-choice
              input#choice5(type='radio',name='status',value='finished')
-             label(for='choice5').form-label I finished #{title}
+             label(for='choice5').form-label #{__('reading-update-finished')}
            .multiple-choice
              input#choice6(type='radio',name='status',value='stalled')
-             label(for='choice6').form-label I gave up reading #{title}
+             label(for='choice6').form-label #{__('reading-update-stalled')}
            .multiple-choice
              input#choice7(type='radio',name='status',value='reject')
-             label(for='choice7').form-label I'm not going to read #{title}
+             label(for='choice7').form-label #{__('reading-update-reject')}
          p
-           input(type='submit',value='Update status').button
+           input(type='submit',value=__('reading-update-submit')).button

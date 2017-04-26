@@ -7,6 +7,7 @@
 
 require('./auth.js')
 require('./login.js')
+require('./i18n.js')
 
 require('./about.js')
 require('./books.js')

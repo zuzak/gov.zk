@@ -1,41 +1,33 @@
 extends skeleton
 block title
-  title Log in to GOV.ZK
+  title #{__('login-header')}
 block login
   //- hide login button
 block js
   script(src="login.js")
 block breadcrumb
   li
-    a(href='/log-in') Account
+    a(href='/log-in') #{__('log-in')}
 block content
   .grid-row
     .column-two-thirds
-      h1.heading-large Log in / create account
-      p.
-        Your account is associated with your IRC nickname.
-      p.
-        Please enter the following command into IRC:
+      h1.heading-large #{__('login-header')}
+      p #{__('login-lede')}
+      p #{__('login-instruction')}
       for nick in nicks
         p.font-medium.panel#js-prompt
-          span /msg #{nick} VERIFY
+          span /msg #{nick} #{__('irc-verify')}
           span &nbsp;
           span#js-slug #{key}
       div#js-loginPrompt
-        p.
-          Once the command has been executed, you can…
+        #{__('login-button-preamble')}
         form(method='POST')#js-form
           input(type='hidden', value=key, name='key')
           input(type='hidden', value=req.query.returnTo, name='returnTo')
-          input.button#js-proceed(type='submit', value='Bake a cookie')
+          input.button#js-proceed(type='submit', value=__('login-button'))
       hr
       details
         summary
-          span.summary What's IRC?
+          span.summary #{__('login-whatisirc')}
         .panel.panel-border-narrow
-          p.
-              Internet Relay Chat (IRC) is a text-only way of communicating
-              with people over the Internet: think of it as a predecessor to
-              Slack (although it is still widely used).
-          p.
-              One connects to IRC networks and joins channels (chat rooms).
+          p #{__('login-whatisirc-answer')}

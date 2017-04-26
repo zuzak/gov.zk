@@ -3,21 +3,21 @@ block title
   title About GOV.ZK
 block breadcrumb
   li
-    a(href='/about-this-website') About
+    a(href='/about-this-website') #{__('about-header')}
 block content
-  h1.heading-large About this website
+  h1.heading-large #{__('about-header')}
   p.lede
     span The code for this website is available on&nbsp;
     a(href="//github.com/zuzak/gov.zk") GitHub
     span .
   .grid-row
     .column-two-thirds
-      h2.heading-medium Credits
+      h2.heading-medium #{__('about-credits')}
       details
         summary
-          span.summary Codebase licence
+          span.summary #{__('about-codebase-licence')}
         .panel.panel-border-narrow
-          h3.heading-small The MIT Licence
+          h3.heading-small #{__('about-mit-licence')}
           p Copyright &copy; 2016 Douglas Gardner
           p.
             Permission is hereby granted, free of charge to any person
@@ -44,32 +44,25 @@ block content
             or in connection with the Software or the use or
             other dealings in the Software.
       if contributors.length > 0
-        h3.heading-small Contributors
-        p The following people committed the code that runs this site:
+        h3.heading-small #{__('about-contributors')}
+        p #{__('about-contributors-lede')}
         ul.list.list-bullet
           for contributor in contributors
             li #{contributor}
-        p.
-          You can add your own name to this list!
-          If you find something you'd like to improve, fork this repository
-          and submit a pull request. If you need help, ask someone on IRC.
-      h2.heading-medium Third-party credits 
-      p.
-        The website layout is based upon GOV.UK, which is created by
-        the Government Digital Service, a department of the Cabinet
-        Office. The assets are licensed under the MIT Licence, and are
-        thus freely available.
+        p #{__('about-contributors-calltoaction')}
+      h2.heading-medium #{__('about-credits-thirdparty')}
+      p #{__('about-credits-govuk')}
 
       details
         summary
-          span.summary #{Object.keys(dependencies).length} dependencies (#{coreDeps.length} direct)
+          span.summary #{__('about-dep-dropdown', {'count': Object.keys(dependencies).length, 'direct': coreDeps.length})}
         table.table-font-xsmall
           thead
             tr
-              th Name
-              th Version
-              th Licence
-              th Description
+              th #{__('about-dep-name')}
+              th #{__('about-dep-version')}
+              th #{__('about-dep-licence')}
+              th #{__('about-dep-desc')}
           tbody
             for dependency in dependencies
               if typeof dependency !== 'undefined'
@@ -93,10 +86,10 @@ block content
                     else
                       td &mdash;
                     td= dependency.description
-      h3.heading-medium Privacy information
-      p This website uses Google Analytics.
-      h3.heading-medium Git information
-      p This website is currently running on <strong>#{state.branch}</strong>.
+      h3.heading-medium #{__('about-privacy-heading')}
+      p #{__('about-privacy-ganalytics')}
+      h3.heading-medium #{__('about-git-heading')}
+      p #{__('about-git-branch', {branch: state.branch})}
       p
         span The current Git commit hash is&nbsp;
         if state.ahead === 0
@@ -108,16 +101,16 @@ block content
           .column.column-one-third
               p.data
                 .bold-xlarge #{state.dirty}
-                .bold-xsmall changed files
+                .bold-xsmall #{__('about-stat-dirty')}
           .column.column-one-third
               p.data
                 .bold-xlarge #{state.untracked}
-                .bold-xsmall untracked files
+                .bold-xsmall #{__('about-stat-untracked')}
           .column.column-one-third
               p.data
                 .bold-xlarge #{state.ahead}
-                .bold-xsmall unpushed commits
+                .bold-xsmall #{__('about-stat-ahead')}
       else
-        p There are no outstanding code changes to push upstream.
+        p #{__('about-nochanges')}
     .column-one-third
-      img(src='/arms.png',alt="A heraldric coat of arms, containing two stars, a fig roll, and the flag of the United Kingdom")
+      img(src='/arms.png')

@@ -2,7 +2,7 @@ doctype html
 html
   head
     block title
-      title GOV.ZK
+      title #{__('gov-zk')}
     block css
       link(rel='stylesheet', href='/index.css')
     block js
@@ -36,16 +36,17 @@ html
         .grid-row
           .column-two-thirds.font-large
             block header
-              a.logo(href='/') &#9819; gov.zk
+              a.logo(href='/') &#9819; #{__('gov-zk')}
           .columns-one-third
             block login
-              if req && req.user
-                //-
-                  div.login
-                   span Hello, #{req.user}&nbsp;
-                   a(href='/log-out') (Log out)
-              else
-                a.button.login(href='/log-in') Log in
+              if req
+                if req.user
+                  //-
+                    div.login
+                     span Hello, #{req.user}&nbsp;
+                     a(href='/log-out') #{__(log-out')}
+                else
+                  a.button.login(href='/log-in') #{__('log-in')}
     #content
       block banner
         .accent-bar
@@ -54,15 +55,20 @@ html
         .breadcrumbs
           ol
             li
-              a(href="/") Home
+              a(href="/") #{__('home')}
             block breadcrumb
       block content
     footer
       .footer
         block footer
           .grid-row
-            p.column-two-thirds
+            div.column-two-thirds.languages
+              h2 #{__('languages')}
+              ul
+                each locale in __h('autonym')
+                  each autonym, code in locale
+                    if code !== 'qqx'
+                      li
+                        a(href='/change-lang/'+code+'?returnTo='+req.originalUrl) #{autonym}
             p.column-one-third.center
-              a(href='/about-this-website')
-                block about
-                  span About this website
+              a(href='/about-this-website') #{__('about-link')}

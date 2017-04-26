@@ -66,3 +66,8 @@ footer a:hover {
 .center { text-align: center; }
 .unanimous::before { content: "★ "}
 .almost-unanimous::before { content: "☆ "}
+.languages {
+  list-style-type: none;
+  li, h2, ul { display: inline-block; }
+  h2 { font-weight: bold; }
+}
