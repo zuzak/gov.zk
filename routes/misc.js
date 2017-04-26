@@ -2,9 +2,9 @@ var app = require('..')
 var exec = require('child_process').exec
 var fs = require('fs')
 
-function rollFortune() {
+function rollFortune () {
   exec('/usr/games/fortune -s -n60', function (err, stdout, stderr) {
-    if (err) throw err;
+    if (err) throw err
     fs.writeFileSync('data/fortune.txt', stdout)
   })
 }
