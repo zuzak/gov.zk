@@ -2,33 +2,33 @@
 extends ../skeleton
 block breadcrumb
   li
-    a(href='/') Home
+    a(href='/') #{__('home')}
   li
-    a(href='/book-club') Book club
+    a(href='/book-club') #{__('book-club')}
   li
     a(href='/book-club/book/'+book.isbn) #{book.title}
-  li History
+  li #{__('history')}
   li #{user}
 block title
-  title #{book.title} history for #{user}
+  title #{__('history')}
 block css
   link(rel='stylesheet', href='/shortlist.css')
 block content
   .grid-row
-    span.heading-large History for #{user}
-    p.lede for #{book.title}
+    span.heading-large #{__('history-heading', {'title': book.title, 'author': book.author, 'user': user})}
+    p.lede #{__('history-subtitle', { 'title': book.title, 'author': book.author})}
 
     table
       thead
         tr
-          th Time
-          th Status
-          th Pages
-          th Freeform
+          th #{__('history-time')}
+          th #{__('history-status')}
+          th #{__('history-pages')}
+          th #{__('history-freeform')}
       for status in book.status[user]
         tr
           td #{new Date(status.ts).toUTCString()}
-          td(class='reading-'+status.status) #{status.status}
+          td(class='reading-'+status.status) #{__('reading-'+status.status)}
           td #{status.pages}
           if status.freeform
             td #{status.freeform}

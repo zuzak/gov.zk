@@ -23,4 +23,7 @@ h1 { margin-bottom: 0.2em !important;}
 $placeholder-height: 6em;
 .placeholder{ padding-top: $placeholder-height + 6em; padding-bottom: $placeholder-height; color: $border-colour; text-align: center}
 .fortune { white-space: pre }
+.fortune-outer {text-align: center; display:inline-block;}
+h1{text-align:left;}
+.fortune{ display: inline-block; text-align: left; }
 .phase-banner-alpha, .phase-banner-beta { display: none; }

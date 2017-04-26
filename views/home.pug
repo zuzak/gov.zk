@@ -7,8 +7,9 @@ block content
   .hero
     .grid-row
       .column-two-thirds
-        h1.heading-xlarge #{__('welcome')}
-        span.font-small.fortune #{String(fortune).replace(/--/g,'—')}
+        .fortune-outer
+          h1.heading-xlarge #{__('welcome')}
+          p.font-small.fortune #{String(fortune).replace(/--/g,'—')}
         //
           span.font-small for even made up countries need intranets
       .column-one-third.black-nav
