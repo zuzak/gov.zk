@@ -1,11 +1,10 @@
 //- Used for testing: [squeamish ossifrage]
 extends skeleton
 block title
-  title 404: Not Found
+  title #{__('error-404-heading')}
 block content
   .grid-row.error
     .column-two-thirds
-      h1.heading-xlarge 404: Not Found
-      p We weren't able to find what you were looking for.
-      p If you typed in a URL, check it was correct.
-      a.link-back(href='/') Return to home page
+      h1.heading-xlarge #{__('error-404-heading')}
+      p #{__('error-404-prose')}
+      a.link-back(href='/') #{__('error-404-back')}

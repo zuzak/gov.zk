@@ -175,7 +175,11 @@
 	"shortlist-person-complete": "shortlist-person-complete",
 	"shortlist-person-approval-count": "shortlist-person-approval-count",
 	"shortlist-person-approval-percent-cell": "shortlist-person-approval-percent-cell",
-	"shortlist-progress": "shortlist-progress",
+	"shortlist-progress": "{{sum}} o {{max}} pleidleisiau a fwriwyd",
 	"shortlist-stat-unanimous": "shortlist-stat-unanimous",
-	"shortlist-polls-completebutopen": "shortlist-polls-completebutopen"
+	"shortlist-polls-completebutopen": "shortlist-polls-completebutopen",
+	"error-500-heading": "error-500-heading",
+	"error-500-prose": "error-500-prose",
+	"error-500-stack-dropdown": "error-500-stack-dropdown",
+	"error-500-back": "error-500-back"
 }

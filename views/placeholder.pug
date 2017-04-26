@@ -1,11 +1,10 @@
 //- Used for testing: [squeamish ossifrage]
 extends skeleton
 block title
-  title GOV.ZK Placeholder
+  title #{__('error-501-heading')}
 block content
   .grid-row.error
     .column-two-thirds
-      h1.heading-xlarge Placeholder
-      p The functionality you requested is not yet available.
-      p Please check back later.
-      a.link-back(href='/') Return to home page
+      h1.heading-xlarge #{__('error-501-heading')}
+      p #{__('error-501-prose')}
+      a.link-back(href='/') #{__('error-501-back')}
