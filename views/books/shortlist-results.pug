@@ -1,46 +1,46 @@
 //- vim:ft=jade
 extends ../skeleton
 block title
-  title Shortlist Results
+  title #{__('shortlist-results')}
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href='/book-club') #{__('book-club')}
   li
-    a(href='/book-club/short-list') Short list
+    a(href='/book-club/short-list') #{__('shortlist-results')}
 block content
   - electorCount = Object.keys(electorate).length
   - max = books.length * electorCount
   - unanimousBooks = 0
   .grid-row
     .column-full
-      h1.heading-xlarge Short list results
+      h1.heading-xlarge #{__('shortlist-results')}
   .grid-row
     .column-two-thirds
       table
         thead
           tr
-            th(colspan="3") Flags
-            th Candidate
-            th.numeric Approvals
+            th(colspan="3") #{__('shortlist-flags')}
+            th #{__('shortlist-candidate')}
+            th.numeric #{__('shortlist-approvals')}
             th.numeric
-              abbr(title="Satisifaction Approval Voting") SAV
+              abbr(title=__('shortlist-sav')) #{__('shortlist-sav-abbr')}
         if results.length == 0
           tr
-            td(colspan="7",style="text-align:center") Awaiting first ballot…
+            td(colspan="7",style="text-align:center") #{__('shortlist-waiting')}
         for result in results
           tr
             if result.readingList
-              td(colspan="3").center.green Selected #{result.readingList}
+              td(colspan="3").center.green #{__('shortlist-selected', {'note': result.readingList})}
             else
               td
                 if result.longlistedBy === req.user
-                  abbr.green(title="You nominated this")  &#9998;
+                  abbr.green(title=__('shortlist-flag-longlisted'))  &#9998;
               td
                 if result.difficult
-                  abbr.red(title="Marked difficult") &#9936;
+                  abbr.red(title=__('shortlist-flag-difficult')) &#9936;
               td
                 if result.alreadyRead && result.alreadyRead.length > 0
-                  abbr.read(title="Someone has already read this") 📖 
+                  abbr.read(title=__('shortlist-flag-alreadyread')) 📖 
             td
               strong
                 a(href='/book-club/book/' + result.isbn) #{result.title}
@@ -53,10 +53,10 @@ block content
             else
               if result.approve.length === electorCount
                 - unanimousBooks++
-                td.numeric(title="Unanimous approval by entire electorate").unanimous #{result.approve.length}
+                td.numeric(title=__('shortlist-approvals-allapproved')).unanimous #{result.approve.length}
               else
                 if result.approve.length > 0 && result.disapprove.length === 0
-                  td.numeric(title="No dissents").almost-unanimous #{result.approve.length}
+                  td.numeric(title=__('shortlist-approvals-nodownvotes')).almost-unanimous #{result.approve.length}
                 else
                   td.numeric(title=result.approve.join(', ')) #{result.approve.length}
               - sav = (result.scaledSav/100*Object.keys(electorate).length).toFixed(2)
@@ -65,31 +65,32 @@ block content
       table
         thead
           tr
-            th Elector
-            th.numeric Votes
+            th #{__('shortlist-person-elector')}
+            th.numeric #{__('shortlist-person-votes')}
             th.numeric
-              abbr(title="Approvals") Appr.
+              abbr(title=__('shortlist-person-approval-percent')) #{__('shortlist-person-approval-percent-abbr')}
         - sum = 0
         for elector in Object.keys(electorate)
           - sum += electorate[elector].total
           tr
             td #{elector}
             if electorate[elector].total == 0
-              td.numeric Nil
+              td.numeric #{__('shortlist-person-nil')}
             else
               if electorate[elector].total == books.length
-                td.numeric Complete
+                td.numeric #{__('shortlist-person-complete')}
               else if electorate[elector].total > books.length
-                td.numeric.red #{electorate[elector].total} of #{books.length}
+                td.numeric.red #{__('shortlist-person-progress-overrun', {'count': electorate[elector].total, 'total': books.length})}
               else
-                td.numeric #{electorate[elector].total} of #{books.length}
-            td.numeric(title=electorate[elector].approve+' approvals') #{Math.round((electorate[elector].approve/electorate[elector].total)*100)}%
+                td.numeric #{__('shortlist-person-progress', {'count': electorate[elector].total, 'total': books.length})}
+            td.numeric(title=__('shortlist-person-approval-count', {'count':electorate[elector].approve})).
+              #{__('shortlist-person-approval-percent-cell', {'percent': Math.round((electorate[elector].approve/electorate[elector].total)*100)})}
 
-      p #{sum} of #{max} votes returned.
+      p #{__('shortlist-progress', {sum, max})}
       p
         .data
           span.data-item.bold-xlarge #{unanimousBooks}
-          span.data-item.bold-xsmall unanimous books
+          span.data-item.bold-xsmall #{__('shortlist-stat-unanimous')}
       p.
         The shortlist is created using the <a href="//en.wikipedia.org/wiki/Approval_voting">Approval Voting</a>
         electoral system.
@@ -117,14 +118,10 @@ block content
       hr
       if state.allowVoting
         if sum !== max
-            p.
-              Votes shown are provisional, as not everybody who has submitted a book to the longlist, or
-              begun voting on the shortlist, has completed their ballots.
+          p #{__('shortlist-polls-incomplete')}
         else
-          p.
-            Everybody that has submitted a book to the longlist, or begun voting on the shortlist, has
-            completed their ballots.
+          p #{__('shortlist-polls-completebutopen')}
       else
-        p Polls are closed.
+        p #{__('shortlist-polls-closed')}
   .grid-row
      .column-full
