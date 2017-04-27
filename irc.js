@@ -54,6 +54,6 @@ for (var j = 0; j < bots.length; j++) {
 
       str = cmds['VERIFY'](nick, msg, lang)
     }
-    this.say(nick, str)
+    this.notice(nick, str)
   })
 }
