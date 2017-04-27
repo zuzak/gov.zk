@@ -46,7 +46,7 @@ i18n.configure({
   autoReload: true,
   cookie: 'i18nlang',
   defaultLocale: 'en',
-  directory: __dirname + '/i18n',
+  directory: path.join(__dirname, '/i18n'),
   fallbacks: {'cy': 'en'},
   queryParameter: 'uselang',
   register: global,
@@ -67,7 +67,7 @@ global.__ = function (phrase, args) {
   var translation = t(phrase, args)
 
   if (translation === phrase && !translation.startsWith('/')) {
-    translation = t({ phrase, locale: 'en'}, args)
+    translation = t({phrase, locale: 'en'}, args)
     if (translation === phrase) {
       if (args) {
         return '⟪' + phrase + '|' + Object.keys(args).join('·') + '⟫'

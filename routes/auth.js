@@ -8,7 +8,7 @@ app.all('*', function (req, res, next) {
   var validStarts = [].concat(__l('/log-in')).concat(__('/change-lang')).concat(__('/about-this-website'))
   for (var i = 0; i < validStarts.length; i++) {
     if (req.params[0].startsWith(validStarts[i])) {
-      next();
+      next()
       return
     }
   }

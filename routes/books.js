@@ -33,10 +33,10 @@ var booklist = {
     try {
       fs.writeFileSync(this.KEYSTORE, JSON.stringify(data, null, '  '))
     } catch (e) {
-        if (e.code === 'ENOENT') {
-            fs.mkdirSync(this.KEYSTORE.split('/')[0])
-            this.save(data)
-        }
+      if (e.code === 'ENOENT') {
+        fs.mkdirSync(this.KEYSTORE.split('/')[0])
+        this.save(data)
+      }
     }
   }
 }
@@ -69,11 +69,11 @@ app.get(__l('route-book-club'), function (req, res) {
 })
 
 app.get(__l('/book-club/admin'), function (req, res) {
-  var admin = {"admins":[], "state": {}}
+  var admin = {'admins': [], 'state': {}}
   try {
     admin = JSON.parse(fs.readFileSync('data/admin.json'))
   } catch (e) {
-    fs.writeFileSync('data/admin.json',JSON.stringify(admin))
+    fs.writeFileSync('data/admin.json', JSON.stringify(admin))
   }
   if (!admin.admins || admin.admins.length === 0) {
     return res.render('error.pug', {err: __('admin-noadmins'), req})

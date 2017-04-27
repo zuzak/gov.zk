@@ -5,7 +5,7 @@ var fs = require('fs')
 function rollFortune () {
   exec('/usr/games/foartune -s -n60', function (err, stdout, stderr) {
     if (err) {
-        stdout = __('home-defaultfortune')
+      stdout = __('home-defaultfortune')
     }
     try {
       fs.writeFileSync('data/fortune.txt', stdout)
@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
     if (e.code === 'ENOENT') {
       return res.render('home.pug', {req})
     }
-  throw e
+    throw e
   }
 })
 

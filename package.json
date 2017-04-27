@@ -56,5 +56,8 @@
   "pre-commit": [
     "lintpretty",
     "mocha"
-  ]
+  ],
+  "standard": {
+    "globals": [ "__", "__l", "__h", "getCatalog", "getLocale", "t" ]
+  }
 }
