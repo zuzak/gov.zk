@@ -15,10 +15,15 @@ block content
       p #{__('login-lede')}
       p #{__('login-instruction')}
       for nick in nicks
-        p.font-medium.panel#js-prompt
-          span /msg #{nick} #{__('irc-verify')}
-          span &nbsp;
-          span#js-slug #{key}
+        if nick
+          p.font-medium.panel#js-prompt
+            span /msg #{nick} #{__('irc-verify')}
+            span &nbsp;
+            span#js-slug #{key}
+        else
+          p.font-medium.panel.error
+            span.red #{__('irc-errorconnecting')}
+      p
       div#js-loginPrompt
         #{__('login-button-preamble')}
         form(method='POST')#js-form

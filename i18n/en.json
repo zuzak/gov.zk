@@ -273,5 +273,6 @@
   "error-unknown": "An unknown error occurred.",
   "fallback": "«{{content}}»",
   "zuzakistan": "Zuzakistan",
-  "zuzakistan-full": "The Federated Microstates of Zuzakistan"
+  "zuzakistan-full": "The Federated Microstates of Zuzakistan",
+  "irc-errorconnecting": "Error connecting to IRC network"
 }
