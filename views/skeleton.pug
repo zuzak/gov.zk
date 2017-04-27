@@ -67,9 +67,9 @@ html
               h2 #{__('languages')}
               ul
                 each locale in __h('autonym')
-                  each autonym, code in locale
-                    if code !== 'qqx'
+                  each autonym, skeleton_code in locale
+                    if skeleton_code !== 'qqx'
                       li
-                        a(href='/change-lang/'+code+'?returnTo='+req.originalUrl) #{autonym}
+                        a(href='/change-lang/'+skeleton_code+'?returnTo='+req.originalUrl) #{autonym}
             p.column-one-third.center
               a(href=__('/about-this-website')) #{__('about-link')}
