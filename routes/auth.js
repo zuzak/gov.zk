@@ -5,18 +5,16 @@ app.all('*', function (req, res, next) {
     // cannot easily test things behind a login redir, so disable for tests
     return next()
   }
-  if (
-      req.params['0'] === '/' ||
-      req.params['0'].startsWith('/log-in') ||
-      req.params['0'].startsWith('/change-lang') ||
-      req.params['0'].startsWith('/about-this-website')
-      ) {
-    next()
-  } else {
-    if (req.isAuthenticated()) {
-      return next()
-    } else {
-      res.redirect('/log-in?returnTo=' + req.originalUrl)
+  var validStarts = [].concat(__l('/log-in')).concat(__('/change-lang')).concat(__('/about-this-website'))
+  for (var i = 0; i < validStarts.length; i++) {
+    if (req.params[0].startsWith(validStarts[i])) {
+      next();
+      return
     }
+  }
+  if (req.isAuthenticated()) {
+    return next()
+  } else {
+    res.redirect(__('/log-in') + '?returnTo=' + req.originalUrl)
   }
 })

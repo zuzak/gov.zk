@@ -4,7 +4,7 @@ block breadcrumb
   li
     a(href='/') #{__('home')}
   li
-    a(href='/book-club') #{__('book-club')}
+    a(href=__('/book-club')) #{__('book-club')}
   li
     a(href='/book-club/book/'+book.isbn) #{book.title}
   li #{__('history')}

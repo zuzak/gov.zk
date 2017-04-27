@@ -4,9 +4,9 @@ block title
   title #{__('longlist-add-title')}
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href=__('/book-club')) Book club
   li
-    a(href='/book-club/long-list') #{__('longlist')}
+    a(href=__('/book-club/long-list')) #{__('longlist')}
   li #{__('longlist-add-title')}
 block content
   .grid-row
@@ -18,7 +18,7 @@ block content
           label.form-label(for='book-title') #{__('longlist-add-form-booktitle')}
           input.form-control#book-title(type='text',name='title',required)
         .form-group
-          label.form-label(for='book-author') #{__('longlist-add-form-title')}
+          label.form-label(for='book-author') #{__('longlist-add-form-author')}
           input.form-control#book-author(type='text',name='author',required)
         .form-group
           label.form-label(for='book-isbn')
@@ -31,5 +31,5 @@ block content
 
         .form-group
           input.button(type='submit',value=__('longlist-add-form-submit'))
-  a.link-back(href='/book-club/long-list') #{__('longlist-return')}
+  a.link-back(href=__('/book-club/long-list')) #{__('longlist-return')}
 

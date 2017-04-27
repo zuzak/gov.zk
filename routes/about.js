@@ -6,7 +6,7 @@ var gstate = require('git-state')
 var gitHash = require('githash')
 var packagejson = require('../package.json')
 
-app.get('/about-this-website', function (req, res) {
+app.get(__l('/about-this-website'), function (req, res) {
   var coreDeps = Object.keys(packagejson.dependencies)
   exec('git log --format="%cN" | sort -u', function (err, stdout, stderr) {
     if (err) throw err
@@ -20,9 +20,4 @@ app.get('/about-this-website', function (req, res) {
       })
     })
   })
-})
-
-app.get('/500', function (req, res) {
-  var err = new Error('Just a drill :)')
-  throw err
 })

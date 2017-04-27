@@ -4,9 +4,9 @@ block title
   title #{__('reading-list')}
 block breadcrumb
   li
-    a(href='/book-club') #{__('book-club')}
+    a(href=__('/book-club')) #{__('book-club')}
   li
-    a(href='/book-club/reading-list') #{__('reading-list')}
+    a(href=__('/book-club/reading-list')) #{__('reading-list')}
 block css
     link(rel='stylesheet', href='/readinglist.css')
 block content
@@ -29,4 +29,4 @@ block content
       else
         p #{__('reading-list-no-books')}
       p
-        a.link-back(href='/book-club') #{__('back')}
+        a.link-back(href=__('/book-club')) #{__('back')}

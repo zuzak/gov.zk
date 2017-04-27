@@ -45,9 +45,9 @@ html
                   //-
                     div.login
                      span Hello, #{req.user}&nbsp;
-                     a(href='/log-out') #{__(log-out')}
+                     a(href=__('/log-out')) #{__(log-out')}
                 else
-                  a.button.login(href='/log-in') #{__('log-in')}
+                  a.button.login(href=__('/log-in')) #{__('log-in')}
     #content
       block banner
         .accent-bar
@@ -72,4 +72,4 @@ html
                       li
                         a(href='/change-lang/'+code+'?returnTo='+req.originalUrl) #{autonym}
             p.column-one-third.center
-              a(href='/about-this-website') #{__('about-link')}
+              a(href=__('/about-this-website')) #{__('about-link')}

@@ -17,11 +17,11 @@ var books = {
   }
 }
 
-app.get('/book-club/reading-list', function (req, res) {
+app.get(__l('/book-club/reading-list'), function (req, res) {
   res.render('books/reading-index.pug', { req, books: books.load() })
 })
 
-app.post('/book-club/reading-list', function (req, res) {
+app.post(__l('/book-club/reading-list'), function (req, res) {
   var b = books.load()
   console.log(req.body)
   for (var i = 0; i < b.length; i++) {
@@ -37,7 +37,7 @@ app.post('/book-club/reading-list', function (req, res) {
     })
 
     books.save(b)
-    return res.redirect('/book-club/reading-list')
+    return res.redirect(__('/book-club/reading-list'))
   }
   throw new Error('book not found')
 })

@@ -1,19 +1,19 @@
 //- Used for testing: [squeamish ossifrage]
 extends ../skeleton
 block title
-  title Add to Longlist
+  title #{book.title}
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href=__('/book-club')) #{__('book-club')}
 block content
   .grid-row
     .column-two-thirds
-      h1.heading-xlarge Edit note
-      p.lede Editing #{book.title} by #{book.author}
+      h1.heading-xlarge #{__('book-edit-note')}
+      p.lede #{__('book-edit-note-heading', {title:book.title, author:book.author})}
       form(method='POST')
-        label.form-label(for='desc') Note contents
+        label.form-label(for='desc') #{__('book-edit-note-field')}
         textarea#desc(name='desc',cols='24',rows='5').form-control #{book.desc}
         p.form-group
-          input.button(type='submit',value='Edit description')
-  a.link-back(href='/book-club/book/'+book.isbn) Return to #{book.title}
+          input.button(type='submit',value=__('book-edit-note-submit'))
+  a.link-back(href='/book-club/book/'+book.isbn) #{__('book-edit-note-back', {title:book.title})}
 

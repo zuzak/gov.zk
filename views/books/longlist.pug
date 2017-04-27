@@ -2,9 +2,9 @@
 extends ../skeleton
 block breadcrumb
   li
-    a(href='/book-club') #{__('book-club')}
+    a(href=__('/book-club')) #{__('book-club')}
   li
-    a(href='/book-club/long-list') #{__('long-list')}
+    a(href=__('/book-club/long-list')) #{__('long-list')}
 block content
   h1.heading-xlarge Long list
   .grid-row
@@ -35,7 +35,7 @@ block content
         .column-two-thirds
           p
           p
-            a(href='long-list/add-a-book').button #{__('longlist-add-book')}
+            a(href=__('/book-club/long-list/add-a-book')).button #{__('longlist-add-book')}
     else
       .grid-row
         .column-two-thirds
@@ -112,4 +112,4 @@ block content
         .column-two-thirds
           p
           p
-            a(href='long-list/add-a-book').button #{__('longlist-add-book')}
+            a(href=__('/book-club/long-list/add-a-book')).button #{__('longlist-add-book')}

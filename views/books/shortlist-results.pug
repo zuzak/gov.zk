@@ -4,9 +4,9 @@ block title
   title #{__('shortlist-results')}
 block breadcrumb
   li
-    a(href='/book-club') #{__('book-club')}
+    a(href=__('/book-club')) #{__('book-club')}
   li
-    a(href='/book-club/short-list') #{__('shortlist-results')}
+    a(href=__('/book-club/short-list')) #{__('shortlist-results')}
 block content
   - electorCount = Object.keys(electorate).length
   - max = books.length * electorCount
@@ -87,34 +87,21 @@ block content
               #{__('shortlist-person-approval-percent-cell', {'percent': Math.round((electorate[elector].approve/electorate[elector].total)*100)})}
 
       p #{__('shortlist-progress', {sum, max})}
-      p
+      if sum < max
+        hr
+        p.notice
+          i.icon.icon-important
+          strong #{__('shortlist-results-warning')}
+        hr
+      else
+        p
         .data
           span.data-item.bold-xlarge #{unanimousBooks}
           span.data-item.bold-xsmall #{__('shortlist-stat-unanimous')}
-      p.
-        The shortlist is created using the <a href="//en.wikipedia.org/wiki/Approval_voting">Approval Voting</a>
-        electoral system.
-
-        It is a simple way to vote on a large number of candidates without having to rank them
-        individually.
-
-        The winner is the candidate with the most number of approvals (yes votes).
+      p #{__('shortlist-results-spiel-approval')}
       hr
-      p.
-        For comparison, the results of <a href="//en.wikipedia.org/wiki/Satisfaction_approval_voting">satisfaction approval voting</a>
-        are also provided.
-
-        This is similar to approval voting, except that each elector has one vote shared between all
-        their approvals, so each approval from a voter that votes five times is worth one fifth; and
-        a voter who votes ten times has their approval worth one tenth.
-      p.
-        This has the effect of looking at how "satisfied" a voter is with an outcome: it tends to
-        return more diverse candidates than vanilla approval voting (which is usually only used for
-        single-winner elections).
-
-      p.
-        SAV ususally results in an unwieldy irrational number, so the results displayed have been scaled
-        to be a value between 0 and #{Object.keys(electorate).length}.
+      p #{__('shortlist-results-spiel-sav')}
+      p #{__('shortlist-results-spiel-sav-weighting', {min: 0, max: Object.keys(electorate).length})}
       hr
       if state.allowVoting
         if sum !== max

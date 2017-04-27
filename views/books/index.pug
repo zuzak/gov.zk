@@ -4,7 +4,7 @@ block title
   title #{__('book-club')}
 block breadcrumb
   li
-    a(href='/book-club') #{__('book-club')}
+    a(href=__('/book-club')) #{__('book-club')}
 block content
   .grid-row
     .column-two-thirds
@@ -12,7 +12,7 @@ block content
       p.lede #{__('book-club-lede')}
 
       if state.advertise == 'LONGLIST'
-        a(href='/book-club/long-list').button.button-start #{'long-list-link'}
+        a(href=__('/book-club/long-list')).button.button-start #{'long-list-link'}
         p
 
         p.
@@ -23,9 +23,9 @@ block content
           p #{__('shortlist-voting-open')}
           p #{__('shortlist-voting-anonwarning')}
           p #{__('shortlist-voting-instructions')}
-          a(href='/book-club/short-list').button.button-start #{__('short-list-link')}
+          a(href=__('/book-club/short-list')).button.button-start #{__('short-list-link')}
         else if state.advertise == 'READING_LIST'
-          a(href='/book-club/reading-list').button.button-start #{__('reading-list-link')}
+          a(href=__('/book-club/reading-list')).button.button-start #{__('reading-list-link')}
 
 
         if state.allowVoting && state.advertise !== 'SHORTLIST'
@@ -64,7 +64,7 @@ block content
           if state.advertise !== 'SHORTLIST'
             if !state.allowVoting
               li.font-small
-                a(href='/book-club/short-list') #{__('short-list-link-ro')}
+                a(href=__('/book-club/short-list')) #{__('short-list-link-ro')}
           if state.advertise !== 'READING_LIST'
             li.font-small
-              a(href='/book-club/reading-list') #{__('reading-list-link')}
+              a(href=__('/book-club/reading-list')) #{__('reading-list-link')}

@@ -4,9 +4,9 @@ block title
   title Shortlist Ballot
 block breadcrumb
   li
-    a(href='/book-club') Book club
+    a(href=__('/book-club')) #{__('book-club')}
   li
-    a(href='/book-club/short-list') Short list
+    a(href=__('/book-club/short-list')) #{__('short-list')}
 block css
   link(rel='stylesheet', href='/shortlist.css')
 block content
@@ -20,8 +20,8 @@ block content
         - author = book.upstream.authors.join(' & ')
       .grid-row
         .column-two-thirds
-            span.font-medium.progress Ballot #{total - books.length + 1} of #{total}
-            h1.heading-xlarge Shortlisting
+          span.font-medium.progress #{__('shortlist-ballot-progress', {'count': total - books.length + 1, total: total})}
+            h1.heading-xlarge #{__('shortlist-ballot-heading')}
       .grid-row
         .column-full
           h2.heading-large.title #{title}
@@ -37,13 +37,13 @@ block content
                     p
                       blockquote #{book.upstream.description}
                   if book.difficult
-                    p.panel This book has been marked as long or difficult.
+                    p.panel #{__('book-difficult')}
               .column-one-third.sidebar
                 if book.upstream.imageLinks
                   img(src=book.upstream.imageLinks.thumbnail)
                 if book.upstream.previewLink
                   p
-                    a(href=book.upstream.previewLink) Preview online
+                    a(href=book.upstream.previewLink) #{__('book-preview')}
             else
               .column-two-thirds
                 p.lede
@@ -51,29 +51,29 @@ block content
                   span.author #{author}
                 p.notice
                   i.icon.icon-important
-                  strong We have no information about this book.
+                    strong #{__('book-noinfo')}
 
           form(method='POST')
             input(type='hidden',name='author',value=book.author)
             input(type='hidden',name='title',value=book.title)
-            h3.heading-small Do you want to read this book?
+            h3.heading-small #{__('shortlist-ballot-wanttoread')}
             fieldset(required)
               .multiple-choice
                 input#choice1(type='radio',name='verdict',value='yes')
-                label(for='choice1') Yes, I want to read #{title} as part of the book club
+                label(for='choice1') #{__('shortlist-ballot-wanttoread-yes', {title})}
               .multiple-choice
                 input#choice2(type='radio',name='verdict',value='no')
-                label(for='choice2') No, I don't want to read this book
-            h3.heading-small Have you read this book before?
+                label(for='choice2') #{__('shortlist-ballot-wanttoread-no', {title})}
+            h3.heading-small #{__('shortlist-ballot-alreadyread', {title})}
             fieldset
               .multiple-choice
                 input#cb1(type='checkbox',name='alreadyRead')
-                label(for='cb1') I have already read #{title}
+                label(for='cb1') #{__('shortlist-ballot-alreadyread-box', {title})}
               .multiple-choice
                 input#cb2(type='checkbox',name='haveCopy')
-                label(for='cb2') I have access to a copy of #{title}
+                label(for='cb2') #{__('shortlist-ballot-havecopy-box', {title})}
             p.submit
-              input(type='submit',value='Cast ballot as '+req.user).button
+              input(type='submit',value=__('shortlist-ballot-submit', {user: req.user})).button
         if book.upstream
           .column-one-third
             .grid-row
@@ -81,19 +81,19 @@ block content
                 if book.isbn
                   tr
                     th
-                      abbr(title="International Standard Book Number") ISBN
+                      abbr(title=__('book-isbn')) #{__('book-isbn-abbrev')}
                     td #{book.isbn}
                 if book.upstream.publishedDate
                   tr
-                    th Published date
+                    th #{__('book-publishedDate')}
                     td #{book.upstream.publishedDate}
                 if book.upstream.publisher
                   tr
-                    th Publisher
+                    th #{__('book-publisher')}
                     td #{book.upstream.publisher}
                 if book.upstream.pageCount
                   tr
-                    th Pages
+                    th #{__('book-pagecount')}
                     td #{book.upstream.pageCount}
                 if book.upstream.categories
                   tr(rowspan=book.upstream.categories.length)
@@ -101,20 +101,17 @@ block content
                   for category in book.upstream.categories
                     - j++
                     if j !== 0
-                      th Categories
+                      th #{__('book-categories')}
                     td #{category}
                 if book.upstream.language
                   tr
-                    th Language 
-                    if book.upstream.language === 'en'
-                      td English
-                    else
-                      td #{book.upstream.language}
+                    th #{__('book-language')}
+                    td #{__('book-language-'+book.upstream.language)}
                 if book.upstream.maturityRating
                   tr
-                    th Classification
-                    td #{book.upstream.maturityRating.replace('_', ' ').toLowerCase()}
+                    th #{__('book-maturity-rating')}
+                    td #{__('book-maturity-rating-'+book.upstream.maturityRating.replace('_', '-').toLowerCase())}
                 if book.longlistedBy
                   tr
-                    th Longlister
+                    th #{__('book-longlisted-by')}
                     td #{book.longlistedBy}

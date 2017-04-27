@@ -34,7 +34,7 @@ var booklist = {
   }
 }
 
-app.get('/book-club', function (req, res) {
+app.get(__l('route-book-club'), function (req, res) {
   var books = booklist.load()
   var longlist = books.length
   var longlistProblemCount = 0
@@ -61,7 +61,7 @@ app.get('/book-club', function (req, res) {
   res.render('books/index.pug', { req, longlist: booklist.load().length, participants: longlistParticipants, longlistProblemCount, shortlistVotes, state, networkCount: irc.length, readingListCount })
 })
 
-app.get('/book-club/admin', function (req, res) {
+app.get(__l('/book-club/admin'), function (req, res) {
   var admin = JSON.parse(fs.readFileSync('data/admin.json'))
   if (admin.admins.indexOf(req.user) === -1) {
     return res.status(403).send('not allowed')
@@ -69,7 +69,7 @@ app.get('/book-club/admin', function (req, res) {
   res.render('books/admin.pug', { req: req, state, books: booklist.load() })
 })
 
-app.post('/book-club/admin', function (req, res) {
+app.post(__l('/book-club/admin'), function (req, res) {
   var admin = JSON.parse(fs.readFileSync('data/admin.json'))
   if (admin.admins.indexOf(req.user) === -1) {
     return res.status(403).send('not allowed')
@@ -99,7 +99,7 @@ app.post('/book-club/admin', function (req, res) {
   return res.redirect('/book-club')
 })
 
-app.get('/book-club/long-list', function (req, res) {
+app.get(__l('/book-club/long-list'), function (req, res) {
   var books = booklist.load()
   books.sort(function (x, y) {
     x = x.author.split(' ')
@@ -115,7 +115,7 @@ app.get('/book-club/long-list', function (req, res) {
   res.render('books/longlist.pug', { req, books, state })
 })
 
-app.get('/book-club/short-list', function (req, res) {
+app.get(__l('/book-club/short-list'), function (req, res) {
   var books = booklist.load()
   var slate = []
   for (var i = 0; i < books.length; i++) {
@@ -195,7 +195,7 @@ app.get('/book-club/short-list', function (req, res) {
   }
 })
 
-app.post('/book-club/short-list', function (req, res) {
+app.post(__l('/book-club/short-list'), function (req, res) {
   if (!state.allowVoting) {
     return res.status(403).render('placeholder.pug', req)
   }
@@ -229,14 +229,14 @@ app.post('/book-club/short-list', function (req, res) {
       }
     }
     booklist.save(bl)
-    return res.redirect('/book-club/short-list')
+    return res.redirect(__('/book-club/short-list'))
   }
 
   res.status(404)
   // resend the ballot anyway I guess?
 })
 
-app.get('/book-club/long-list/add-a-book', function (req, res) {
+app.get(__l('/book-club/long-list/add-a-book'), function (req, res) {
   if (!state.addToLonglist) {
     res.status(403).render('placeholder.pug', { req })
   } else {
@@ -257,7 +257,7 @@ function replaceIsbn (books, author, title, newIsbn) {
   return null
 }
 
-app.post('/book-club/long-list', function (req, res) {
+app.post(__l('/book-club/long-list'), function (req, res) {
   // ISBN editing
   var books = booklist.load()
   books = replaceIsbn(books, req.body.author, req.body.title, req.body.isbn)
@@ -268,7 +268,7 @@ app.post('/book-club/long-list', function (req, res) {
   res.status(400).send('couldn\'t find right book')
 })
 
-app.post('/book-club/long-list/add-a-book', function (req, res) {
+app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
   if (!state.addToLonglist) {
     return res.status(403).render('placeholder.pug', req)
   }
@@ -285,7 +285,7 @@ app.post('/book-club/long-list/add-a-book', function (req, res) {
   }
 })
 
-app.get('/book-club/book/:isbn', function (req, res, next) {
+app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn && books[i].isbn === req.params.isbn) {
@@ -317,7 +317,7 @@ app.get('/book-club/book/:isbn', function (req, res, next) {
   next()
 })
 
-app.get('/book-club/book/:isbn/:user', function (req, res, next) {
+app.get(__l('/book-club/book/:isbn/:user'), function (req, res, next) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
@@ -329,7 +329,7 @@ app.get('/book-club/book/:isbn/:user', function (req, res, next) {
   next()
 })
 
-app.get('/book-club/book/:isbn/edit', function (req, res) {
+app.get(__l('/book-club/book/:isbn/edit'), function (req, res) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
@@ -337,7 +337,7 @@ app.get('/book-club/book/:isbn/edit', function (req, res) {
     }
   }
 })
-app.post('/book-club/book/:isbn/edit', function (req, res) {
+app.post(__l('/book-club/book/:isbn/edit'), function (req, res) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
@@ -348,7 +348,7 @@ app.post('/book-club/book/:isbn/edit', function (req, res) {
   }
 })
 
-app.get('/book-club/reading-list', function (req, res) {
+app.get(__l('/book-club/reading-list'), function (req, res) {
   var books = booklist.load()
   var readingList = []
   for (var i = 0; i < books.length; i++) {
@@ -357,7 +357,7 @@ app.get('/book-club/reading-list', function (req, res) {
   res.render('books/reading-index.pug', { req, books: readingList })
 })
 
-app.post('/book-club/reading-list', function (req, res) {
+app.post(__l('/book-club/reading-list'), function (req, res) {
   var b = booklist.load()
   for (var i = 0; i < b.length; i++) {
     if (b[i].isbn !== req.body.isbn) continue

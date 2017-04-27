@@ -2,7 +2,7 @@ var app = require('..')
 var auth = require('../auth.js')
 var irc = require('../irc.js')
 
-app.get('/log-in', function (req, res) {
+app.get(__l('/log-in'), function (req, res) {
   var key = auth.getNewKey(5)
   var nicks = []
   for (var i = 0; i < irc.length; i++) {
@@ -14,7 +14,7 @@ app.get('/log-in', function (req, res) {
   res.render('login.pug', { key, nicks, req })
 })
 
-app.get('/log-out', function (req, res) {
+app.get(__l('/log-out'), function (req, res) {
   req.logout()
   res.redirect('/')
 })
@@ -33,7 +33,7 @@ var validUsernames = [
   'neko'
 ]
 
-app.post('/log-in', function (req, res) {
+app.post(__l('/log-in'), function (req, res) {
   if (!req.body.key) {
     res.sendStatus(400)
   } else {
@@ -58,7 +58,7 @@ app.post('/log-in', function (req, res) {
   }
 })
 
-app.get('/log-in/verify/:slug.json', function (req, res) {
+app.get(__l('/log-in/verify/:slug.json'), function (req, res) {
   if (auth.isKey(req.params.slug)) {
     if (auth.isUsedKey(req.params.slug)) {
       res.json(true)

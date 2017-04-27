@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
   res.render('home.pug', {req, fortune: fs.readFileSync('data/fortune.txt')})
 })
 
-app.get('/hello-world', function (req, res) {
+app.get(__l('/hello-world'), function (req, res) {
   res.render('hello.pug', {req})
 })
 

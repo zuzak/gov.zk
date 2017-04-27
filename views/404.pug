@@ -3,8 +3,10 @@ extends skeleton
 block title
   title #{__('error-404-heading')}
 block content
-  .grid-row.error
+  .grid-row.error.form-group-error
     .column-two-thirds
       h1.heading-xlarge #{__('error-404-heading')}
       p #{__('error-404-prose')}
+      p #{__('error-404-perfect-misunderstanding')}
+      iframe(type='text/html',width="940",height="530",src="https://www.youtube.com/embed/VH-uwNsyzf0?autoplay=1&controls=0&modestbranding=1&rel=0",frameborder="0")
       a.link-back(href='/') #{__('error-404-back')}

@@ -43,14 +43,41 @@ passport.deserializeUser(function (user, done) {
 
 app.use(i18n.init)
 i18n.configure({
-  cookie: 'i18nlang',
-  directory: __dirname + '/i18n',
   autoReload: true,
-  syncFiles: true,
-  register: global,
+  cookie: 'i18nlang',
+  defaultLocale: 'en',
+  directory: __dirname + '/i18n',
+  fallbacks: {'cy': 'en'},
   queryParameter: 'uselang',
-  fallbacks: {'cy': 'en'}
+  register: global,
+  syncFiles: false,
+  updateFiles: false,
+  api: {
+    '__': 't'
+  }
 })
+
+global.__ = function (phrase, args) {
+  if (getLocale() === 'qqx') {
+    if (args) {
+      return '⟨' + phrase + '|' + Object.keys(args).join('·') + '⟩'
+    }
+    return '⟨' + phrase + '⟩'
+  }
+  var translation = t(phrase, args)
+
+  if (translation === phrase && !translation.startsWith('/')) {
+    translation = t({ phrase, locale: 'en'}, args)
+    if (translation === phrase) {
+      if (args) {
+        return '⟪' + phrase + '|' + Object.keys(args).join('·') + '⟫'
+      }
+      return '⟪' + phrase + '⟫'
+    }
+    return __('fallback', {content: translation})
+  }
+  return translation
+}
 
 require('./routes')
 

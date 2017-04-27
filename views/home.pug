@@ -18,20 +18,20 @@ block content
           li
             a(href='//gsi.zuzakistan.com') #{__('homepage-gsi-link')}
           li
-            a(href='/book-club') #{__('homepage-bookclub-link')}
+            a(href=__('/book-club')) #{__('homepage-bookclub-link')}
           li
             a(href='//webm.website') #{__('homepage-webm-link')}
   .grid-row.main-body
     .column-one-third
       h3.heading-medium
-        a(href='/book-club') #{__('book-club')}
+        a(href=__('/book-club')) #{__('book-club')}
       ul.font-small
         li
-          a(href='/book-club/long-list') #{__('long-list-link')}
+          a(href=__('/book-club/long-list')) #{__('long-list-link')}
         li
-          a(href='/book-club/short-list') #{__('short-list-link')}
+          a(href=__('/book-club/short-list')) #{__('short-list-link')}
         li
-          a(href='/book-club/reading-list') #{__('reading-list-link')}
+          a(href=__('/book-club/reading-list')) #{__('reading-list-link')}
       h3.heading-medium #{__('homepage-governance-header')}
       ul.font-small
         li
@@ -40,8 +40,8 @@ block content
           a(href='//github.com/zuzak/gov.zk/issues/new') #{__('issues-link')}
         li
           if req.user
-            a(href='/log-out') #{__('logout-long')}
+            a(href=__('/log-out')) #{__('logout-long')}
           else
-            a(href='/log-in') #{__('login-long')}
+            a(href=__('/log-in')) #{__('login-long')}
     .column-two-thirds
         p.placeholder #{__('placeholder')}
