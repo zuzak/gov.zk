@@ -41,7 +41,7 @@ var booklist = {
   }
 }
 
-app.get(__l('route-book-club'), function (req, res) {
+app.get(__l('/book-club'), function (req, res) {
   var books = booklist.load()
   var longlist = books.length
   var longlistProblemCount = 0

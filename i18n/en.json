@@ -231,7 +231,6 @@
   "shortlist-ballot-alreadyread-box": "I have already read {{title}}",
   "shortlist-ballot-havecopy-box": "I have access to a copy of {{title}}",
   "shortlist-ballot-heading": "Shortlisting",
-  "shortlist-ballot-process": "Ballot {{ballot}} of {{total}}",
   "shortlist-ballot-progress": "Ballot {{count}} of {{total}}",
   "shortlist-ballot-submit": "Cast ballot as {{user}}",
   "shortlist-ballot-wanttoread": "Do you want to read this book?",
