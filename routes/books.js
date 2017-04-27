@@ -197,7 +197,7 @@ app.get(__l('/book-club/short-list'), function (req, res) {
 
 app.post(__l('/book-club/short-list'), function (req, res) {
   if (!state.allowVoting) {
-    return res.status(403).render('placeholder.pug', req)
+    return res.status(403).render('403.pug', req)
   }
   var bl = booklist.load()
   for (var i = 0; i < bl.length; i++) {
@@ -238,7 +238,7 @@ app.post(__l('/book-club/short-list'), function (req, res) {
 
 app.get(__l('/book-club/long-list/add-a-book'), function (req, res) {
   if (!state.addToLonglist) {
-    res.status(403).render('placeholder.pug', { req })
+    res.status(403).render('403.pug', { req })
   } else {
     res.render('books/longlist-add.pug', { req })
   }
@@ -270,7 +270,7 @@ app.post(__l('/book-club/long-list'), function (req, res) {
 
 app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
   if (!state.addToLonglist) {
-    return res.status(403).render('placeholder.pug', req)
+    return res.status(403).render('403.pug', req)
   }
   var book = req.body
   book.difficult = book.difficult === 'on'
