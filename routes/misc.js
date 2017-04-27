@@ -3,7 +3,7 @@ var exec = require('child_process').exec
 var fs = require('fs')
 
 function rollFortune () {
-  exec('/usr/games/foartune -s -n60', function (err, stdout, stderr) {
+  exec('/usr/games/fortune -s -n60', function (err, stdout, stderr) {
     if (err) {
       stdout = __('home-defaultfortune')
     }
