@@ -9,9 +9,10 @@ block content
       .column-two-thirds
         .fortune-outer
           h1.heading-xlarge #{__('welcome')}
-          p.font-small.fortune #{String(fortune).replace(/--/g,'—')}
-        //
-          span.font-small for even made up countries need intranets
+          if fortune
+            p.font-small.fortune #{String(fortune).replace(/--/g,'—')}
+          else
+            p.font-small.fortune #{__('home-defaultfortune')}
       .column-one-third.black-nav
         h2.heading-small #{__('homepage-nav-header')}
         ul.list.list-bullet.font-small

@@ -26,8 +26,9 @@ block content
               a(href='/book-club/book/'+book.isbn).title.font-medium #{book.title}
             p
               a(href='/book-club/book/'+book.isbn).author.font-small #{book.author}
-            p
-              a(href='/book-club/book/'+book.isbn).author.font-xsmall #{book.readingList}
+            if typeof book.readingList === "string"
+              p
+                a(href='/book-club/book/'+book.isbn).author.font-xsmall #{book.readingList}
       else
         p #{__('reading-list-no-books')}
       p

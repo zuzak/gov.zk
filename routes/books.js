@@ -25,12 +25,19 @@ var booklist = {
       return JSON.parse(fs.readFileSync(this.KEYSTORE))
     } catch (e) {
       if (e.code === 'ENOENT') { // 404
-        return {}
+        return []
       }
     }
   },
   save: function (data) {
-    fs.writeFileSync(this.KEYSTORE, JSON.stringify(data, null, '  '))
+    try {
+      fs.writeFileSync(this.KEYSTORE, JSON.stringify(data, null, '  '))
+    } catch (e) {
+        if (e.code === 'ENOENT') {
+            fs.mkdirSync(this.KEYSTORE.split('/')[0])
+            this.save(data)
+        }
+    }
   }
 }
 
@@ -62,9 +69,17 @@ app.get(__l('route-book-club'), function (req, res) {
 })
 
 app.get(__l('/book-club/admin'), function (req, res) {
-  var admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  var admin = {"admins":[], "state": {}}
+  try {
+    admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  } catch (e) {
+    fs.writeFileSync('data/admin.json',JSON.stringify(admin))
+  }
+  if (!admin.admins || admin.admins.length === 0) {
+    return res.render('error.pug', {err: __('admin-noadmins'), req})
+  }
   if (admin.admins.indexOf(req.user) === -1) {
-    return res.status(403).send('not allowed')
+    return res.status(403).render('403.pug', {req})
   }
   res.render('books/admin.pug', { req: req, state, books: booklist.load() })
 })
@@ -204,8 +219,8 @@ app.post(__l('/book-club/short-list'), function (req, res) {
     if (bl[i].author !== req.body.author) continue
     if (bl[i].title !== req.body.title) continue
 
-//    if (!bl[i].approve) bl[i].approve = []
- //   if (!bl[i].dispprove) bl[i].disapprove = []
+    if (!bl[i].approve) bl[i].approve = []
+    if (!bl[i].dispprove) bl[i].disapprove = []
 
     if (req.body.verdict === 'yes') {
       bl[i].approve.push(req.user)

@@ -22,6 +22,9 @@ $ echo 'gov.zk 127.0.0.1' | sudo tee /etc/hosts
 $ sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8080
 ```
 
+To enable the administator panel, create `data/admin.json` with contents like
+`{"admins": ["zuzak"]}`.
+
 ## Contributing
 This repository uses [standard](http://standardjs.com/) as its coding style.
 

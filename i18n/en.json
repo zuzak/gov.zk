@@ -159,7 +159,7 @@
 	"longlist-return": "Return to the long list",
 	"longlist-status": "Status",
 	"longlist-title": "Title",
-	"or": "or",
+	"or": "or​",
 	"other-actions": "Other actions",
 	"placeholder": "nothing here",
 	"reading-acknowledged": "acknowledged",
@@ -274,5 +274,12 @@
   "fallback": "«{{content}}»",
   "zuzakistan": "Zuzakistan",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan",
-  "irc-errorconnecting": "Error connecting to IRC network"
+  "irc-errorconnecting": "Error connecting to IRC network",
+  "home-defaultfortune": "For even made up countries need intranets",
+  "longlist-nobooks": "No books have been added to the long list.",
+  "longlist-getdata": "Get data",
+  "book-language-unknown": "Unknown",
+  "admin-noadmins": "This installation has no administrators defined. See the README for details.",
+  "shortlist-ballot-progress": "Ballot {{count}} of {{total}}",
+  "reading-awaiting-readers": "Awaiting readers…"
 }
