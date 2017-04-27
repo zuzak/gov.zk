@@ -175,5 +175,6 @@
   "readinglist-reject": "Possible reading status for when a user doesn't want to read the book at all",
   "readinglist-stalled": "Reading status when a user has given up reading the book",
   "short-list": "Breadcrumb",
-  "short-list-link-ro": "Link to the shortlist when voting is disabled"
+  "short-list-link-ro": "Link to the shortlist when voting is disabled",
+  "about-nochanges": "Shown on about page when there are no outstanding changes in the working copy compared to Github"
 }

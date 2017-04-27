@@ -281,5 +281,6 @@
   "book-language-unknown": "Unknown",
   "admin-noadmins": "This installation has no administrators defined. See the README for details.",
   "shortlist-ballot-progress": "Ballot {{count}} of {{total}}",
-  "reading-awaiting-readers": "Awaiting readers…"
+  "reading-awaiting-readers": "Awaiting readers…",
+  "about-nochanges": "The code currently running is synchronised with GitHub."
 }
