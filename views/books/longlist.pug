@@ -6,25 +6,16 @@ block breadcrumb
   li
     a(href=__('/book-club/long-list')) #{__('long-list')}
 block content
-  h1.heading-xlarge Long list
+  h1.heading-xlarge #{__('long-list')}
   .grid-row
     .column-two-thirds
-      p.lede.
-        The first step in deciding which books to read was to narrow
-        down the many available novels into a smaller list.
       if state.advertise == 'LONGLIST'
-        p.font-small.
-          This longlist is an initial, longer list from which a
-          shortlist will be extracted. Accordingly, feel free to add
-          any texts that could be good to read: the less appropriate
-          items will be filtered away later, so don't worry too much.
+        p.lede #{__('longlist-lede-present')}
+        p.font-small #{__('longlist-secondpara-present')}
       else
-        p.font-small.
-          This long list is an initial, longer list from which
-          a shortlist was extracted.
-      p.panel.
-        Books with a <span class="red">✗</span> have problems
-        with metadata.
+        p.lede #{__('longlist-lede-past')}
+        p.font-small #{__('longlist-secondpara-past')}
+      p.panel #{__('longlist-metadataproblem', { glyph: '✗'})}
     if state.allowVoting
       .grid-row
         .column-two-thirds
@@ -71,15 +62,15 @@ block content
                   //- upstream data fetched
                   if book.upstream.imageLinks && book.upstream.imageLinks.thumbnail && book.upstream.description
                     if book.longlistedBy === req.user
-                      td.green ✓
+                      td.green(title=__('longlist-metadata-ok')) ✓
                       td
                         strong #{book.longlistedBy}
                     else
-                      td.green ✓
+                      td.green(title=__('longlist-metadata-ok')) ✓
                       td #{book.longlistedBy}
                   else
                     //- bad upstream
-                    td.red ✗
+                    td.red(title=__('longlist-metadata-bad')) ✗
                     td
                       details
                         summary
@@ -92,11 +83,11 @@ block content
                           input(type='submit',value=__('longlist-edit-isbn-button')).button
                 else
                   //- no upstream
-                  td.red ✗
+                  td.red(title=__('longlist-metadata-bad')) ✗
                   td
                     a(href='book/'+book.isbn) #{__('longlist-getdata')}
               else
-                  td.red ✗
+                  td.red(title=__('longlist-metadata-bad')) ✗
                   td
                     details
                       summary

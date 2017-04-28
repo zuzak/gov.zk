@@ -124,8 +124,8 @@ block content
         for lang, code in catalog
           - curr = Object.keys(lang).length
           tr
-            td 
-              a(href='/about-this-website/internationalization/'+code) #{__('about-i18n-language', {name: __('about-i18n-lang-'+code), code})}
+            td
+              a(href=__('/about-this-website/internationalization/:code').replace(':code',code)) #{__('about-i18n-language', {name: __('about-i18n-lang-'+code), code})}
             td #{__('about-i18n-progress', {curr, max})}
             td
               meter(min=0,max=max,value=curr)

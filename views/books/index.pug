@@ -31,12 +31,16 @@ block content
         if state.allowVoting && state.advertise !== 'SHORTLIST'
           p
           p.
-            If you haven't already, you can also <a href="/book-club/short-list">vote on the long list</a>.
+            If you haven't already, you may also <a href="/book-club/short-list">vote on the long list</a>.
         if state.addToLonglist
           p
-          p.
-            You can also <a href="/book-club/long-list">add books to the long list</a>
-            ready for the next voting round.
+          if state.allowVoting
+            p.
+              You may also <a href="/book-club/long-list">add books to the long list</a> to be voted on.
+          else
+            p.
+              You may also <a href="/book-club/long-list">add books to the long list</a>
+              ready for the next voting round.
 
 
     .column-one-third

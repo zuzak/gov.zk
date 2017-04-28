@@ -47,22 +47,27 @@ block content
               br
               span  #{result.author}
 
-            if result.approve.length == 0
-              td.numeric —
-              td.numeric —
+            if result.approve.length === electorCount
+              - unanimousBooks++
+              td.numeric(title=__('shortlist-approvals-allapproved')).unanimous #{result.approve.length}
             else
-              if result.approve.length === electorCount
-                - unanimousBooks++
-                td.numeric(title=__('shortlist-approvals-allapproved')).unanimous #{result.approve.length}
+              if result.approve.length > 0 && result.disapprove.length === 0
+                td.numeric(title=__('shortlist-approvals-nodownvotes')).almost-unanimous #{result.approve.length}
               else
-                if result.approve.length > 0 && result.disapprove.length === 0
-                  td.numeric(title=__('shortlist-approvals-nodownvotes')).almost-unanimous #{result.approve.length}
-                else
-                  if (result.approve.length + result.disapprove.length) < electorCount
-                    td.numeric(title=__('shortlist-approvals-incomplete')).incomplete #{result.approve.length}
+                if (result.approve.length + result.disapprove.length) < electorCount
+                  if result.approve.length == 0
+                    td.numeric(title=__('shortlist-approvals-incomplete')).incomplete #{__('shortlist-approvals-nil')}
                   else
-                    td.numeric(title=result.approve.join(', ')) #{result.approve.length}
-              - sav = (result.scaledSav/100*Object.keys(electorate).length).toFixed(2)
+                    td.numeric(title=__('shortlist-approvals-incomplete')).incomplete #{result.approve.length}
+                else
+                  if result.approve.length === 0
+                    td.numeric #{__('shortlist-approvals-nil')}
+                  else
+                    td.numeric(title=__('shortlist-approvals-approvedby', {voters: result.approve.join(__('shortlist-approvals-approvedby-join'))})) #{result.approve.length}
+            - sav = (result.scaledSav/100*Object.keys(electorate).length).toFixed(2)
+            if sav === '0.00'
+              td.numeric #{__('shortlist-approvals-nil')}
+            else
               td.numeric #{sav}
     .column-one-third
       table
