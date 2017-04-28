@@ -3,6 +3,9 @@ var auth = require('../auth.js')
 var irc = require('../irc.js')
 
 app.get(__l('/log-in'), function (req, res) {
+  if (req.user) {
+    return res.status(403).render('error.pug', {msg: __('login-alreadyloggedin', {user: req.user}), req})
+  }
   var key = auth.getNewKey(5)
   var nicks = []
   for (var i = 0; i < irc.length; i++) {

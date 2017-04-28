@@ -64,8 +64,9 @@ footer a:hover {
 .green { color: $grass-green }
 .grid-row { margin: 0 0 !important; }
 .center { text-align: center; }
-.unanimous::before { content: "★ "}
-.almost-unanimous::before { content: "☆ "}
+.almost-unanimous::before { content: "🔶 ⚠ "}
+.unanimous::before { content: "🏆 "}
+.incomplete::before { content: "⚠ "}
 .languages {
   list-style-type: none;
   li, h2, ul { display: inline-block; }

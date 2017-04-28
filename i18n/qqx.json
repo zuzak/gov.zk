@@ -1,5 +1,4 @@
 {
-
   "/about-this-website": "Route for the about page visible on every footer",
   "/book-club": "Route for the book club homepage",
   "/book-club/admin": "Route for the administrative interface of the book club",
@@ -167,6 +166,7 @@
   "issues-link": "Homepage link to filing a new issue.",
   "languages": "Header shown next to links to change the localization, shown on the footer of every page",
   "log-in": "Button shown in corner to log in, used when a full sentence would be inappropriate",
+  "login-alreadyloggedin": "Error message displayed if user is already logged in as {{user}} and so has to log out before they can log back in",
   "login-button": "The button on the login page",
   "login-button-preamble": "The paragraph on the login page after the bit with the command but before the login button",
   "login-header": "The heading of the login page",

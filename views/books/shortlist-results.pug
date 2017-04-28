@@ -58,7 +58,10 @@ block content
                 if result.approve.length > 0 && result.disapprove.length === 0
                   td.numeric(title=__('shortlist-approvals-nodownvotes')).almost-unanimous #{result.approve.length}
                 else
-                  td.numeric(title=result.approve.join(', ')) #{result.approve.length}
+                  if (result.approve.length + result.disapprove.length) < electorCount
+                    td.numeric(title=__('shortlist-approvals-incomplete')).incomplete #{result.approve.length}
+                  else
+                    td.numeric(title=result.approve.join(', ')) #{result.approve.length}
               - sav = (result.scaledSav/100*Object.keys(electorate).length).toFixed(2)
               td.numeric #{sav}
     .column-one-third
