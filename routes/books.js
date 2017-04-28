@@ -87,7 +87,7 @@ app.get(__l('/book-club/admin'), function (req, res) {
 app.post(__l('/book-club/admin'), function (req, res) {
   var admin = JSON.parse(fs.readFileSync('data/admin.json'))
   if (admin.admins.indexOf(req.user) === -1) {
-    return res.status(403).send('not allowed')
+    return res.status(403).render('403.pug', {req})
   }
   if (req.body.changeState) {
     if (req.body.advertise) {
@@ -280,7 +280,7 @@ app.post(__l('/book-club/long-list'), function (req, res) {
     booklist.save(books)
     return res.redirect('/book-club/book/' + req.body.isbn)
   }
-  res.status(400).send('couldn\'t find right book')
+  res.status(400).render('error.pug', {req, msg: __('longlist-edit-isbn-fail')})
 })
 
 app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
@@ -291,7 +291,7 @@ app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
   book.difficult = book.difficult === 'on'
   book.longlistedBy = req.user
   if (!book.author || !book.title) {
-    res.status(400)
+    res.status(400).render('error.pug', {req, msg: __('longlist-add-book-fail')})
   } else {
     var bl = booklist.load()
     bl.push(book)
@@ -390,5 +390,5 @@ app.post(__l('/book-club/reading-list'), function (req, res) {
     booklist.save(b)
     return res.redirect('/book-club/reading-list')
   }
-  throw new Error('book not found')
+  return res.render('error.pug', {req, msg: __('longlist-edit-isbn-fail')})
 })

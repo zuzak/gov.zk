@@ -33,6 +33,6 @@ app.get(__l('/hello-world'), function (req, res) {
 })
 
 app.get('/500', function (req, res) {
-  var err = new Error('Just a drill :)')
+  var err = new Error(__('err-dryrun'))
   throw err
 })

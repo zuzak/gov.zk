@@ -40,7 +40,7 @@ app.post(__l('/log-in'), function (req, res) {
     var username = auth.validateKey(req.body.key)
     if (username) {
       if (validUsernames.indexOf(username) === -1) {
-        return res.status(403).render('error.pug', {msg: 'Your username is not on the whitelist.', req})
+        return res.status(403).render('error.pug', {msg: __('irc-notwhitelisted'), req})
       }
       req.login(username, function (err) {
         if (err) {
@@ -66,6 +66,6 @@ app.get(__l('/log-in/verify/:slug.json'), function (req, res) {
       res.json(false)
     }
   } else {
-    res.status(404).json({'error': 'key not found'})
+    res.status(404).json({'error': __('irc-keynotfound')})
   }
 })
