@@ -48,7 +48,7 @@ block content
                 td.numeric
                   a(href='book/'+book.isbn)
                     if book.upstream && book.upstream.imageLinks && book.upstream.imageLinks.smallThumbnail
-                      img(src=book.upstream.imageLinks.smallThumbnail, style="height:2em")
+                      img(src=book.upstream.imageLinks.smallThumbnail.replace('http://','https://'), style="height:2em")
                     else
                       span #{i}
               else
