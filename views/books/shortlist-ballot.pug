@@ -53,7 +53,7 @@ block content
                   i.icon.icon-important
                   strong #{__('book-noinfo')}
 
-          form(method='POST')
+          form(method='POST').ballot
             input(type='hidden',name='author',value=book.author)
             input(type='hidden',name='title',value=book.title)
             h3.heading-small #{__('shortlist-ballot-wanttoread')}

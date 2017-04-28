@@ -139,10 +139,22 @@ block content
                 td #{book.longlistedBy}
         .grid-row
           p
-          p.font-xsmall  #{book.desc}
-          p.font-xxsmall
+          p.font-xxsmall(style="float:right; margin-top:0; margin-left: 0.5em; margin-bottom: 0.5em;")
             a(href='/book-club/book/' + book.isbn + '/edit')
               if book.desc
                 span #{__('book-edit-note')}
               else
                 span #{__('book-add-note')}
+          p.font-xsmall  #{book.desc}
+        .grid-row
+          if book.comments
+            for comment in book.comments
+              p.comment
+                h3.bold-xsmall(title=new Date(comment.ts).toUTCString()) #{comment.user}
+                span.font-xsmall #{comment.text}
+          details(open)
+            summary.summary.heading-xsmall #{__('add-comment-dropdown')}
+            .panel
+              form(method="POST",action="/book-club/book/"+book.isbn+"/add-comment")
+                textarea.form-control(style="width:100%",name="comment").font-xsmall
+                input(type="submit",value=__('add-comment-button')).button

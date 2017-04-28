@@ -363,6 +363,23 @@ app.post(__l('/book-club/book/:isbn/edit'), function (req, res) {
   }
 })
 
+app.post(__l('/book-club/book/:isbn/add-comment'), function (req, res) {
+  var books = booklist.load()
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].isbn === req.params.isbn) {
+      if (!req.body.comment) return res.status(400).render('error.pug')
+      if (!books[i].comments) books[i].comments = []
+      books[i].comments.push({
+        "user": req.user,
+        "text": req.body.comment,
+        "ts": Date.now()
+      })
+      booklist.save(books)
+      res.redirect('/book-club/book/' + req.params.isbn)
+    }
+  }
+})
+
 app.get(__l('/book-club/reading-list'), function (req, res) {
   var books = booklist.load()
   var readingList = []

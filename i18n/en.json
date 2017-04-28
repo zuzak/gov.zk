@@ -55,6 +55,8 @@
   "about-stat-ahead": "unpushed changes",
   "about-stat-dirty": "changed files",
   "about-stat-untracked": "untracked files",
+  "add-comment-button": "Add comment",
+  "add-comment-dropdown": "Add comment",
   "admin-actions": "Actions",
   "admin-addtoreadinglist": "Add to reading list",
   "admin-advertising": "Advertising",

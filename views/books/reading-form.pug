@@ -2,7 +2,7 @@ if book.readingList
   details
     summary.summary.heading-small #{__('reading-update-header')}
     .panel.panel-border-narrow
-       form(method='POST',action='/book-club/reading-list')
+       form(method='POST',action='/book-club/reading-list').ballot
          input(type='hidden',name='isbn', value=book.isbn)
          fieldset(required)
            .multiple-choice
