@@ -21,7 +21,7 @@ block content
             if book.upstream
               if book.upstream.imageLinks
                 a(href='/book-club/book/'+book.isbn)
-                  img(src=book.upstream.imageLinks.thumbnail)
+                  img(src=book.upstream.imageLinks.thumbnail.replace('http://','//'))
             p
               a(href='/book-club/book/'+book.isbn).title.font-medium #{book.title}
             p

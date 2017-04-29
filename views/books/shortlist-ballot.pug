@@ -40,7 +40,7 @@ block content
                     p.panel #{__('book-difficult')}
               .column-one-third.sidebar
                 if book.upstream.imageLinks
-                  img(src=book.upstream.imageLinks.thumbnail)
+                  img(src=book.upstream.imageLinks.thumbnail.replace('http://','//'))
                 if book.upstream.previewLink
                   p
                     a(href=book.upstream.previewLink) #{__('book-preview')}
