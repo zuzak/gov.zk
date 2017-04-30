@@ -9,6 +9,7 @@ var JsonSession = require('express-session-json')(session) // TODO something bet
 var i18n = require('i18n')
 
 app.set('view engine', 'pug')
+app.set('json spaces', 2)
 app.locals.pretty = true
 
 /* Static & SCSS setup */
