@@ -233,3 +233,20 @@ describe('pug rendering', function () {
     })(f[i])
   }
 })
+
+describe('internationalization', function () {
+  var f = recurse('i18n')
+  for (var i = 0; i < f.length; i++) {
+    ;(function (x) {
+      if (x.indexOf('.json') === -1) return
+      it('should load ' + x + ' as valid JSON', function (done) {
+        fs.readFile(x, function (err, data) {
+          if (err) throw err
+          JSON.parse(data)
+          done()
+        })
+      })
+    })(f[i])
+  }
+})
+
