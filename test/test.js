@@ -281,9 +281,11 @@ describe('internationalization', function () {
         fs.readFile(x, function (err, data) {
           if (err) throw err
           var a, b
-          a = b = Object.keys(JSON.parse(data))
+          a = Object.keys(JSON.parse(data))
+          b = a.slice(0)
           a.sort()
-          ;(a === b).should.equal(true)
+          // ;(a === b).should.equal(true)
+          ;(JSON.stringify(a) === JSON.stringify(b)).should.equal(true) // wtf js
           done()
         })
       })
