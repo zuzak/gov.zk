@@ -1,6 +1,7 @@
 $path: "/";
 $toolkit-font-stack: "Varela";
-$un-blue: #4b92db;
+$accent-color: #4b92db;
+$accent-color: #843B68;
 
 
 @import 'https://fonts.googleapis.com/css?family=Varela';
@@ -8,6 +9,9 @@ $un-blue: #4b92db;
 @import 'govuk-elements';
 @import '_conditionals';
 @import 'elements/govuk-template-base';
+
+.phase-tag { background-color: $accent-color !important;}
+a:visited { color: $accent-color }
 
 header {
 	background-color: $text-colour;
@@ -47,7 +51,7 @@ footer a:hover {
 }
 
 .accent-bar {
-	background-color: $un-blue;
+	background-color: $accent-color;
 	height: 0.5em;
 	width: 100%;
 }
