@@ -234,7 +234,7 @@
   "other-actions": "Other actions",
   "phasetag-alpha": "alpha",
   "phasetag-beta": "beta",
-  "phasetag-dev": "test",
+  "phasetag-dev": "dev",
   "phasetag-prod": "prod",
   "phasetag-test": "test",
   "placeholder": "nothing here",
@@ -323,5 +323,6 @@
   "stat-shortlist-votes": "shortlist votes",
   "welcome": "Welcome to Zuzakistan",
   "zuzakistan": "Zuzakistan",
+  "banner-incompletevotes": "You have not voted on {{count}} long listed books. Click here to vote.",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }
