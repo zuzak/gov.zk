@@ -325,5 +325,6 @@
   "stat-shortlist-votes": "Stat used after the number of votes on the sortlist",
   "welcome": "Main greeting on the homepage.",
   "zuzakistan": "The name of a micronation",
+  "about-git-hash": "Shown before the current SHA-1 hash of the codebase on the about page. The hash is appended to this string. The hash links to Github if applicable.",
   "zuzakistan-full": "The full name of a micronation"
 }

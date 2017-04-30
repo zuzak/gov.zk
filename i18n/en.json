@@ -323,6 +323,7 @@
   "stat-shortlist-votes": "shortlist votes",
   "welcome": "Welcome to Zuzakistan",
   "zuzakistan": "Zuzakistan",
+  "about-git-hash": "The current Git hash is:",
   "banner-incompletevotes": "You have not voted on {{count}} long listed books. Click here to vote.",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }

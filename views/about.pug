@@ -91,7 +91,7 @@ block content
       h3.heading-medium #{__('about-git-heading')}
       p #{__('about-git-branch', {branch: state.branch})}
       p
-        span The current Git commit hash is&nbsp;
+        span #{__('about-git-hash')} &nbsp;
         if state.ahead === 0
           a.code(href='https://github.com/zuzak/gov.zk/commit/' + hash)= hash
         else
