@@ -6,7 +6,6 @@ var pug = require('pug')
 var fs = require('fs')
 var recurse = require('recursive-readdir-sync')
 require('should')
-console.log(app.get('env') === 'test')
 
 describe('index', function () {
   it('should work!', function (done) {
