@@ -306,6 +306,7 @@
   "shortlist-ballot-wanttoread-no": "Ballot paper disapproval wording",
   "shortlist-ballot-wanttoread-yes": "Ballot paper approval wording",
   "shortlist-candidate": "SHortlist book table header above book author and title",
+  "shortlist-doublevote": "Error shown if a user tries to vote twice on a book",
   "shortlist-flag-alreadyread": "Title of a open book icon used next to books of which someone has marked as already reading",
   "shortlist-flag-difficult": "Title of a swerving car icon used next to books that are marked long or difficult",
   "shortlist-flag-longlisted": "Title of pencil icon used next to books that the current user has longlisted",

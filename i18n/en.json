@@ -305,6 +305,7 @@
   "shortlist-ballot-wanttoread-no": "No, I don't want to read this book",
   "shortlist-ballot-wanttoread-yes": "Yes, I want to read {{title}} as part of the book club",
   "shortlist-candidate": "Candidate",
+  "shortlist-doublevote": "You have already voted on that book.",
   "shortlist-flag-alreadyread": "Somebody has already read this",
   "shortlist-flag-difficult": "Marked difficult",
   "shortlist-flag-longlisted": "You longlisted this",

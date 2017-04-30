@@ -239,7 +239,12 @@ app.post(__l('/book-club/short-list'), function (req, res) {
     if (bl[i].title !== req.body.title) continue
 
     if (!bl[i].approve) bl[i].approve = []
-    if (!bl[i].dispprove) bl[i].disapprove = []
+    if (!bl[i].disapprove) bl[i].disapprove = []
+
+    if ((bl[i].approve.indexOf(req.user) !== -1) ||
+        (bl[i].disapprove.indexOf(req.user) !== -1)) {
+      return res.status(400).render('error.pug', {err: __('shortlist-doublevote'), req})
+    }
 
     if (req.body.verdict === 'yes') {
       bl[i].approve.push(req.user)
