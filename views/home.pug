@@ -39,6 +39,8 @@ block content
         li
           a(href='//github.com/zuzak/gov.zk/issues/new') #{__('issues-link')}
         li
+          a(href=__('/profile/api-key')) #{__('apikey-link')}
+        li
           if req.user
             a(href=__('/log-out')) #{__('logout-long')}
           else

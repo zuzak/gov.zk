@@ -351,6 +351,16 @@ app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
   next()
 })
 
+app.get(__l('/book-club/book/:isbn.json'), function (req, res, next) {
+  var books = booklist.load()
+  for (var i = 0; i < books.length; i++) {
+    if (books[i].isbn && books[i].isbn === req.params.isbn) {
+      return res.json(books[i])
+    }
+  }
+  return next()
+})
+
 app.get(__l('/book-club/book/:isbn/:user'), function (req, res, next) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {

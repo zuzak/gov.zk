@@ -1,5 +1,6 @@
 {
   "/about-this-website": "Route for the about page visible on every footer",
+  "/profile/api-key": "Route to generate and revoke API keys",
   "/book-club": "Route for the book club homepage",
   "/book-club/admin": "Route for the administrative interface of the book club",
   "/book-club/book/:isbn": "Route for the information page of a single book on the book club.",
@@ -326,5 +327,20 @@
   "welcome": "Main greeting on the homepage.",
   "zuzakistan": "The name of a micronation",
   "about-git-hash": "Shown before the current SHA-1 hash of the codebase on the about page. The hash is appended to this string. The hash links to Github if applicable.",
+  "api": "Heading of the API key page",
+  "api-introduction": "Lede text of the API key page",
+  "api-nokey": "Message shown instead of a table when no API key exists yet",
+  "api-username": "Table header for the API key table",
+  "api-key": "Table header for the API key table, opposite the actual API key",
+  "api-never": "Used in place of a date in the API key table if there is no date to show",
+  "api-lastused": "Table header opposite the date the API key was last used to authenticate",
+  "api-createdon": "Table header opposite the date and time the API key was generated",
+  "api-uses": "Table header opposite the number of times the API key has been used",
+  "apikey-link": "Homepage link to the API generation page",
+  "api-delete-button": "Button to revoke the current API key without generating a new one",
+  "api-regen-button": "Button to revoke the current API key and replace it with a new one",
+  "api-newkey-button": "Button to generate a new API key where there was no active API key before",
+  "api-json-dropdown": "Text of dropdown link, contents of which are a list of automatically generated JSON endpoints",
+  "api-json-prose": "Contents of dropdown on API page. Paragraph appears before a computer-generated bullet point list of API endpoints ending in .json.",
   "zuzakistan-full": "The full name of a micronation"
 }

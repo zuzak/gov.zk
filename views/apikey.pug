@@ -1,0 +1,48 @@
+extends skeleton
+block title
+  title #{__('api')}
+block content
+  .grid-row
+    .column-full
+      h1.heading-xlarge #{__('api')}
+      p.lede #{__('api-introduction')}
+  .grid-row
+    .column-two-thirds
+      if !key
+        p #{__('api-nokey')}
+      else
+        table
+          tr
+            th #{__('api-username')}
+            td #{req.user}
+          tr
+            th #{__('api-key')}
+            td
+              code.code #{key.key}
+          tr
+            th #{__('api-lastused')}
+            if key.lastUsed
+              td #{new Date(key.lastUsed).toUTCString()}
+            else
+              td #{__('api-never')}
+          tr
+            th #{__('api-createdon')}
+            td #{new Date(key.createdOn).toUTCString()}
+          tr
+            th #{__('api-uses')}
+            td #{key.uses}
+      p
+      form(method="POST")
+        if key
+          input(type="submit",value=__('api-delete-button'),name="delKey").button
+          input(type="submit",value=__('api-regen-button'),name="genKey").button
+        else
+          input(type="submit",value=__('api-newkey-button'),name="genKey").button
+      p
+      details
+        summary.summary #{__('api-json-dropdown')}
+        p #{__('api-json-prose')}
+        ul
+          for route in stack
+            li
+              code.code #{route}

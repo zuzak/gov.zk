@@ -5,7 +5,10 @@
  * Distributed under terms of the MIT license.
  */
 
+// interstitials
+require('./api.js')
 require('./auth.js')
+
 require('./login.js')
 require('./i18n.js')
 

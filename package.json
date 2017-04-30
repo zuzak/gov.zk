@@ -32,12 +32,14 @@
     "cookie-parser": "^1.4.3",
     "credits-to": "0.0.2",
     "express": "^4.14.0",
+    "express-list-endpoints": "^3.0.0",
     "express-session": "^1.15.2",
     "express-session-json": "0.0.8",
     "git-state": "^2.5.1",
     "githash": "0.0.4",
     "govuk-elements-sass": "^3.0.2",
     "govuk_frontend_toolkit": "^5.2.0",
+    "hat": "0.0.3",
     "i18n": "^0.8.3",
     "irc": "^0.5.2",
     "node-isbn": "^1.2.0",
@@ -58,6 +60,13 @@
     "mocha"
   ],
   "standard": {
-    "globals": [ "__", "__l", "__h", "getCatalog", "getLocale", "t" ]
+    "globals": [
+      "__",
+      "__l",
+      "__h",
+      "getCatalog",
+      "getLocale",
+      "t"
+    ]
   }
 }
