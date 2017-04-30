@@ -60,6 +60,13 @@ app.get(__l('/profile/api-key'), function (req, res, next) {
   res.render('apikey.pug', {req, key, stack: jsonRoutes.sort()})
 })
 
+app.get(__l('/whoami.json'), function (req, res, next) {
+  return res.json({
+    user: req.user,
+    lang: getLocale()
+  })
+})
+
 app.post(__l('/profile/api-key'), function (req, res, next) {
   if (!req.body.genKey && !req.body.delKey) {
     return res.status(400).render('error.pug', {req})
