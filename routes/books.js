@@ -405,7 +405,7 @@ app.post(__l('/book-club/reading-list'), function (req, res) {
     })
 
     booklist.save(b)
-    return res.redirect('/book-club/reading-list')
+    return res.redirect(__('/book-club/book/:isbn').replace(':isbn', req.body.isbn))
   }
   return res.render('error.pug', {req, msg: __('longlist-edit-isbn-fail')})
 })
