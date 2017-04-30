@@ -1,10 +1,19 @@
-//- Used for testing: [squeamish ossifrage]
 extends ../skeleton
 block breadcrumb
   li
     a(href=__('/book-club')) #{__('book-club')}
   li
     a(href=__('/book-club/long-list')) #{__('long-list')}
+mixin isbnform(action, book)
+  details
+    summary
+      span.summary #{__('longlist-'+action+'-isbn-header')}
+    form(method='POST')
+      // label(for='isbn'+i) ISBN
+      input(type='hidden',name='title',value=book.title)
+      input(type='hidden',name='author',value=book.author)
+      input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
+      input(type='submit',value=__('longlist-'+action+'-isbn-button')).button
 block content
   h1.heading-xlarge #{__('long-list')}
   .grid-row
@@ -40,6 +49,8 @@ block content
                 th #{__('longlist-title')}
               th #{__('longlist-author')}
               th(colspan="2") #{__('longlist-status')}
+              th #{__('book-congress')}
+
           - i = 0
           for book in books
             - i++
@@ -61,46 +72,38 @@ block content
                 if book.upstream
                   //- upstream data fetched
                   if book.upstream.imageLinks && book.upstream.imageLinks.thumbnail && book.upstream.description
-                    if book.longlistedBy === req.user
-                      td.green(title=__('longlist-metadata-ok')) ✓
+                    if book.upstream && book.upstream.oclc && book.upstream.oclc && book.upstream.oclc.congress
+                      if book.longlistedBy === req.user
+                        td.green(title=__('longlist-metadata-ok')) ✓
+                        td
+                          strong #{book.longlistedBy}
+                      else
+                        td.green(title=__('longlist-metadata-ok')) ✓
+                        td #{book.longlistedBy}
                       td
-                        strong #{book.longlistedBy}
+                        - classification = book.upstream.oclc.congress.substring(0,2).replace(/[0-9]/g, '')
+                        abbr(title=__('book-congress-'+ classification.toLowerCase())) #{classification}
                     else
-                      td.green(title=__('longlist-metadata-ok')) ✓
-                      td #{book.longlistedBy}
+                      td.red(title=__('longlist-metadata-missing')) ✓
+                      td(colspan="2")
+                        +isbnform('edit', book)
                   else
                     //- bad upstream
                     td.red(title=__('longlist-metadata-bad')) ✗
-                    td
-                      details
-                        summary
-                          span.summary #{__('longlist-edit-isbn-header')}
-                        form(method='POST')
-                          // label(for='isbn'+i) ISBN
-                          input(type='hidden',name='title',value=book.title)
-                          input(type='hidden',name='author',value=book.author)
-                          input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
-                          input(type='submit',value=__('longlist-edit-isbn-button')).button
+                    td(colspan="2")
+                      +isbnform('edit', book)
                 else
                   //- no upstream
                   td.red(title=__('longlist-metadata-bad')) ✗
-                  td
+                  td(colspan="2")
                     a(href='book/'+book.isbn) #{__('longlist-getdata')}
               else
                   td.red(title=__('longlist-metadata-bad')) ✗
-                  td
-                    details
-                      summary
-                        span.summary #{__('longlist-add-isbn-header')}
-                      form(method='POST')
-                        // label(for='isbn'+i) ISBN
-                        input(type='hidden',name='title',value=book.title)
-                        input(type='hidden',name='author',value=book.author)
-                        input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
-                        input(type='submit',value=__('longlist-add-isbn-button')).button
+                  td(colspan="2")
+                    +isbnform('add', book)
           else
             tr
-              td(colspan="5").center #{__('longlist-nobooks')}
+              td(colspan="6").center #{__('longlist-nobooks')}
     if req.user && state == 'LONGLIST'
       .grid-row
         .column-two-thirds
