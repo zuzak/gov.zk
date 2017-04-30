@@ -43,7 +43,10 @@ block content
                   abbr.read(title=__('shortlist-flag-alreadyread')) 📖 
             td
               strong
-                a(href='/book-club/book/' + result.isbn) #{result.title}
+                if result.isbn
+                  a(href='/book-club/book/' + result.isbn) #{result.title}
+                else
+                  span #{result.title}
               br
               span  #{result.author}
 
