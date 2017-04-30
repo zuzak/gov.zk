@@ -438,3 +438,7 @@ app.post(__l('/book-club/reading-list'), function (req, res) {
   }
   return res.render('error.pug', {req, msg: __('longlist-edit-isbn-fail')})
 })
+
+app.get(__l('/book-club/books.json'), function (req, res) {
+  return res.json(booklist.load())
+})
