@@ -335,7 +335,7 @@
   "api-lastused": "Last used",
   "api-createdon": "Generated at",
   "api-uses": "Times used",
-  "apikey-link": "Generate API key",
+  "apikey-link": "Generate an API key",
   "api-delete-button": "Revoke key",
   "api-regen-button": "Revoke this key and generate another",
   "api-newkey-button": "Generate an API key",
