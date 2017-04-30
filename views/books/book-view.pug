@@ -50,43 +50,40 @@ block content
             span #{__('book-onreadinglist')}
             if typeof book.readingList === 'string'
               span &nbsp;(#{book.readingList})
-          h2.heading-medium #{__('book-readingstatus')}
-          include reading-table.pug
-          include reading-form.pug
-        if book.approve
-          h2.heading-medium #{__('book-ballot-title')}
-          table
-            thead
+        h2.heading-medium #{__('book-readingstatus')}
+        include reading-table.pug
+        include reading-form.pug
+        h2.heading-medium #{__('book-ballot-title')}
+        table
+          thead
+            tr
+              th #{__('book-ballot-voter')}
+              th #{__('book-ballot-approval')}
+              th #{__('book-ballot-already-read')}
+              th #{__('book-ballot-owns-copy')}
+          - ballots = [].concat(book.approve).concat(book.disapprove).sort().filter(n=>n)
+          if ballots.indexOf(req.user) == -1
+            tr
+              td(colspan=4).center #{__('book-ballot-notvotedyet')}
+          else
+            for name in ballots
               tr
-                th #{__('book-ballot-voter')}
-                th #{__('book-ballot-approval')}
-                th #{__('book-ballot-already-read')}
-                th #{__('book-ballot-owns-copy')}
-            - ballots = book.approve.concat(book.disapprove).sort()
-            if ballots.indexOf(req.user) === -1
-              tr
-                td(colspan=4).center #{__('book-nballot-notvotedyet')}
-            else
-              for name in ballots
-                tr
-                  th
-                    span #{name}
-                    if name == book.longlistedBy
-                      abbr(title="Longlister").green &nbsp;✎
-                  if book.approve.indexOf(name) !== -1
-                    td.green ☑  #{__('book-ballot-approval-yes')}
-                  else
-                    td.red #{__('book-ballot-approval-no')}
-                  if book.alreadyRead && book.alreadyRead.indexOf(name) !== -1
-                    td #{__('book-ballot-already-read-yes')}
-                  else
-                    td #{__('book-ballot-already-read-no')}
-                  if book.haveCopy && book.haveCopy.indexOf(name) !== -1
-                    td #{__('book-ballot-owns-copy-yes')}
-                  else
-                    td #{__('book-ballot-owns-copy-no')}
-
-
+                th
+                  span #{name}
+                  if name == book.longlistedBy
+                    abbr(title="Longlister").green &nbsp;✎
+                if book.approve.indexOf(name) !== -1
+                  td.green ☑  #{__('book-ballot-approval-yes')}
+                else
+                  td.red #{__('book-ballot-approval-no')}
+                if book.alreadyRead && book.alreadyRead.indexOf(name) !== -1
+                  td #{__('book-ballot-already-read-yes')}
+                else
+                  td #{__('book-ballot-already-read-no')}
+                if book.haveCopy && book.haveCopy.indexOf(name) !== -1
+                  td #{__('book-ballot-owns-copy-yes')}
+                else
+                  td #{__('book-ballot-owns-copy-no')}
     if book.upstream
       .column-one-third
         .grid-row
