@@ -1,4 +1,8 @@
-.phase-banner-alpha
-  p
-    strong.phase-tag #{__('phasetag-alpha')}
-    span You can now issue reading status updates on arbitrary books, in case you want to keep track of other books.
+if req.banner
+  .phase-banner-alpha
+    p
+      strong.phase-tag #{__('phasetag-alpha')}
+      if req.banner.a
+        a(href=req.banner.a) #{req.banner.b}
+      else
+        span #{req.banner.b}

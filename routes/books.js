@@ -41,6 +41,25 @@ var booklist = {
   }
 }
 
+app.use(__l('/book-club').map(function (x) { return x + '/*' }), function (req, res, next) {
+  var books = booklist.load()
+  var count = 0
+  for (var i = 0; i < books.length; i++) {
+    if (!books[i].approve) {
+      count++
+      continue
+    }
+    if (books[i].approve.concat(books[i].disapprove).indexOf(req.user) === -1) {
+      count++
+      continue
+    }
+  }
+  if (count > 0) {
+    req.banner = { a: __('/book-club/short-list'), b: __('banner-incompletevotes', { count }) }
+  }
+  next()
+})
+
 app.get(__l('/book-club'), function (req, res) {
   var books = booklist.load()
   var longlist = books.length
