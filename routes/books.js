@@ -187,14 +187,14 @@ app.get(__l('/book-club/short-list'), function (req, res) {
 
     results.sort(function (a, b) {
       var count = 0
-      count -= a.approve.length * 1000
-      count -= a.sav
+      // count -= a.approve.length * 1000
+      count -= a.sav * 1000
       if (a.alreadyRead) count += a.alreadyRead.length / 10
       if (a.difficult) count += 1 / 100
       if (a.readingList) count -= 1 / 100
 
-      count += b.approve.length * 1000
-      count += b.sav
+      // count += b.approve.length * 1000
+      count += b.sav * 1000
       if (b.alreadyRead) count -= b.alreadyRead.length / 10
       if (b.difficult) count -= 1 / 100
       if (b.readingList) count += 1 / 100
