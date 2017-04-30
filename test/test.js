@@ -274,4 +274,20 @@ describe('internationalization', function () {
     missingKeys.length.should.equal(0)
     done()
   })
+
+  for (i = 0; i < f.length; i++) {
+    ;(function (x) {
+      if (x.indexOf('.json') === -1) return
+      it('should be sorted alphabetically (' + x + ')', function (done) {
+        fs.readFile(x, function (err, data) {
+          if (err) throw err
+          var a, b
+          a = b = Object.keys(JSON.parse(data))
+          a.sort()
+          ;(a === b).should.equal(true)
+          done()
+        })
+      })
+    })(f[i])
+  }
 })
