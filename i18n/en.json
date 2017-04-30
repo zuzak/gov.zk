@@ -342,5 +342,6 @@
   "api-json-dropdown": "List of JSON endpoints",
   "api-json-prose": "The following is an automatically generated list of JSON endpoints, which may be useful. Note that the API key works on all pages, not just ones ending in .json.",
   "about-privacy-dnt": "This website uses Google Analytics. However, it is disabled whilst the \"Do Not Track\" setting of your browser is enabled.",
+  "about-privacy-cookies": "It also uses cookies, which are small files placed on your computer. These are used to store your preferred interface language, and to allow you to log in.",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }

@@ -342,5 +342,7 @@
   "api-newkey-button": "Button to generate a new API key where there was no active API key before",
   "api-json-dropdown": "Text of dropdown link, contents of which are a list of automatically generated JSON endpoints",
   "api-json-prose": "Contents of dropdown on API page. Paragraph appears before a computer-generated bullet point list of API endpoints ending in .json.",
+  "about-privacy-dnt": "Displayed instead of about-privacy-ganalytics if the DNT HTTP header is set",
+  "about-privacy-cookies": "Paragraph of about page",
   "zuzakistan-full": "The full name of a micronation"
 }
