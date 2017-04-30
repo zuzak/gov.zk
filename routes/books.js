@@ -95,7 +95,7 @@ app.get(__l('/book-club/admin'), function (req, res) {
     fs.writeFileSync('data/admin.json', JSON.stringify(admin))
   }
   if (!admin.admins || admin.admins.length === 0) {
-    return res.render('error.pug', {err: __('admin-noadmins'), req})
+    return res.status(403).render('error.pug', {err: __('admin-noadmins'), req})
   }
   if (admin.admins.indexOf(req.user) === -1) {
     return res.status(403).render('403.pug', {req})
