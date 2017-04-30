@@ -248,5 +248,30 @@ describe('internationalization', function () {
       })
     })(f[i])
   }
-})
 
+  it('should have message documentation for every English string', function (done) {
+    var en = Object.keys(require('../i18n/en.json'))
+    var qqx = Object.keys(require('../i18n/qqx.json'))
+
+    var missingKeys = en.filter(function (x) {
+      return qqx.indexOf(x) < 0
+    })
+
+    if (missingKeys.length > 0) throw Error('Missing qqx keys for ' + missingKeys.join(', '))
+    missingKeys.length.should.equal(0)
+    done()
+  })
+
+  it('should have no surplus message documentation', function (done) {
+    var en = Object.keys(require('../i18n/en.json'))
+    var qqx = Object.keys(require('../i18n/qqx.json'))
+
+    var missingKeys = qqx.filter(function (x) {
+      return en.indexOf(x) < 0
+    })
+
+    if (missingKeys.length > 0) throw Error('Surplus qqx keys for ' + missingKeys.join(', '))
+    missingKeys.length.should.equal(0)
+    done()
+  })
+})
