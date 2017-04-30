@@ -89,6 +89,9 @@ block content
       h3.heading-medium #{__('about-privacy-heading')}
       p #{__('about-privacy-ganalytics')}
       h3.heading-medium #{__('about-git-heading')}
+      if state.ahead === 0
+        a(style="float:right",href='//travis-ci.org/zuzak/gov.zk')
+          img(src='//travis-ci.org/zuzak/gov.zk.svg?branch='+state.branch)
       p #{__('about-git-branch', {branch: state.branch})}
       p
         span #{__('about-git-hash')} &nbsp;
