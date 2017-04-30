@@ -3,7 +3,7 @@ table
     tr
       th #{__('reading-username')}
       th #{__('reading-status')}
-      th #{__('reading-progress')}
+      th(colspan="2") #{__('reading-progress')}
       if book.status
         for person in Object.keys(book.status)
           tr
@@ -15,11 +15,17 @@ table
               if obj.pages
                 td
                   span #{obj.pages} / #{book.upstream.pageCount}
+                td
                   progress(value=obj.pages,max=book.upstream.pageCount)
               else
                 if obj.freeform
                   td 
                     em #{obj.freeform}
+                else
+                  td
+                if obj.status === 'finished'
+                  td
+                    progress(value=book.upstream.pageCount,max=book.upstream.pageCount)
                 else
                   td
             else
