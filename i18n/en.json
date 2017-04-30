@@ -341,5 +341,6 @@
   "api-newkey-button": "Generate an API key",
   "api-json-dropdown": "List of JSON endpoints",
   "api-json-prose": "The following is an automatically generated list of JSON endpoints, which may be useful. Note that the API key works on all pages, not just ones ending in .json.",
+  "about-privacy-dnt": "This website uses Google Analytics. However, it is disabled whilst the \"Do Not Track\" setting of your browser is enabled.",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }
