@@ -127,6 +127,7 @@
   "longlist-add-book-disabled": "Dych chi'n ddim yn gallu adio llyfrau ar hyn o bryd.",
   "longlist-add-form-author": "Awdur llyfr",
   "longlist-add-form-booktitle": "Teitl llyfr",
+  "longlist-add-form-difficult": "Mae y llyfr hwn yn hir neu annodd",
   "longlist-add-form-submit": "Adio llyfr",
   "longlist-add-isbn-button": "Adio ISBN",
   "longlist-add-isbn-header": "Adio ISBN",
