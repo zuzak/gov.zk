@@ -34,7 +34,12 @@ function generateNewKey (keys) {
 }
 
 app.get(__l('/profile/api-key'), function (req, res, next) {
-  var admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  var admin = {}
+  try {
+    admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  } catch (e) {
+    if (e.code !== 'ENOENT') throw e
+  }
   var key = null
   if (admin.keys && admin.keys[req.user]) {
     key = admin.keys[req.user]
@@ -72,7 +77,13 @@ app.post(__l('/profile/api-key'), function (req, res, next) {
     return res.status(400).render('error.pug', {req})
   }
 
-  var admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  var admin = {}
+  try {
+    admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  } catch (e) {
+    if (e.code !== 'ENOENT') throw e
+  }
+
   if (!admin) return next()
 
   if (!admin.keys) admin.keys = {}
