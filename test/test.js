@@ -2,6 +2,7 @@
 var app = require('..')
 var request = require('supertest')
 var path = require('path') // core
+var endpoints = require('express-list-endpoints')
 var pug = require('pug')
 var fs = require('fs')
 var recurse = require('recursive-readdir-sync')
@@ -72,23 +73,23 @@ describe('routes', function () {
       .get('/book-club/admin')
       .expect(403, done)
   })
-  var routes = [
-    '/',
-    '/book-club',
-    '/book-club/long-list',
-    '/book-club/long-list/add-a-book',
-    '/book-club/reading-list',
-    '/book-club/short-list',
-    '/hello-world'
-  ]
-  for (var i = 0; i < routes.length; i++) {
+  var endpoint = endpoints(app)
+  var routes = []
+  for (var i = 0; i < endpoint.length; i++) {
+    if (endpoint[i].methods.length === 1 && endpoint[i].methods[0] === 'GET') {
+      routes = routes.concat(endpoint[i].path.split(',').filter(function (x) {
+        return x.startsWith('/') && x.indexOf(':') === -1 && x !== '/500'
+      }))
+    }
+  }
+  for (i = 0; i < routes.length; i++) {
     ;(function (route) {
-      it('route ' + route + ' should 200', function (done) {
+      it('route ' + route + ' should not result in a server error', function (done) {
         request(app)
           .get(route)
-          .expect(200)
           .end(function (err, res) {
             if (err) throw err
+            res.serverError.should.equal(false)
             res.text.should.not.containEql('Log in to GOV.ZK')
             done()
           })
