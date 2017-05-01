@@ -51,7 +51,7 @@
   "about-i18n-table-progress": "Translation progress",
   "about-link": "About this website",
   "about-mit-licence": "The MIT Licence",
-  "about-nochanges": "The code currently running is synchronised with GitHub.",
+  "about-nochanges": "There are no outstanding changes on this server to push upstream to GitHub.",
   "about-privacy-cookies": "It also uses cookies, which are small files placed on your computer. These are used to store your preferred interface language, and to allow you to log in.",
   "about-privacy-dnt": "This website uses Google Analytics. However, it is disabled whilst the \"Do Not Track\" setting of your browser is enabled.",
   "about-privacy-ganalytics": "This website uses Google Analytics.",
