@@ -4,6 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/zuzak/gov.zk/badges/gpa.svg)](https://codeclimate.com/github/zuzak/gov.zk)
 [![Coverage Status](https://coveralls.io/repos/github/zuzak/gov.zk/badge.svg?branch=master)](https://coveralls.io/github/zuzak/gov.zk?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Website status](https://img.shields.io/website-up-down-green-red/https/zuzakistan.com.svg?label=zuzakistan.com)](https://zuzakistan.com)
 
 An intranet for a small Internet community that sometimes likes to pretend to be a tiny enclave in rural Wales.
 Features include login via Internet Relay Chat, and a somewhat overengineered method to decide the next novel in our book club.
