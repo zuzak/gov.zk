@@ -203,7 +203,7 @@
   "irc-alreadyused": "Verification code already used. Please refresh and try again.",
   "irc-errorconnecting": "Error connecting to IRC network",
   "irc-keynotfound": "Key not found.",
-  "irc-notwhitelisted": "Your nickname is not on the whitelist.",
+  "irc-notwhitelisted": "Your nickname is not on the whitelist. If you already have an account, please change your IRC nickname to the one you used to sign in originally, then try again.",
   "irc-return": "Please return to your browser to continue.",
   "irc-unrecognized": "Verification code not recognized. Please refresh and try again.",
   "irc-verify": "VERIFY",
