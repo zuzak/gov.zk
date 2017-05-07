@@ -309,6 +309,7 @@
   "shortlist-doublevote": "Error shown if a user tries to vote twice on a book",
   "shortlist-flag-alreadyread": "Title of a open book icon used next to books of which someone has marked as already reading",
   "shortlist-flag-difficult": "Title of a swerving car icon used next to books that are marked long or difficult",
+  "shortlist-flag-hasreadingstatus": "Displayed as title of closed book emoji if someone has set a reading status on the book in question",
   "shortlist-flag-longlisted": "Title of pencil icon used next to books that the current user has longlisted",
   "shortlist-flags": "Shortlist book table header above pictoral flags showing status",
   "shortlist-person-approval-count": "Title of approval percentage cell. Number of approvals by that user shown as {{count}}.",

@@ -39,7 +39,9 @@ block content
                 if result.difficult
                   abbr.red(title=__('shortlist-flag-difficult')) &#9936;
               td
-                if result.alreadyRead && result.alreadyRead.length > 0
+                if result.status
+                  abbr.read(title=__('shortlist-flag-hasreadingstatus')) 📕
+                else if result.alreadyRead && result.alreadyRead.length > 0
                   abbr.read(title=__('shortlist-flag-alreadyread')) 📖 
             td
               strong

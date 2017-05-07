@@ -308,6 +308,7 @@
   "shortlist-doublevote": "You have already voted on that book.",
   "shortlist-flag-alreadyread": "Somebody has already read this",
   "shortlist-flag-difficult": "Marked difficult",
+  "shortlist-flag-hasreadingstatus": "Someone has updated their reading status for this book",
   "shortlist-flag-longlisted": "You longlisted this",
   "shortlist-flags": "Flags",
   "shortlist-person-approval-count": "{{count}} approvals",
