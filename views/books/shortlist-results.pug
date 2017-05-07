@@ -73,7 +73,7 @@ block content
             if sav === '0.00'
               td.numeric #{__('shortlist-approvals-nil')}
             else
-              td.numeric #{sav}
+              td.numeric(title=__('shortlist-sav-title', {sav: result.scaledSav})) #{sav}
     .column-one-third
       table
         thead

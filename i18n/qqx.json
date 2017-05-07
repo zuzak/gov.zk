@@ -333,6 +333,7 @@
   "shortlist-results-warning": "Message displayed in bold in sidebar of shortlist results page if voting is still in progress, as incomplete ballots cause the ranking to be off",
   "shortlist-sav": "Satisfaction approval voting, used when there is space for the full name or as the title element of an abbr tag",
   "shortlist-sav-abbr": "Abbreviation for satisfaction approval voting, used in shortlist book table header",
+  "shortlist-sav-title": "Title on SAV cell. Takes variable {{sav}} which is a value between 0 and 100",
   "shortlist-selected": "Used in place of flags to state that the associated book is on the reading list. Might have variable {{note}} which if present is an English annotation (e.g. book club date)",
   "shortlist-stat-unanimous": "Stat of number of books voted yes by all users",
   "shortlist-voting-anonwarning": "String displayed on book club index when shortlist voting is being promoted",

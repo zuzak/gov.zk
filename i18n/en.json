@@ -332,6 +332,7 @@
   "shortlist-results-warning": "Not all ballots are complete, so the rankings of these books may be misleading",
   "shortlist-sav": "Satisfaction Approval Voting",
   "shortlist-sav-abbr": "SAV",
+  "shortlist-sav-title": "{{sav}}% satisfaction",
   "shortlist-selected": "Selected {{note}}",
   "shortlist-stat-unanimous": "unanimous books",
   "shortlist-voting-anonwarning": "Please note that votes are not anonymous.",
