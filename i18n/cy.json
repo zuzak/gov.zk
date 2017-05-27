@@ -90,6 +90,8 @@
   "error": "Gwall",
   "error-403-heading": "403: Gwall canitâd",
   "error-403-prose": "Ni chaniateir i chi wneud y weithred y gwnaethoch gais amdani.",
+  "error-501-back": "Yn ôl i'r hafan",
+  "error-501-heading": "Dalfan",
   "error-unknown": "Cafwyd gwall anhysbys",
   "fallback": "«{{content}}»",
   "gov-zk": "GOV.ZK",
