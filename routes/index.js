@@ -17,5 +17,7 @@ require('./books.js')
 require('./reading.js')
 require('./misc.js')
 
+require('./diaspora.js')
+
 // this must be last:
 require('./errors.js')

@@ -32,6 +32,13 @@ block content
           a(href=__('/book-club/short-list')) #{__('short-list-link')}
         li
           a(href=__('/book-club/reading-list')) #{__('reading-list-link')}
+    .column-one-third
+      h3.heading-medium
+          a(href='/diaspora-affairs') #{__('homepage-diaspora-header')}
+      ul.font-small
+        li
+          a(href=__('/diaspora-affairs/edit-your-details')) #{__('diaspora-edit-link')}
+    .column-one-third
       h3.heading-medium #{__('homepage-governance-header')}
       ul.font-small
         li
@@ -45,5 +52,6 @@ block content
             a(href=__('/log-out')) #{__('logout-long')}
           else
             a(href=__('/log-in')) #{__('login-long')}
-    .column-two-thirds
+  .grid-row
+    .column-full
         p.placeholder #{__('placeholder')}

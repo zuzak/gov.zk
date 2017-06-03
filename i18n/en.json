@@ -1,6 +1,8 @@
 {
   "/about-this-website": "/about-this-website",
   "/book-club": "/book-club",
+  "/diaspora-affairs": "/diaspora-affairs",
+  "/diaspora-affairs/edit-my-detaisl": "diaspora-affairs",
   "/book-club/admin": "/book-club/admin",
   "/book-club/book/:isbn": "/book-club/book/:isbn",
   "/book-club/book/:isbn/:user": "/book-club/book/:isbn/:user",
@@ -346,5 +348,7 @@
   "stat-shortlist-votes": "shortlist votes",
   "welcome": "Welcome to Zuzakistan",
   "zuzakistan": "Zuzakistan",
+  "homepage-diaspora-header": "Diaspora Affairs",
+  "diaspora-edit-link": "Edit your details",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }
