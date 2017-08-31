@@ -6,16 +6,9 @@
  */
 
 // interstitials
-require('./api.js')
-require('./auth.js')
 
-require('./login.js')
-require('./i18n.js')
-
-require('./about.js')
-require('./books.js')
-require('./reading.js')
 require('./misc.js')
+require('./cakes.js')
 
 // this must be last:
 require('./errors.js')

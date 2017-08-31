@@ -3,9 +3,10 @@ var exec = require('child_process').exec
 var fs = require('fs')
 
 function rollFortune () {
-  exec('/usr/games/fortune -s -n60', function (err, stdout, stderr) {
+  exec('fortune -s -n60', function (err, stdout, stderr) {
     if (err) {
-      stdout = __('home-defaultfortune')
+      console.log(err)
+      stdout = 'Helo'
     }
     try {
       fs.writeFileSync('data/fortune.txt', stdout)
@@ -26,13 +27,4 @@ app.get('/', function (req, res) {
     }
     throw e
   }
-})
-
-app.get(__l('/hello-world'), function (req, res) {
-  res.render('hello.pug', {req})
-})
-
-app.get('/500', function (req, res) {
-  var err = new Error(__('err-dryrun'))
-  throw err
 })

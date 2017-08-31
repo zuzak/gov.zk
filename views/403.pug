@@ -1,9 +1,9 @@
 extends skeleton
 block title
-  title #{__('error-403-heading')}
+  title Forbidden
 block content
   .grid-row.error.form-group-error
     .column-two-thirds
-      h1.heading-xlarge #{__('error-403-heading')}
-      p #{__('error-403-prose')}
-      a.link-back(href='/') #{__('error-403-back')}
+      h1.heading-xlarge Forbidden
+      p The server understood the request but refuses to authorize it.
+      a.link-back(href='/') Back to homepage

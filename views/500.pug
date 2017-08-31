@@ -1,15 +1,15 @@
 extends skeleton
 block title
-  title #{__('error-500-heading')}
+  title Internal Server Error
 block content
   .error.error-panel.form-group-error
-    h1.heading-xlarge #{__('error-500-heading')}
-    p #{__('error-500-prose')}
+    h1.heading-xlarge Internal Server Error
+    p The server encountered an unexpected condition that prevented it from fulfilling the request.
     if err
       details(open)
         summary
-          span.summary #{__('error-500-stack-dropdown')}
+          span.summary Stack trace
         pre.code.stack= err.stack
     else
-      p #{__('error-500-stack-nostack')}
-    a.link-back(href='/') #{__('error-500-back')}
+      p That's all we know.
+    a.link-back(href='/') Back to homepage

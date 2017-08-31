@@ -2,7 +2,7 @@ $path: "/";
 $toolkit-font-stack: "Varela";
 $accent-color: #4b92db;
 $accent-color: #843B68;
-
+$accent-color: #FE9702;
 
 @import 'https://fonts.googleapis.com/css?family=Varela';
 
@@ -75,4 +75,21 @@ footer a:hover {
   list-style-type: none;
   li, h2, ul { display: inline-block; }
   h2 { font-weight: bold; }
+}
+
+
+.samplelist {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  li {
+    text-transform: uppercase;
+    flex-grow: 1;
+    text-align: center;
+    list-style-type: none;
+    a {
+      font-size: 3em;
+      display:block;
+    }
+  }
 }

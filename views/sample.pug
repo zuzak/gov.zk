@@ -1,0 +1,38 @@
+extends skeleton
+block css
+  link(rel="stylesheet",href="/index.css")
+block breadcrumbs
+block content
+  h1.heading-large Sample #{sample.toUpperCase()}
+  form.column-two-thirds
+    fieldset
+      h2.heading-medium On a scale of zero to one hundred, how do you rate sample #{sample.toUpperCase()}'s Genoise sponge base?
+      input(type="number", min="0", max="100", name="sponge").form-control-1-8
+    fieldset
+       h2.heading-medium On the same scale, how do you rate sample #{sample.toUpperCase()}'s orange filling?
+       input(type="number", min="0", max="100", name="orange").form-control-1-8
+    fieldset
+      h2.heading-medium On a scale of zero to one hundred, how do you rate sample #{sample.toUpperCase()}'s chocolate topping?
+      input(type="number", min="0", max="100", name="chocolate").form-control-1-8
+    fieldset.inline
+      legend
+        h2.heading-medium Do you think this sample #{sample.toUpperCase()} is McVitie's Jaffa Cakes?
+      .multiple-choice
+        input(type="radio", name="mcvities", value="Yes")#mcv1
+        label(for="mcv1") Yes
+      .multiple-choice
+        input(type="radio", name="mcvities", value="No")#mcv2
+        label(for="mcv2") No
+    fieldset
+      h2.heading-medium How much do you think a pack of twelve Jaffa Cake #{sample.toUpperCase()} cost?
+      span £
+      input(type="number", min="0", step="0.01", name="chocolate").form-control-1-4
+    fieldset.inline
+      legend
+        h2.heading-medium Would you consider buying sample  #{sample.toUpperCase()} instead of McVitie's?
+        .multiple-choice
+          input(type="radio", name="buyagain", value="Yes")#ba1
+          label(for="ba1") Yes
+        .multiple-choice
+          input(type="radio", name="buyagain", value="No")#ba2
+          label(for="ba2") No

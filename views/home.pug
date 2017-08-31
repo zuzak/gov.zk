@@ -7,43 +7,20 @@ block content
     .grid-row
       .column-two-thirds
         .fortune-outer
-          h1.heading-xlarge #{__('welcome')}
+          h1.heading-xlarge Jaffa Cakes
           if fortune
             p.font-small.fortune #{String(fortune).replace(/--/g,'—')}
           else
-            p.font-small.fortune #{__('home-defaultfortune')}
+            p.font-small.fortune Hello
       .column-one-third.black-nav
-        h2.heading-small #{__('homepage-nav-header')}
+        h2.heading-small Navigation
         ul.list.list-bullet.font-small
           li
-            a(href='//gsi.zuzakistan.com') #{__('homepage-gsi-link')}
-          li
-            a(href=__('/book-club')) #{__('homepage-bookclub-link')}
-          li
-            a(href='//webm.website') #{__('homepage-webm-link')}
-  .grid-row.main-body
-    .column-one-third
-      h3.heading-medium
-        a(href=__('/book-club')) #{__('book-club')}
-      ul.font-small
-        li
-          a(href=__('/book-club/long-list/add-a-book')) #{__('longlist-add-book')}
-        li
-          a(href=__('/book-club/short-list')) #{__('short-list-link')}
-        li
-          a(href=__('/book-club/reading-list')) #{__('reading-list-link')}
-      h3.heading-medium #{__('homepage-governance-header')}
-      ul.font-small
-        li
-          a(href='//github.com/zuzak/gov.zk') #{__('source-link')}
-        li
-          a(href='//github.com/zuzak/gov.zk/issues/new') #{__('issues-link')}
-        li
-          a(href=__('/profile/api-key')) #{__('apikey-link')}
-        li
-          if req.user
-            a(href=__('/log-out')) #{__('logout-long')}
-          else
-            a(href=__('/log-in')) #{__('login-long')}
-    .column-two-thirds
-        p.placeholder #{__('placeholder')}
+            a(href='//gsi.zuzakistan.com') GSI
+  .grid-row
+      h2.heading-medium Voting
+      p.heading-small Which sample do you wish to rate next?
+      ul.samplelist
+        for sample in "abcdefg".split('')
+          li: a(href='/ranking/'+sample)= sample
+      p.placeholder: span(lang="cy") nid byd, byd heb cacennau

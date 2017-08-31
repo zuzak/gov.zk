@@ -1,11 +1,11 @@
 extends skeleton
 block title
-  title #{__('error-404-heading')}
+  title Not Found
 block content
   .grid-row.error.form-group-error
     .column-two-thirds
-      h1.heading-xlarge #{__('error-404-heading')}
-      p #{__('error-404-prose')}
-      p #{__('error-404-perfect-misunderstanding')}
+      h1.heading-xlarge Not Found
+      p The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
+      p Perhaps it was...
       iframe(type='text/html',width="940",height="530",src="https://www.youtube.com/embed/VH-uwNsyzf0?autoplay=1&controls=0&modestbranding=1&rel=0",frameborder="0")
-      a.link-back(href='/') #{__('error-404-back')}
+      a.link-back(href='/') Back

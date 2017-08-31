@@ -3,15 +3,9 @@ doctype html
 html
   head
     block title
-      title #{__('gov-zk')}
+      title GOV.ZK
     block css
       link(rel='stylesheet', href='/index.css')
-    block js
-    if req
-      if req.user
-        link(rel="shortcut icon" href="/figroll.png")
-      else
-        link(rel="shortcut icon" href="/favicon.png")
   body
     if req && req.get('DNT') !== '1'
       if req.user
@@ -39,8 +33,9 @@ html
         .grid-row
           .column-two-thirds.font-large
             block header
-              a.logo(href='/') &#9819; #{__('gov-zk')}
-          .columns-one-third
+              //a.logo(href='/') &#9819; GOV.ZK
+          //-
+            .columns-one-third
             block login
               if req
                 if req.user
@@ -53,25 +48,14 @@ html
     #content
       block banner
         .accent-bar
-        include banner.pug
       block breadcrumbs
         .breadcrumbs
           ol
             li
-              a(href="/") #{__('home')}
+              a(href="/") Home
             block breadcrumb
       block content
     footer
       .footer
         block footer
           .grid-row
-            div.column-two-thirds.languages
-              h2 #{__('languages')}
-              ul
-                each locale in __h('autonym')
-                  each autonym, skeleton_code in locale
-                    if skeleton_code !== 'qqx' && req
-                      li
-                        a(href='/change-lang/'+skeleton_code+'?returnTo='+req.originalUrl) #{autonym}
-            p.column-one-third.center
-              a(href=__('/about-this-website')) #{__('about-link')}
