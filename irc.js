@@ -2,7 +2,6 @@ var irc = require('irc')
 var auth = require('./auth')
 
 var networks = [
-  'lem0n.net',
   'chat.freenode.net'
 ]
 
