@@ -17,8 +17,6 @@ require('./books.js')
 require('./reading.js')
 require('./misc.js')
 
-require('./diaspora.js')
-
 require('./pisg.js')
 
 // this must be last:
