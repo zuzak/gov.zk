@@ -9,6 +9,7 @@
   "/book-club/long-list/add-a-book": "/book-club/long-list/add-a-book",
   "/book-club/reading-list": "/book-club/reading-list",
   "/book-club/short-list": "/book-club/short-list",
+  "/chan-stats": "/chan-stats",
   "/change-lang/:lang": "/change-lang/:lang",
   "/hello-world": "/hello-world",
   "/log-in": "/log-in",

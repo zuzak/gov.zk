@@ -1,0 +1,9 @@
+//- Used for testing: [squeamish ossifrage]
+extends skeleton
+block append css
+  link(rel='stylesheet', href='/pisg.css')
+block title
+  title #{__('hello-world')}
+block content
+  .grid-row !{pisg}
+

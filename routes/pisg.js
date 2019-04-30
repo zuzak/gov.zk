@@ -1,25 +1,11 @@
 var app = require('..')
 const path = require('path')
-const express = require('express')
+const fs = require('fs')
 
-let router = express.Router()
-let mountPoint = '/pisg'
+app.get(__l('/chan-stats'), function (req, res, next) {
+  let data = fs.readFileSync(path.resolve(path.join(__dirname, '..', 'pisg', 'index.html')), 'utf-8')
+  let body = data.substring(data.lastIndexOf('<body>') + 6, data.lastIndexOf('</body>'))
+  let css = data.substring(data.lastIndexOf('<style>') + 8, data.lastIndexOf('</style>'))
 
-router.get('*', function (req, res, next) {
-  let file = req.originalUrl.substring(mountPoint.length)
-  if (file === '/') {
-    file = 'index.html'
-  }
-  try {
-    return res.sendFile(file, {
-      root: path.resolve(path.join(__dirname, '..', 'pisg'))
-    })
-  } catch (e) {
-    console.log('->', e)
-    console.log(e.code)
-    if (e.code === 'ENOENT') return next()
-  }
+  return res.render('pisg.pug', {pisg: body, req, style: css})
 })
-
-app.use(mountPoint + '/*', router)
-

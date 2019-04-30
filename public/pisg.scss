@@ -1,0 +1,114 @@
+$path: "/";
+$toolkit-font-stack: "nta", "Raleway";
+$accent-color: #4b92db;
+$accent-color: #843B68;
+
+
+@import 'https://fonts.googleapis.com/css?family=Raleway';
+
+@import 'govuk-elements';
+@import '_typography';
+
+
+body {
+  background-color: #dedeee;
+}
+a:hover {
+    text-decoration: underline;
+    color: #0b407a;
+}
+
+a.background {
+    text-decoration: none;
+}
+
+a.background:link {
+    color: #0b407a;
+}
+
+a.background:visited {
+    color: #0b407a;
+}
+
+a.background:hover {
+    text-decoration: underline;
+    color: #0b407a;
+}
+
+body {
+    font-size: 13px;
+}
+
+td {
+    color: black;
+    text-align: left;
+}
+
+table tbody td { font-size: 13px; .small{ font-size: 10px !important; }}
+
+.title {
+  @include bold-24();
+}
+
+.headtext {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    background-color: #666699;
+}
+
+.tdhead {
+  background-color: #bbb;
+}
+b {
+  font-weight: bold !important;
+}
+
+.hicell {
+    background-color: #BABADD;
+}
+
+.hicell10 {
+    background-color: #BABADD;
+    font-size: 10px;
+}
+
+
+.rankc, .hirankc {
+    background-color: #CCCCCC;
+    text-align: center;
+    padding-right: 0.5em
+}
+
+.hirankc {
+    font-weight: bold;
+
+}
+
+.rankc10center {
+    text-align: center;
+}
+
+.hirankc10center {
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.tdtop {
+  background-color: #C8C8DD;
+}
+
+.asmall {
+      font-size: 10px;
+      color: black;
+      text-align: center;
+      line-height: 0;
+   img:first-of-type {
+     margin-top: 10px;
+   }
+}
+
+.asmall img[width="40"] {
+  margin-top: -3px;
+}

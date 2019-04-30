@@ -9,6 +9,7 @@
   "/book-club/long-list/add-a-book": "Route for adding a book to the longlist",
   "/book-club/reading-list": "Route for viewing a list of all the books on the reading list",
   "/book-club/short-list": "Route for voting on the longlist, or viewing the results of the vote if there are no outstanding ballots",
+  "/chan-stats": "Route for rendering pisg",
   "/change-lang/:lang": "Route for changing the interface language by setting a cookie",
   "/hello-world": "Route used for testing purposes",
   "/log-in": "Route used to log in",
