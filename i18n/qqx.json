@@ -200,6 +200,7 @@
   "homepage-governance-header": "Used on homepage to group links about source code, issues, and logging in.",
   "homepage-gsi-link": "Link used on homepage to link to the internal Zuzakistan wiki. Refer to either \"GSI\" or make reference to some internal government website.",
   "homepage-nav-header": "Header of black box on homepage.",
+  "homepage-pisg-link": "Link used on homepage to link to chan stats",
   "homepage-webm-link": "Link used on homepage to link to webm.website.",
   "irc-alreadyused": "Message sent by IRC client when the sent code has been invalidated",
   "irc-errorconnecting": "Message shown instead of an IRC command on the login page, if there is a problem with the IRC bot",

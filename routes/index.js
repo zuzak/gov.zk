@@ -19,5 +19,7 @@ require('./misc.js')
 
 require('./diaspora.js')
 
+require('./pisg.js')
+
 // this must be last:
 require('./errors.js')
