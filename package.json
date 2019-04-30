@@ -37,6 +37,7 @@
     "express-list-endpoints": "^3.0.0",
     "express-session": "^1.15.2",
     "express-session-json": "0.0.8",
+    "get-stdin": "^7.0.0",
     "git-state": "^2.5.1",
     "githash": "0.0.4",
     "govuk-elements-sass": "^3.0.2",
