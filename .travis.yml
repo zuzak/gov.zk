@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-    - "node"
-    - "8"
+    - "8.11.1"
 after_success:
     - "npm run coverage-push"
