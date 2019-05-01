@@ -26,7 +26,11 @@ block content
               abbr(title=__('shortlist-sav')) #{__('shortlist-sav-abbr')}
         if results.length == 0
           tr
-            td(colspan="7",style="text-align:center") #{__('shortlist-waiting')}
+            td(colspan="7",style="text-align:center")
+              if state.allowVoting
+                span #{__('shortlist-waiting')}
+              else
+                span #{__('shortlist-waiting-notyetopen')}
         for result in results
           tr
             if result.readingList
