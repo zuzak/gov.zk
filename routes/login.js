@@ -32,7 +32,7 @@ var validUsernames = [
   'samstudio8',
   'spaceinvader',
 // 'neko',
-  'zuzak',
+  'zuzak'
 ]
 
 app.post(__l('/log-in'), function (req, res) {
