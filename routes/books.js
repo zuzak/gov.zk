@@ -341,7 +341,7 @@ app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
           if (err) {
             var newbooks = replaceIsbn(books, books[i].author, books[i].title, null)
             if (newbooks) booklist.save(books)
-            return res.status(404).render('error.pug', {err})
+            return res.status(404).render('error.pug', {req, err})
           }
           books.oclc = classify.get(req.params.isbn, function (data) {
             books[i].upstream = book
@@ -401,7 +401,7 @@ app.post(__l('/book-club/book/:isbn/add-comment'), function (req, res) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
-      if (!req.body.comment) return res.status(400).render('error.pug')
+      if (!req.body.comment) return res.status(400).render('error.pug', {req})
       if (!books[i].comments) books[i].comments = []
       books[i].comments.push({
         'user': req.user,

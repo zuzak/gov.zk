@@ -39,7 +39,7 @@ block content
           if book.difficult
             p.panel #{__('book-difficult')}
         .column-one-third.sidebar
-          if book.upstream && book.upstream.imageLinks
+          if book.upstream && book.upstream.imageLinks && book.upstream.imageLinks.thumbnail
             img(src=book.upstream.imageLinks.thumbnail.replace('http://', '//'))
           if book.upstream && book.upstream.previewLink
             p
