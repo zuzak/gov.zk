@@ -118,11 +118,19 @@ describe('log in system', function () {
   })
   it('should work on POSTed login with verified key', function (done) {
     var key = auth.getNewKey()
-    auth.activateKey(key, 'test')
+    auth.activateKey(key, 'zuzak')
     request(app)
       .post('/log-in')
       .send({key})
       .expect(302, done) // redirect to /
+  })
+  it('should fail on POSTed login with verified key but unwhitelisted user', function (done) {
+    var key = auth.getNewKey()
+    auth.activateKey(key, 'test')
+    request(app)
+      .post('/log-in')
+      .send({key})
+      .expect(403, done)
   })
 })
 describe('log in JSON API', function () {
