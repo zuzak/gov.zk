@@ -246,6 +246,7 @@
   "longlist-lede-past": "The first step into deciding which books to read was to narrow the many available novels into a smaller list.",
   "longlist-lede-present": "The first step in deciding which books to read is to narrow down the many available novels into a smaller list.",
   "longlist-metadata-bad": "Metadata missing",
+  "longlist-metadata-missing": "Some metadata missing; try a different ISBN",
   "longlist-metadata-ok": "Metadata OK",
   "longlist-metadataproblem": "Books with a red {{glyph}} have problems with metadata.",
   "longlist-nobooks": "No books have been added to the long list.",
@@ -349,7 +350,6 @@
   "stat-longlisted-books": "longlisted books",
   "stat-readinglist-count": "books on reading list",
   "stat-shortlist-votes": "shortlist votes",
-  "longlist-metadata-missing": "Some metadata missing; try a different ISBN",
   "welcome": "Welcome to Zuzakistan",
   "zuzakistan": "Zuzakistan",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
