@@ -42,6 +42,7 @@ var booklist = {
 }
 
 app.use(__l('/book-club').map(function (x) { return x + '/*' }), function (req, res, next) {
+  if (!state.allowVoting) return next()
   var books = booklist.load()
   var count = 0
   for (var i = 0; i < books.length; i++) {
