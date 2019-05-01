@@ -106,6 +106,8 @@
   "book-ballot-approval": "Table heading of whether the user approved the book",
   "book-ballot-approval-no": "Shown in cell when user said they disapproved of the book choice",
   "book-ballot-approval-yes": "Cell contents of yes approval vote",
+  "book-ballot-changedmind": "Character that appears next to a voting result if the vote differs from the one stored in history",
+  "book-ballot-changedmind-title": "Description that appears when you hover over the book-ballot-changedmind string",
   "book-ballot-notvotedyet": "Text used instead of showing the ballot table on book view, if a user hasn't voted on the book yet",
   "book-ballot-owns-copy": "Table heading of whether the user had access to a copy of the book at the time of ballot",
   "book-ballot-owns-copy-no": "Cell contents of negative already read",

@@ -105,6 +105,8 @@
   "book-ballot-approval": "Approval",
   "book-ballot-approval-no": "No",
   "book-ballot-approval-yes": "Yes",
+  "book-ballot-changedmind": "Δ",
+  "book-ballot-changedmind-title": "{{user}} voted the other way last time",
   "book-ballot-notvotedyet": "You must vote before you can see the ballots for this book.",
   "book-ballot-owns-copy": "Owns copy",
   "book-ballot-owns-copy-no": "No",
