@@ -12,7 +12,7 @@ mixin isbnform(action, book)
       // label(for='isbn'+i) ISBN
       input(type='hidden',name='title',value=book.title)
       input(type='hidden',name='author',value=book.author)
-      input(type='text',name='isbn',style='width:initial;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
+      input(type='number',maxlength='13',name='isbn',style='width:9em;',id='isbn'+i,placeholder=book.isbn,size='11').form-control
       input(type='submit',value=__('longlist-'+action+'-isbn-button')).button
 block content
   h1.heading-xlarge #{__('long-list')}
