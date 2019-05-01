@@ -23,22 +23,16 @@ app.get(__l('/log-out'), function (req, res) {
 })
 
 var validUsernames = [
-  'andreas',
-  'bjarnboi',
-  'boolton',
+// 'bjarneboi',
+// 'boolton',
   'danhedron',
   'dendodge',
-  'douglas',
-  'golem',
+// 'golem',
   'kgz',
-  'kragniz',
-  'meddyg',
-  'neko',
-  'oripsambles',
   'samstudio8',
   'spaceinvader',
-  'test',
-  'zuzak'
+// 'neko',
+  'zuzak',
 ]
 
 app.post(__l('/log-in'), function (req, res) {
