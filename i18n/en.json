@@ -349,6 +349,7 @@
   "stat-longlisted-books": "longlisted books",
   "stat-readinglist-count": "books on reading list",
   "stat-shortlist-votes": "shortlist votes",
+  "longlist-metadata-missing": "Some metadata missing; try a different ISBN",
   "welcome": "Welcome to Zuzakistan",
   "zuzakistan": "Zuzakistan",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
