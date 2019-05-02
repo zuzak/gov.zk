@@ -75,7 +75,7 @@
   "admin-bookstates": "Book states",
   "admin-noadmins": "This installation has no administrators defined. See the README for details.",
   "admin-permissions": "permissions",
-  "admin-permissions-addtolonglist": "Allow voting on the longlist",
+  "admin-permissions-addtolonglist": "Allow adding books to the longlist",
   "admin-permissions-allowvoting": "Allow voting on the shortlist",
   "admin-state": "Book club states",
   "administration": "Administration",
