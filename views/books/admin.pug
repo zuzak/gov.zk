@@ -20,13 +20,13 @@ block content
         h3.heading-small #{__('admin-permissions')}
         fieldset
           .multiple-choice
-            if state.addToLonglist
+            if state.allowVoting
               input#choice4(type='checkbox', name='allowVoting', checked)
             else
               input#choice4(type='checkbox', name='allowVoting')
             label(for='choice4') #{__('admin-permissions-allowvoting')}
           .multiple-choice
-            if state.allowVoting
+            if state.addToLonglist
               input#choice5(type='checkbox', name='addToLonglist', checked)
             else
               input#choice5(type='checkbox', name='addToLonglist')
