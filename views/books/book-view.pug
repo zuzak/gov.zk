@@ -103,7 +103,7 @@ block content
                 th
                   abbr(title=__('book-isbn')) #{__('book-isbn-abbrev')}
                 td
-                  a(href='https://www.amazon.co.uk/s/r&field-isbn='+book.isbn) #{book.isbn}
+                  a(href='https://www.bookfinder.com/search/?st=sr&ac=qr&currency=GBP&isbn='+book.isbn) #{book.isbn}
             if book.upstream.publishedDate
               tr
                 th #{__('book-publishedDate')}
