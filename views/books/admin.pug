@@ -20,25 +20,36 @@ block content
         h3.heading-small #{__('admin-permissions')}
         fieldset
           .multiple-choice
-            input#choice4(type='checkbox', name='allowVoting')
+            if state.addToLonglist
+              input#choice4(type='checkbox', name='allowVoting', checked)
+            else
+              input#choice4(type='checkbox', name='allowVoting')
             label(for='choice4') #{__('admin-permissions-allowvoting')}
           .multiple-choice
-            input#choice5(type='checkbox', name='addToLonglist')
+            if state.allowVoting
+              input#choice5(type='checkbox', name='addToLonglist', checked)
+            else
+              input#choice5(type='checkbox', name='addToLonglist')
             label(for='choice5') #{__('admin-permissions-addtolonglist')}
         h3.heading-small #{__('admin-advertising')}
         fieldset(required)
           .multiple-choice
-            input#choice1(type='radio',name='advertise',value='LONGLIST')
+            if state.advertise == 'LONGLIST'
+              input#choice1(type='radio',name='advertise',value='LONGLIST', checked)
+            else
+              input#choice1(type='radio',name='advertise',value='LONGLIST')
             label(for='choice1') #{__('admin-advertising-longlist')}
-              if state == 'LONGLIST'
-                span  (active)
           .multiple-choice
-            input#choice2(type='radio',name='advertise',value='SHORTLIST')
+            if state.advertise == 'SHORTLIST'
+              input#choice2(type='radio',name='advertise',value='SHORTLIST', checked)
+            else
+              input#choice2(type='radio',name='advertise',value='SHORTLIST')
             label(for='choice2') #{__('admin-advertising-shortlist')}
-              if state == 'SHORTLIST'
-                span  (active)
           .multiple-choice
-            input#choice3(type='radio',name='advertise',value='READING_LIST')
+            if state.advertise == 'READING_LIST'
+              input#choice3(type='radio',name='advertise',value='READING_LIST', checked)
+            else
+              input#choice3(type='radio',name='advertise',value='READING_LIST')
             label(for='choice3') #{__('admin-advertising-readinglist')}
               if state == 'READING_LIST'
                 span  (active)
