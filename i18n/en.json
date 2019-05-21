@@ -110,7 +110,7 @@
   "book-ballot-notvotedyet": "You must vote before you can see the ballots for this book.",
   "book-ballot-owns-copy": "Owns copy",
   "book-ballot-owns-copy-no": "No",
-  "book-ballot-owns-copy-yes": "No",
+  "book-ballot-owns-copy-yes": "Yes",
   "book-ballot-title": "Ballot results",
   "book-ballot-voter": "Voter",
   "book-book-by": "a book by {{author}}",
