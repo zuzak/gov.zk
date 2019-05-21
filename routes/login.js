@@ -24,13 +24,13 @@ app.get(__l('/log-out'), function (req, res) {
 
 var validUsernames = [
 // 'bjarneboi',
-// 'boolton',
   'danhedron',
   'dendodge',
 // 'golem',
   'kgz',
   'samstudio8',
   'spaceinvader',
+  'takside',
 // 'neko',
   'zuzak'
 ]
