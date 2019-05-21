@@ -17,8 +17,7 @@ block content
       for nick in nicks
         if nick
           p.font-medium.panel#js-prompt
-            span /msg #{nick} #{__('irc-verify')}
-            span &nbsp;
+            span /msg #{nick} #{__('irc-verify')}&nbsp;
             span#js-slug #{key}
         else
           p.font-medium.panel.error
