@@ -73,14 +73,14 @@ block content
                   if name == book.longlistedBy
                     abbr(title="Longlister").green &nbsp;✎
                 if book.approve.indexOf(name) !== -1
-                  if book.oldVotes.approve && book.oldVotes.disapprove.indexOf(name) !== -1
+                  if book.oldVotes && book.oldVotes.disapprove && book.oldVotes.disapprove.indexOf(name) !== -1
                     td
                       span.green ☑  #{__('book-ballot-approval-yes')}
                       abbr(title=__('book-ballot-changedmind-title')).delta #{__('book-ballot-changedmind', {user: req.user})}
                   else
                     td.green ☑  #{__('book-ballot-approval-yes')}
                 else
-                  if book.oldVotes.approve && book.oldVotes.approve.indexOf(name) !== -1
+                  if book.oldVotes && book.oldVotes.approve && book.oldVotes.approve.indexOf(name) !== -1
                     td
                       span.red #{__('book-ballot-approval-no')}
                       sup: abbr(title=__('book-ballot-changedmind-title')).delta #{__('book-ballot-changedmind', {user: req.user})}
