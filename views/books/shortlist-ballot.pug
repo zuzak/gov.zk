@@ -19,12 +19,11 @@ block content
         - title = book.upstream.title
         - author = book.upstream.authors.join(' & ')
       .grid-row
-        .column-two-thirds
-          span.font-medium.progress #{__('shortlist-ballot-progress', {'count': total - books.length + 1, total: total})}
-          h1.heading-xlarge #{__('shortlist-ballot-heading')}
-      .grid-row
         .column-full
-          h2.heading-large.title #{title}
+          h1.heading-xlarge Shortlisting
+          h2.heading-large
+            .font-medium.progress #{__('shortlist-ballot-progress', {'count': total - books.length + 1, total: total})}
+            .title #{title}
       .grid-row
         .column-two-thirds
           .grid-row
