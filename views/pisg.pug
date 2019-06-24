@@ -1,9 +1,12 @@
 //- Used for testing: [squeamish ossifrage]
 extends skeleton
+block breadcrumb
+  li: a(href='/chan-stats/') #{__('chanstat-header')}
+  li #{__('chanstat-breadcrumb', {number: numberOfLines})}
 block append css
   link(rel='stylesheet', href='/pisg.css')
 block title
-  title #{__('hello-world')}
+  title #{__('chanstat-header')}
 block content
   .grid-row !{pisg}
 

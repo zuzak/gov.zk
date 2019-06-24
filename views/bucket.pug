@@ -1,0 +1,35 @@
+//- Used for testing: [squeamish ossifrage]
+extends skeleton
+block title
+  title #{__('cs-title')}
+block breadcrumb
+  li= __('cs-title')
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('cs-title')}
+  .grid-row
+    .column-two-thirds
+      h2.heading-medium #{__('cs-bucket-header')}
+      ol.list.list-number
+        each item in inventory
+          li= item
+      h2.heading-medium #{__('cs-quotes-header')}
+      each category in Object.keys(quotes)
+        h3.heading-small= category
+        each quote in quotes[category]
+          li !{__('cs-quote-wrapper', {quote})}
+    .column-one-third
+      .data
+        span.data-item.bold-xxlarge= ofn.toLocaleString('en-GB')
+        span.data-item.bold-xsmall= __('cs-urlcount')
+      .data
+        span.data-item.bold-xxlarge= scrabble.length.toLocaleString('en-GB')
+        span.data-item.bold-xsmall= __('cs-scrabble-count')
+  .grid-row
+    .column-full
+      h2.heading-medium #{__('cs-scrabble-header')}
+      ol.list.list-number.columns
+        each word in scrabble
+          li: span.code= word
+

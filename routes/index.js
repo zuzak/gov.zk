@@ -18,6 +18,7 @@ require('./reading.js')
 require('./misc.js')
 
 require('./pisg.js')
+require('./civilservant.js')
 
 // this must be last:
 require('./errors.js')

@@ -1,0 +1,14 @@
+//- Used for testing: [squeamish ossifrage]
+extends skeleton
+block title
+  title #{__('chanstat-header')}
+block breadcrumb
+ li #{__('chanstat-header')}
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('chanstat-header')}
+      ul
+        for i in logFiles
+          li: a(href='/chan-stats/' + i) #{__('chanstat-link-' + i)}
+

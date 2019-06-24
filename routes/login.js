@@ -41,9 +41,11 @@ app.post(__l('/log-in'), function (req, res) {
   } else {
     var username = auth.validateKey(req.body.key)
     if (username) {
-      if (validUsernames.indexOf(username) === -1) {
+    /*  if (validUsernames.indexOf(username) === -1) {
+        console.log('Failed login for ' + username)
         return res.status(403).render('error.pug', {msg: __('irc-notwhitelisted'), req})
-      }
+      } */
+      console.log('Logging ' + username + ' in')
       req.login(username, function (err) {
         if (err) {
           throw err

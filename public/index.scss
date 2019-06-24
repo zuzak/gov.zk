@@ -81,3 +81,6 @@ footer a:hover {
   padding-left: 0.5em;
   color: $grey-1;
 }
+ol.columns {
+  columns: 15rem auto;
+}
