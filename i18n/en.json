@@ -367,11 +367,14 @@
   "zuzakistan": "Zuzakistan",
   "cs-quote-wrapper": "“{{quote}}”",
   "cs-quotes-header": "Quotes stored",
-  "cs-bucket-header": "Current inventory",
+  "cs-bucket-header": "Inventory",
+  "cs-bucket-header-current": "Current inventory",
+  "cs-bucket-header-previous": "Previously held items",
   "cs-title": "Civilservant",
   "cs-urlcount": "URLs parsed",
   "cs-scrabble-header": "Scrabble® words",
   "cs-scrabble-count": "high-scoring Scrabble® words",
+  "cs-bucket-emptyslot": "[empty]",
   "homepage-cs-link": "View bot information",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }

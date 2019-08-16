@@ -11,9 +11,25 @@ block content
   .grid-row
     .column-two-thirds
       h2.heading-medium #{__('cs-bucket-header')}
+      h3.heading-small #{__('cs-bucket-header-current')}
       ol.list.list-number
-        each item in inventory
-          li= item
+        - let i = 0
+        each item in inventory.current
+          - i++
+          li
+            span.bucket-item= item.item
+            if item.nick
+              span.text-secondary &nbsp;(#{item.nick})
+        while i < 20
+          - i++
+          li.text-secondary.bucket-empty= __('cs-bucket-emptyslot')
+      h3.heading-small #{__('cs-bucket-header-previous')}
+      ol.list.list-number.truncateable
+        each item in inventory.old
+          li
+            span.bucket-item= item.item
+            if item.nick
+              span.text-secondary &nbsp;(#{item.nick})
       h2.heading-medium #{__('cs-quotes-header')}
       each category in Object.keys(quotes)
         h3.heading-small= category
