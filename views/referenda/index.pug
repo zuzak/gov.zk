@@ -1,0 +1,41 @@
+extends ../skeleton
+block title
+  title #{__('referenda')}
+block breadcrumb
+  li
+    a(href=__('/referenda')) #{__('referenda')}
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('referenda')}
+      p.lede #{__('referenda-lede')}
+
+      a(href=__('/referenda/active')).button.button-start #{__('referenda-active-link')}
+      p
+
+      p.
+        Cast your ballot in an active referendum to engage with democracy. Terms and Conditions apply,
+        only where valid, no purchase necessary.
+
+      a(href=__('/referendum/create')).button #{__('referendum-new-link')}
+      p
+
+      p.
+          Create a new referendum on a topic of national importance to citizens.
+
+    .column-one-third
+      p.data
+        .bold-xlarge #{activeReferenda}
+        .bold-xsmall #{__('stat-active-referenda')}
+      p.data
+        .bold-xlarge #{ballotsCast}
+        .bold-xsmall #{__('stat-ballots-cast')}
+      p.data
+        .bold-xlarge #{referendaCompleted}
+        .bold-xsmall #{__('stat-referenda-completed')}
+  .grid-row
+    .column-two-thirds
+      h2.heading-small #{__('other-actions')}
+      ul
+        li.font-small
+          a(href=__('/referenda/complete')) #{__('complete-referenda')}
