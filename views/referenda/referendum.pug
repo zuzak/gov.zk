@@ -25,7 +25,7 @@ block content
         if referendum.amendable
             p.
                 You may amend your vote with aditional candidates.
-  if isActive
+  if canVote
     .grid-row
       .column-full
         form(method='POST')
@@ -49,3 +49,16 @@ block content
           h2.heading-medium #{__('referendum-exit-poll')}
         else
           h2.heading-medium #{__('referendum-result')}
+        table
+          thead
+            tr
+              th Candidate
+              th Votes
+
+          for candidate in candidates
+            tr
+              td #{candidate}
+              td #{votes[candidate] || 0}
+          else
+            tr
+              td(colspan=2) No Ballots have been cast.

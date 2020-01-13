@@ -41,9 +41,15 @@ function loadCompleteReferenda () {
   return data.filter(x => !isReferendumActive(x))
 }
 
+function votesCast (referendum) {
+  const candidates = referendum.candidates || []
+  const votes = referendum.votes || {}
+  return candidates.reduce((v, candidate) => v + (votes[candidate] || 0), 0)
+}
+
 app.get(__l('/referenda'), function (req, res) {
   const activeReferenda = loadActiveReferenda().length
-  const ballotsCast = 0
+  const ballotsCast = referenda.load().reduce((v, referendum) => v + votesCast(referendum), 0)
   const referendaCompleted = loadCompleteReferenda().length
   res.render('referenda/index.pug', { req, activeReferenda, ballotsCast, referendaCompleted })
 })
@@ -94,11 +100,46 @@ app.get(__l('/referendum/:slug'), function (req, res) {
   if (referendum === undefined) {
     return res.status(404).render('error.pug', {req, err: 'No such referendum'})
   }
+  const participants = referendum.participants || []
   const isActive = isReferendumActive(referendum)
+  const hasVoted = participants.includes(req.user)
+  const canVote = isActive && !hasVoted
+  const votes = referendum.votes || {}
+
   const candidates = referendum.candidates || []
   const resultsVisible = true
 
-  res.render('referenda/referendum.pug', { req, referendum, isActive, candidates, resultsVisible })
+  res.render('referenda/referendum.pug', { req, referendum, isActive, canVote, candidates, resultsVisible, votes })
+})
+
+app.post(__l('/referendum/:slug'), function (req, res) {
+  const data = referenda.load()
+  const referendum = data.find(ref => ref.slug === req.params.slug)
+  if (referendum === undefined) {
+    return res.status(404).render('error.pug', {req, err: 'No such referendum'})
+  }
+  const participants = referendum.participants || []
+  const isActive = isReferendumActive(referendum)
+  const hasVoted = participants.includes(req.user)
+  const canVote = isActive && !hasVoted
+  if (!canVote) {
+    return res.status(403).render('error.pug', {req, err: 'Cannot vote in this referendum'})
+  }
+  const candidates = referendum.candidates || []
+
+  const votes = candidates.reduce((votes, candidate) => {
+    const userVote = req.body[candidate] === 'on' ? 1 : 0
+    votes[candidate] = (votes.hasOwnProperty(candidate) ? votes[candidate] : 0) + userVote
+    return votes
+  }, referendum.votes || {})
+  participants.push(req.user)
+
+  referendum.votes = votes
+  referendum.participants = participants
+
+  referenda.save(data)
+
+  res.redirect(`/referendum/${referendum.slug}`)
 })
 
 app.get(__l('/referendum/:slug/edit'), function (req, res) {
