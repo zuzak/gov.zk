@@ -381,6 +381,8 @@
   "/referenda/active": "/referenda/active",
   "/referenda/complete": "/referenda/complete",
   "/referendum/create": "/referendum/create",
+  "/referendum/:slug": "/referendum/:slug",
+  "/referendum/:slug/edit": "/referendum/:slug/edit",
   "referenda": "Referenda",
   "referenda-lede": "Please vote.",
   "referenda-active-link": "View active referenda",
@@ -400,7 +402,7 @@
   "referendum-exit-poll": "Exit poll",
   "referendum-result": "Result",
   "referendum-create-title": "Create Referendum",
-  "referendum-create-lede": "Please enter details of the referendum.",
+  "referendum-create-lede": "Enter details of the referendum.",
   "referendum-create-form-title": "Referendum title",
   "referendum-create-form-deadline": "Last voting day",
   "referendum-create-form-binding": "This referendum is binding",
@@ -410,5 +412,5 @@
   "referendum-add-candidate": "Add candidate",
   "referendum-edit-form-candidate": "Candidate name",
   "referendum-edit-publish": "Publish referendum",
-  "referendum-edit-publish-lede": "Make this referendum public. This cannot be undone, so please make sure candidate details are correct."
+  "referendum-edit-publish-lede": "Make this referendum public. This cannot be undone, ensure candidate details are correct."
 }

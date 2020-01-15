@@ -90,7 +90,7 @@ app.post(__l('/referendum/create'), function (req, res) {
 
     data.push(referendum)
     referenda.save(data)
-    res.redirect(`/referendum/${referendum.slug}/edit`)
+    res.redirect(__('/referendum/:slug/edit').replace(':slug', referendum.slug))
   }
 })
 
@@ -139,7 +139,7 @@ app.post(__l('/referendum/:slug'), function (req, res) {
 
   referenda.save(data)
 
-  res.redirect(`/referendum/${referendum.slug}`)
+  res.redirect(__('/referendum/:slug').replace(':slug', referendum.slug))
 })
 
 app.get(__l('/referendum/:slug/edit'), function (req, res) {
@@ -186,5 +186,5 @@ app.post(__l('/referendum/:slug/edit'), function (req, res) {
   data[referendumIndex] = referendum
   referenda.save(data)
 
-  res.redirect(`/referendum/${referendum.slug}/edit`)
+  res.redirect(__('/referendum/:slug/edit').replace(':slug', referendum.slug))
 })

@@ -7,7 +7,7 @@ block breadcrumb
   li
     a(href=__('/referenda/active')) #{__('referenda-active-title')}
   li
-    a(href='/referendum/'+referendum.slug) #{referendum.title}
+    a(href=__('/referendum/:slug', {slug: referendum.slug})) #{referendum.title}
   li Edit referendum
 block content
   .grid-row
