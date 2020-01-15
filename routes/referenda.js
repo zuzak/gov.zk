@@ -129,7 +129,7 @@ app.post(__l('/referendum/:slug'), function (req, res) {
 
   const votes = candidates.reduce((votes, candidate) => {
     const userVote = req.body[candidate] === 'on' ? 1 : 0
-    votes[candidate] = (votes.hasOwnProperty(candidate) ? votes[candidate] : 0) + userVote
+    votes[candidate] = (Object.prototype.hasOwnProperty.call(votes, candidate) ? votes[candidate] : 0) + userVote
     return votes
   }, referendum.votes || {})
   participants.push(req.user)
