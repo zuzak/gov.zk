@@ -29,6 +29,7 @@
     "supertest": "^2.0.0"
   },
   "dependencies": {
+    "ansi_up": "^4.0.4",
     "body-parser": "^1.17.1",
     "classify2": "0.0.3",
     "cookie-parser": "^1.4.3",
@@ -43,6 +44,7 @@
     "govuk-elements-sass": "^3.0.2",
     "govuk_frontend_toolkit": "^5.2.0",
     "hat": "0.0.3",
+    "html-escape": "^2.0.0",
     "i18n": "^0.8.3",
     "irc": "^0.5.2",
     "node-isbn": "^1.2.0",

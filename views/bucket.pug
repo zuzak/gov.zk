@@ -12,6 +12,10 @@ block content
       h1.heading-xlarge #{__('cs-title')}
   .grid-row
     .column-two-thirds
+      if (scram !== 'ok')
+        .error-summary
+          span.error-summary-heading.heading-medium #{__('cs-scram-alert-heading', scram)}
+          p #{__('cs-scram-alert-text', scram)}
       h2.heading-medium #{__('cs-bucket-header')}
       h3.heading-small #{__('cs-bucket-header-current')}
       ol.list.list-number

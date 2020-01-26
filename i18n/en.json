@@ -375,6 +375,14 @@
   "cs-scrabble-header": "Scrabble® words",
   "cs-scrabble-count": "high-scoring Scrabble® words",
   "cs-bucket-emptyslot": "[empty]",
+  "cs-scram-title": "Disable the bot in an emergency",
+  "cs-scram-form-reason-label": "You are disabling the bot because...",
+  "cs-scram-irrevocable": "This can only be undone by manual intervention by a system operator.",
+  "cs-scram-intro": "Use this form to prevent civilservant from tweeting.",
+  "cs-scram-submit": "Stop the bot",
+  "cs-scram-alert-heading": "{{user}} has initiated an emergency shutdown",
+  "cs-scram-alert-text": "{{reason}}",
+  "cs-scram-disabled": "{{user}} has disabled the bot because {{reason}}",
   "homepage-cs-link": "View bot information",
   "zuzakistan-full": "The Federated Microstates of Zuzakistan"
 }

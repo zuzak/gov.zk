@@ -16,7 +16,7 @@ app.all('*', function (req, res, next) {
         admin.keys[username].lastUsed = new Date()
         admin.keys[username].uses++
 
-        fs.writeFile('data/admin.json', JSON.stringify(admin))
+        fs.writeFileSync('data/admin.json', JSON.stringify(admin))
         req.user = username
         break
       }
@@ -101,6 +101,6 @@ app.post(__l('/profile/api-key'), function (req, res, next) {
     delete admin.keys[req.user]
   }
 
-  fs.writeFile('data/admin.json', JSON.stringify(admin))
+  fs.writeFileSync('data/admin.json', JSON.stringify(admin))
   res.redirect(__('/profile/api-key'))
 })
