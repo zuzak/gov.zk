@@ -2,7 +2,7 @@
   "/about-this-website": "/am-y-gwefan-hwn",
   "/about-this-website/internationalization/:code": "/am-y-gwefan-hwn/rhyngwladoli/:code",
   "/book-club": "/clwb-llyfr",
-  "/civil-servant": "/gwas-sifil",
+  "/civilservant": "/gwassifil",
   "/book-club/admin": "/book-club/admin",
   "/book-club/book/:isbn": "/clwb-llyfr/llyfr/:isbn",
   "/book-club/book/:isbn/:user": "/clwb-llyfr/llyfr/:isbn/:user",

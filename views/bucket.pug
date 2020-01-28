@@ -38,16 +38,30 @@ block content
               span.text-secondary &nbsp;(#{item.nick})
       h2.heading-medium #{__('cs-quotes-header')}
       each category in Object.keys(quotes)
-        h3.heading-small= category
-        each quote in quotes[category]
-          li !{__('cs-quote-wrapper', {quote})}
+        if req.user && req.user === category
+          div.panel.panel-border-wide
+            h3.heading-small= category
+            ul.list.list-bullet
+              each quote in quotes[category]
+                li !{__('cs-quote-wrapper', {quote})}
+        else
+          div.panel.panel-border-wide(style="border-color: transparent")
+            h3.heading-small= category
+            ul.list.list-bullet
+              each quote in quotes[category]
+                li !{__('cs-quote-wrapper', {quote})}
     .column-one-third
-      .data
-        span.data-item.bold-xxlarge= ofn.toLocaleString('en-GB')
-        span.data-item.bold-xsmall= __('cs-urlcount')
-      .data
-        span.data-item.bold-xxlarge= scrabble.length.toLocaleString('en-GB')
-        span.data-item.bold-xsmall= __('cs-scrabble-count')
+      .grid-row
+        .data
+          span.data-item.bold-xxlarge= ofn.toLocaleString('en-GB')
+          span.data-item.bold-xsmall= __('cs-urlcount')
+        .data
+          span.data-item.bold-xxlarge= scrabble.length.toLocaleString('en-GB')
+          span.data-item.bold-xsmall= __('cs-scrabble-count')
+      .grid-row
+        a(href=__('/civilservant/console')) Get console
+      .grid-row
+        a(href=__('/civilservant/scram')) Emergency shutdown
   .grid-row
     .column-full
       h2.heading-medium #{__('cs-scrabble-header')}

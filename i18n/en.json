@@ -1,7 +1,8 @@
 {
   "/about-this-website": "/about-this-website",
   "/book-club": "/book-club",
-  "/civil-servant": "/civil-servant",
+  "/civilservant": "/civilservant",
+  "/civilservant/scram": "/civilservant/scram",
   "/book-club/admin": "/book-club/admin",
   "/book-club/book/:isbn": "/book-club/book/:isbn",
   "/book-club/book/:isbn/:user": "/book-club/book/:isbn/:user",
