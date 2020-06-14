@@ -1,0 +1,64 @@
+extends ../skeleton
+block title
+  title #{referendum.title}
+block breadcrumb
+  li
+    a(href=__('/referenda')) #{__('referenda')}
+  li
+    if isActive
+      a(href=__('/referenda/active')) #{__('referenda-active-title')}
+    else
+      a(href=__('/referenda/complete')) #{__('referenda-complete-title')}
+  li
+    a #{referendum.title}
+block content
+  .grid-row
+    .column-full
+      h1.heading-xlarge.title #{referendum.title}
+  .grid-row
+    .column-full
+        p.lede.
+            This is a referendum about "#{referendum.title}".
+        if referendum.binding
+            p.panel.panel-border-wide.
+                This is a binding referendum, your decision will be implemented.
+        if referendum.amendable
+            p.
+                You may amend your vote with aditional candidates.
+  if canVote
+    .grid-row
+      .column-full
+        form(method='POST')
+          h2.heading-medium #{__('referendum-cast-ballot')}
+          p.
+            You may vote for as many candidates as you want. Check the box next to each candidate you would like to vote for.
+          for candidate in candidates
+            .form-group
+              .multiple-choice
+                input.referendum-candidate(name=candidate,type='checkbox')
+                label(for=candidate) #{candidate}
+          else
+            p.
+              This referendum has no candidates
+          .form-group
+            input.button(type='submit',value=__('referendum-cast-ballot'))
+  if resultsVisible
+    .grid-row
+      .column-full
+        if isActive
+          h2.heading-medium #{__('referendum-exit-poll')}
+        else
+          h2.heading-medium #{__('referendum-result')}
+        table
+          thead
+            tr
+              th Candidate
+              th Votes
+
+          for candidate in candidates
+            tr
+              td #{candidate}
+              td #{votes[candidate] || 0}
+          else
+            tr
+              td(colspan=2) No Ballots have been cast.

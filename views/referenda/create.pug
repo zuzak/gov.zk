@@ -1,0 +1,32 @@
+extends ../skeleton
+block title
+  title #{__('referendum-create-title')}
+block breadcrumb
+  li
+    a(href=__('/referenda')) #{__('referenda')}
+  li #{__('referendum-create-title')}
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('referendum-create-title')}
+      form(method='POST')
+        h2.heading-medium #{__('referendum-create-lede')}
+        .form-group
+          label.form-label(for='title') #{__('referendum-create-form-title')}
+          input.form-control#title(type='text',name='title',required)
+        .form-group
+          label.form-label(for='deadline') #{__('referendum-create-form-deadline')}
+          input.form-control#deadline(type='date',name='deadline',required)
+        .form-group
+          .multiple-choice
+            input#binding(name='binding',type='checkbox')
+            label(for='binding') #{__('referendum-create-form-binding')}
+        .form-group
+          .multiple-choice
+            input#amendable(name='amendable',type='checkbox')
+            label(for='amendable') #{__('referendum-create-form-amendable')}
+
+        .form-group
+          input.button(type='submit',value=__('referendum-create-form-submit'))
+  a.link-back(href=__('/referenda')) #{__('referendum-create-return')}
+

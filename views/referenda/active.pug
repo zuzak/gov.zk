@@ -1,0 +1,38 @@
+extends ../skeleton
+block title
+  title #{__('referenda-active-title')}
+block breadcrumb
+  li
+    a(href=__('/referenda')) #{__('referenda')}
+  li #{__('referenda-active-title')}
+block content
+  h1.heading-xlarge #{__('active-referenda')}
+  .grid-row
+    .column-two-thirds
+      p
+  .grid-row
+    .column-full
+      table
+        thead
+          tr
+            th #{__('referendum-title')}
+            th #{__('referendum-deadline')}
+            th #{__('referendum-votes')}
+
+        - i = 0
+        for referendum in referenda
+          - i++
+          tr
+              td
+                a(href='/referendum/'+referendum.slug) #{referendum.title}
+              td #{referendum.deadline}
+              td 0
+        else
+          tr
+            td(colspan="3").center #{__('referenda-no-referenda')}
+  if req.user
+    .grid-row
+      .column-two-thirds
+        p
+        p
+          a(href=__('/referendum/create')).button #{__('referendum-new-link')}

@@ -1,0 +1,53 @@
+extends ../skeleton
+block title
+  title #{referendum.title}
+block breadcrumb
+  li
+    a(href=__('/referenda')) #{__('referenda')}
+  li
+    a(href=__('/referenda/active')) #{__('referenda-active-title')}
+  li
+    a(href=__('/referendum/:slug', {slug: referendum.slug})) #{referendum.title}
+  li Edit referendum
+block content
+  .grid-row
+    .column-full
+      h1.heading-xlarge.title #{referendum.title}
+  .grid-row
+    .column-full
+      p.
+        You can amend the ballot paper for this referendum on this page.
+  .grid-row
+    .column-full
+      table
+        thead
+          tr
+            th Candidate
+
+        for candidate in candidates
+          tr
+            td #{candidate}
+        else
+          tr
+            td This referendum has no candidates
+  .grid-row
+    .column-full
+      form(method='POST')
+        h2.heading-medium #{__('referendum-add-candidate')}
+        .form-group
+          label.form-label(for='name') #{__('referendum-edit-form-candidate')}
+          input.form-control#new-candidate(type='text',name='name',required)
+        .form-group
+          input.button(type='submit',value=__('referendum-add-candidate'))
+  .grid-row
+    .column-full
+      if !referendum.published && candidates.length >= 2
+        form(method='POST')
+          h2.heading-medium #{__('referendum-edit-publish')}
+          p #{__('referendum-edit-publish-lede')}
+          .form-group
+            input.button(type='submit',value=__('referendum-edit-publish'))
+      else
+        h2.heading-medium #{__('referendum-edit-publish')}
+        p.
+          This referendum cannot be published as it does not have at least 2 candidates.

@@ -53,6 +53,7 @@
     "pug": "^2.0.0-beta6",
     "request-promise": "^4.2.4",
     "shuffle-array": "^1.0.1",
+    "slug": "^2.1.0",
     "snyk": "^1.124.0",
     "sort-object": "^3.0.2"
   },
