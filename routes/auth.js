@@ -8,7 +8,7 @@ app.all('*', function (req, res, next) {
   }
   var validStarts = [].concat(__l('/log-in')).concat(__('/change-lang')).concat(__('/about-this-website'))
   if (req.params) {
-    let whitelist = [
+    const whitelist = [
       '/',
       '/stellaris',
       '/factorio',

@@ -9,8 +9,8 @@ const getStdin = require('get-stdin')
 
 const removeVotes = module.exports = async () => {
   const stdin = await getStdin()
-  let data = JSON.parse(stdin)
-  const oldFields = [ 'approve', 'disapprove', 'alreadyRead', 'haveCopy' ]
+  const data = JSON.parse(stdin)
+  const oldFields = ['approve', 'disapprove', 'alreadyRead', 'haveCopy']
   const purgedData = data.map((n) => {
     if (n.oldVotes) throw new Error('won\'t overwrite existing old votes')
     n.oldVotes = {}

@@ -1,5 +1,4 @@
 var app = require('..')
-const htmlEscape = require('html-escape')
 const cors = require('cors')
 const AU = require('ansi_up')
 const request = require('request-promise')
@@ -37,7 +36,7 @@ app.get(__l('/civilservant'), async function (req, res, next) {
 })
 
 app.get('/civilservant/console', async function (req, res, next) {
-  const ansify = new AU.default()
+  const ansify = new AU.default() // eslint-disable-line new-cap
   const stdout = await request({
     url: 'https://files.chippy.ch/cs/stdout.txt'
   })
@@ -54,7 +53,6 @@ app.get('/civilservant/console', async function (req, res, next) {
 })
 
 app.get('/civilservant/notes', async function (req, res, next) {
-  const ansify = new AU.default()
   const stdout = await request({
     url: 'https://files.chippy.ch/cs/notes.txt'
   })

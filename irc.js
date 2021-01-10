@@ -14,16 +14,16 @@ for (var i = 0; i < networks.length; i++) {
 }
 
 var cmds = {
-  'VERIFY': function (nick, args, lang) {
+  VERIFY: function (nick, args, lang) {
     var slug = args[0]
     if (!auth.isKey(slug)) {
-      return __({phrase: 'irc-unrecognized', locale: lang})
+      return __({ phrase: 'irc-unrecognized', locale: lang })
     }
     if (auth.isUsedKey(slug)) {
-      return __({phrase: 'irc-alreadyused', locale: lang})
+      return __({ phrase: 'irc-alreadyused', locale: lang })
     }
     auth.activateKey(slug, nick)
-    return __({phrase: 'irc-return', locale: lang})
+    return __({ phrase: 'irc-return', locale: lang })
   }
 }
 
@@ -51,7 +51,7 @@ for (var j = 0; j < bots.length; j++) {
     } else if (__l('irc-verify').indexOf(cmd) !== -1) {
       console.log('e')
 
-      str = cmds['VERIFY'](nick, msg, lang)
+      str = cmds.VERIFY(nick, msg, lang)
     }
     this.notice(nick, str)
   })

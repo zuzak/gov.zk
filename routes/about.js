@@ -26,7 +26,7 @@ app.get(__l('/about-this-website/internationalization/:code'), function (req, re
   var english = getCatalog('en')
   var foreign = getCatalog(req.params.code)
   if (foreign === false) {
-    res.status(404).render('error.pug', {msg: __('about-i18n-invalidcode'), req})
+    res.status(404).render('error.pug', { msg: __('about-i18n-invalidcode'), req })
   }
-  res.render('i18n.pug', {english, foreign, req, code: req.params.code})
+  res.render('i18n.pug', { english, foreign, req, code: req.params.code })
 })

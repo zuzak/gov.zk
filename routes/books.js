@@ -89,17 +89,17 @@ app.get(__l('/book-club'), function (req, res) {
 })
 
 app.get(__l('/book-club/admin'), function (req, res) {
-  var admin = {'admins': [], 'state': {}}
+  var admin = { admins: [], state: {} }
   try {
     admin = JSON.parse(fs.readFileSync('data/admin.json'))
   } catch (e) {
     fs.writeFileSync('data/admin.json', JSON.stringify(admin))
   }
   if (!admin.admins || admin.admins.length === 0) {
-    return res.status(403).render('error.pug', {err: __('admin-noadmins'), req})
+    return res.status(403).render('error.pug', { err: __('admin-noadmins'), req })
   }
   if (admin.admins.indexOf(req.user) === -1) {
-    return res.status(403).render('403.pug', {req})
+    return res.status(403).render('403.pug', { req })
   }
   res.render('books/admin.pug', { req: req, state, books: booklist.load() })
 })
@@ -107,7 +107,7 @@ app.get(__l('/book-club/admin'), function (req, res) {
 app.post(__l('/book-club/admin'), function (req, res) {
   var admin = JSON.parse(fs.readFileSync('data/admin.json'))
   if (admin.admins.indexOf(req.user) === -1) {
-    return res.status(403).render('403.pug', {req})
+    return res.status(403).render('403.pug', { req })
   }
   if (req.body.changeState) {
     if (req.body.advertise) {
@@ -173,7 +173,7 @@ app.get(__l('/book-club/short-list'), function (req, res) {
 
       for (var k = 0; k < currentBook.approve.length; k++) {
         if (!electorate[currentBook.approve[k]]) {
-          electorate[currentBook.approve[k]] = {'total': 1, 'approve': 1, 'disapprove': 0}
+          electorate[currentBook.approve[k]] = { total: 1, approve: 1, disapprove: 0 }
         } else {
           electorate[currentBook.approve[k]].approve++
           electorate[currentBook.approve[k]].total++
@@ -181,7 +181,7 @@ app.get(__l('/book-club/short-list'), function (req, res) {
       }
       for (var n = 0; n < currentBook.disapprove.length; n++) {
         if (!electorate[currentBook.disapprove[n]]) {
-          electorate[currentBook.disapprove[n]] = {'total': 1, 'approve': 0, 'disapprove': 1}
+          electorate[currentBook.disapprove[n]] = { total: 1, approve: 0, disapprove: 1 }
         } else {
           electorate[currentBook.disapprove[n]].disapprove++
           electorate[currentBook.disapprove[n]].total++
@@ -226,7 +226,7 @@ app.get(__l('/book-club/short-list'), function (req, res) {
       // return b.approve.length - a.approve.length
     })
 
-    res.render('books/shortlist-results.pug', {req, results, electorate, books, state})
+    res.render('books/shortlist-results.pug', { req, results, electorate, books, state })
   }
 })
 
@@ -244,7 +244,7 @@ app.post(__l('/book-club/short-list'), function (req, res) {
 
     if ((bl[i].approve.indexOf(req.user) !== -1) ||
         (bl[i].disapprove.indexOf(req.user) !== -1)) {
-      return res.status(400).render('error.pug', {err: __('shortlist-doublevote'), req})
+      return res.status(400).render('error.pug', { err: __('shortlist-doublevote'), req })
     }
 
     if (req.body.verdict === 'yes') {
@@ -305,7 +305,7 @@ app.post(__l('/book-club/long-list'), function (req, res) {
     booklist.save(books)
     return res.redirect('/book-club/book/' + req.body.isbn)
   }
-  res.status(400).render('error.pug', {req, msg: __('longlist-edit-isbn-fail')})
+  res.status(400).render('error.pug', { req, msg: __('longlist-edit-isbn-fail') })
 })
 
 app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
@@ -316,7 +316,7 @@ app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
   book.difficult = book.difficult === 'on'
   book.longlistedBy = req.user
   if (!book.author || !book.title) {
-    res.status(400).render('error.pug', {req, msg: __('longlist-add-book-fail')})
+    res.status(400).render('error.pug', { req, msg: __('longlist-add-book-fail') })
   } else {
     var bl = booklist.load()
     bl.push(book)
@@ -342,7 +342,7 @@ app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
           if (err) {
             var newbooks = replaceIsbn(books, books[i].author, books[i].title, null)
             if (newbooks) booklist.save(books)
-            return res.status(404).render('error.pug', {req, err})
+            return res.status(404).render('error.pug', { req, err })
           }
           books.oclc = classify.get(req.params.isbn, function (data) {
             books[i].upstream = book
@@ -372,7 +372,7 @@ app.get(__l('/book-club/book/:isbn/:user'), function (req, res, next) {
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
       if (books[i].status && books[i].status[req.params.user]) {
-        return res.render('books/book-history.pug', {req: req, book: books[i], user: req.params.user})
+        return res.render('books/book-history.pug', { req: req, book: books[i], user: req.params.user })
       }
     }
   }
@@ -383,7 +383,7 @@ app.get(__l('/book-club/book/:isbn/edit'), function (req, res) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
-      res.render('books/book-desc.pug', {book: books[i], req})
+      res.render('books/book-desc.pug', { book: books[i], req })
     }
   }
 })
@@ -402,12 +402,12 @@ app.post(__l('/book-club/book/:isbn/add-comment'), function (req, res) {
   var books = booklist.load()
   for (var i = 0; i < books.length; i++) {
     if (books[i].isbn === req.params.isbn) {
-      if (!req.body.comment) return res.status(400).render('error.pug', {req})
+      if (!req.body.comment) return res.status(400).render('error.pug', { req })
       if (!books[i].comments) books[i].comments = []
       books[i].comments.push({
-        'user': req.user,
-        'text': req.body.comment,
-        'ts': Date.now()
+        user: req.user,
+        text: req.body.comment,
+        ts: Date.now()
       })
       booklist.save(books)
       res.redirect('/book-club/book/' + req.params.isbn)
@@ -433,16 +433,16 @@ app.post(__l('/book-club/reading-list'), function (req, res) {
     if (!b[i].status[req.user]) b[i].status[req.user] = []
 
     b[i].status[req.user].push({
-      'status': req.body.status,
-      'pages': req.body.pages,
-      'freeform': req.body.freeform,
-      'ts': Date.now()
+      status: req.body.status,
+      pages: req.body.pages,
+      freeform: req.body.freeform,
+      ts: Date.now()
     })
 
     booklist.save(b)
     return res.redirect(__('/book-club/book/:isbn').replace(':isbn', req.body.isbn))
   }
-  return res.render('error.pug', {req, msg: __('longlist-edit-isbn-fail')})
+  return res.render('error.pug', { req, msg: __('longlist-edit-isbn-fail') })
 })
 
 app.get(__l('/book-club/books.json'), function (req, res) {

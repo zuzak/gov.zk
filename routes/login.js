@@ -4,7 +4,7 @@ var irc = require('../irc.js')
 
 app.get(__l('/log-in'), function (req, res) {
   if (req.user) {
-    return res.status(403).render('error.pug', {msg: __('login-alreadyloggedin', {user: req.user}), req})
+    return res.status(403).render('error.pug', { msg: __('login-alreadyloggedin', { user: req.user }), req })
   }
   var key = auth.getNewKey(5)
   var nicks = []
@@ -70,6 +70,6 @@ app.get(__l('/log-in/verify/:slug.json'), function (req, res) {
       res.json(false)
     }
   } else {
-    res.status(404).json({'error': __('irc-keynotfound')})
+    res.status(404).json({ error: __('irc-keynotfound') })
   }
 })

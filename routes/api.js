@@ -62,7 +62,7 @@ app.get(__l('/profile/api-key'), function (req, res, next) {
     return jsonRoutes.indexOf(x) === y
   })
 
-  res.render('apikey.pug', {req, key, stack: jsonRoutes.sort()})
+  res.render('apikey.pug', { req, key, stack: jsonRoutes.sort() })
 })
 
 app.get(__l('/whoami.json'), function (req, res, next) {
@@ -74,7 +74,7 @@ app.get(__l('/whoami.json'), function (req, res, next) {
 
 app.post(__l('/profile/api-key'), function (req, res, next) {
   if (!req.body.genKey && !req.body.delKey) {
-    return res.status(400).render('error.pug', {req})
+    return res.status(400).render('error.pug', { req })
   }
 
   var admin = {}
@@ -90,10 +90,10 @@ app.post(__l('/profile/api-key'), function (req, res, next) {
 
   if (req.body.genKey) {
     admin.keys[req.user] = {
-      'createdOn': new Date(),
-      'key': generateNewKey(admin.keys),
-      'lastUsed': null,
-      'uses': 0
+      createdOn: new Date(),
+      key: generateNewKey(admin.keys),
+      lastUsed: null,
+      uses: 0
     }
   }
 

@@ -10,26 +10,24 @@ function rollFortune () {
     try {
       fs.writeFileSync('data/fortune.txt', stdout)
     } catch (e) {
-      if (e.code === 'ENOENT') {
-        fs.mkdirSync('data')
-      }
+      if (e.code === 'ENOENT') { fs.mkdirSync('data') }
     }
   })
 }
 app.get('/', function (req, res) {
   rollFortune()
   try {
-    res.render('home.pug', {req, fortune: fs.readFileSync('data/fortune.txt')})
+    res.render('home.pug', { req, fortune: fs.readFileSync('data/fortune.txt') })
   } catch (e) {
     if (e.code === 'ENOENT') {
-      return res.render('home.pug', {req})
+      return res.render('home.pug', { req })
     }
     throw e
   }
 })
 
 app.get(__l('/hello-world'), function (req, res) {
-  res.render('hello.pug', {req})
+  res.render('hello.pug', { req })
 })
 
 app.get('/500', function (req, res) {

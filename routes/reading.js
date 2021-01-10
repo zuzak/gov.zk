@@ -31,9 +31,9 @@ app.post(__l('/book-club/reading-list'), function (req, res) {
     if (!b[i].status[req.user]) b[i].status[req.user] = []
 
     b[i].status[req.user].push({
-      'status': req.body.status,
-      'pages': req.body.pages,
-      'ts': Date.now()
+      status: req.body.status,
+      pages: req.body.pages,
+      ts: Date.now()
     })
 
     books.save(b)

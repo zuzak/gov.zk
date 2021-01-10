@@ -107,13 +107,13 @@ describe('log in system', function () {
   it('should fail on POSTed login with made-up key', function (done) {
     request(app)
       .post('/log-in')
-      .send({key: '!abcdef'}) // excl. mark never going to be part of key
+      .send({ key: '!abcdef' }) // excl. mark never going to be part of key
       .expect(401, done)
   })
   it('should fail on POSTed login with generated but unverified key', function (done) {
     request(app)
       .post('/log-in')
-      .send({key: auth.getNewKey()})
+      .send({ key: auth.getNewKey() })
       .expect(401, done)
   })
   it('should work on POSTed login with verified key', function (done) {
@@ -121,7 +121,7 @@ describe('log in system', function () {
     auth.activateKey(key, 'zuzak')
     request(app)
       .post('/log-in')
-      .send({key})
+      .send({ key })
       .expect(302, done) // redirect to /
   })
   it('should fail on POSTed login with verified key but unwhitelisted user', function (done) {
@@ -129,7 +129,7 @@ describe('log in system', function () {
     auth.activateKey(key, 'test')
     request(app)
       .post('/log-in')
-      .send({key})
+      .send({ key })
       .expect(403, done)
   })
 })
