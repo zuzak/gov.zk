@@ -8,7 +8,14 @@ app.all('*', function (req, res, next) {
   }
   var validStarts = [].concat(__l('/log-in')).concat(__('/change-lang')).concat(__('/about-this-website'))
   if (req.params) {
-    if (req.params[0] === '/') return next()
+    let whitelist = [
+      '/',
+      '/stellaris',
+      '/factorio',
+      '/factorio/',
+      '/civilservant/scram.json'
+    ]
+    if (whitelist.includes(req.params[0])) return next()
     for (var i = 0; i < validStarts.length; i++) {
       if (req.params[0].startsWith(validStarts[i])) {
         next()
