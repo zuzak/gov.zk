@@ -1,0 +1,22 @@
+extends skeleton
+block title
+  title #{__('cs-title')}
+block breadcrumb
+  li: a(href="/civilservant")= __('cs-title')
+  li Emergency shutdown
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('cs-scram-title')}
+      p #{__('cs-scram-intro')}
+
+      if scram !== 'ok'
+        p.panel.panel-border-wide #{__('cs-scram-disabled', scram)}
+      else
+        form(method="POST")
+          .form-group
+            label.form-group(for="scram-reason") #{__('cs-scram-form-reason-label')}
+            input.form-control#scram-reason(name="reason",required)
+          .form-group
+            p.panel.panel-border-wide #{__('cs-scram-irrevocable')}
+            input.button(type="submit",value=__('cs-scram-submit'))

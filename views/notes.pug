@@ -1,0 +1,15 @@
+extends skeleton
+block title
+  title #{__('cs-title')}
+block breadcrumb
+  li: a(href="/civilservant")= __('cs-title')
+  li Notes
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('cs-title')}
+  .grid-row
+    .column-full
+      ul.list.list-bullet
+      for note in notes
+        li= note

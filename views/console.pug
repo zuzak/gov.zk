@@ -1,0 +1,17 @@
+extends skeleton
+block title
+  title #{__('cs-title')}
+block breadcrumb
+  li: a(href="/civilservant")= __('cs-title')
+  li Console
+block content
+  .grid-row
+    .column-two-thirds
+      h1.heading-xlarge #{__('cs-title')}
+  .grid-row
+    .column-full
+      for item in stdout
+        if item[0] !== ''
+          details
+            summary= (new Date(item[0].trim())).toLocaleString(req.getLocale(), {weekday: 'long', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: 'numeric', timeZoneName: 'short'})
+            pre.code !{item[1]}
