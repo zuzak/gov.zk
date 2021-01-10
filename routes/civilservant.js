@@ -1,5 +1,6 @@
 var app = require('..')
 const htmlEscape = require('html-escape')
+const cors = require('cors')
 const AU = require('ansi_up')
 const request = require('request-promise')
 
@@ -64,6 +65,7 @@ app.get('/civilservant/notes', async function (req, res, next) {
   })
 })
 
+app.get('/civilservant/scram.json', cors(), (req, res) => res.json(scram))
 app.get('/civilservant/scram', (req, res) => res.render('scram.pug', { req, scram }))
 app.post('/civilservant/scram', (req, res) => {
   scram = {
