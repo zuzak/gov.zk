@@ -15,6 +15,7 @@ require('./i18n.js')
 require('./about.js')
 require('./books.js')
 require('./reading.js')
+require('./factorio.js')
 require('./misc.js')
 
 require('./pisg.js')

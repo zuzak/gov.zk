@@ -1,0 +1,255 @@
+extends skeleton
+block title
+  title Factorio
+block append css
+  style.
+    .languages { display: none !important }
+    .ballot { border: 3px solid black; padding: 0.4em  }
+    .ballot button { margin-top: 0.5em; }
+    .margin { margin-left: 1em; }
+    .ballot .form-group {margin-bottom: 0}
+    p.wrap { white-space: pre-line }
+    .right { float: right }
+    .button { margin-right: 1em; }
+    .button-secondary { background-color: #f3f2f1 !important; color: black !important;  box-shadow: 0 2px 0 #929191; }
+    .server-info { background-color: #f3f2f1;  padding: 1em; font-size: 1.5em; display: inline-block; }
+    video {max-width: 100%}
+block content
+  .grid-row
+    .column-two-thirds
+      if stats && stats.serverDown
+        .error-summary(role="alert")
+          h2.heading-medium.error-summary-heading Server offline
+          p The server isn&rsquo;t running right now. Contact zuzak if this isn&rsquo;t expected.
+      h1.heading-xlarge Festive Factorio
+      p.
+        Factorio is a game in which you build and maintain factories.
+        You mine resources, research technologies, build infrastructure, automate production and fight enemies.
+      p.
+        We run a multiplayer server for Factorio.
+        It&rsquo;s very similar to the singleplayer experience, except we&rsquo;ve enabled island mode.
+      p.server-info.panel.panel-border-wide
+       span The server is at&nbsp;
+       strong= serverAddress
+       span .
+      a(href="steam://run/427520").button Launch Factorio from Steam
+      a(href="https://factorio.com/buy").button.button-secondary Buy Factorio (£22)
+      p
+      p You can&rsquo;t join until you have:
+      ul.list.list-bullet
+        li added yourself to the invite list (below)
+        if stats && stats.version
+          li signed into the Factorio #{stats.version} client with your Factorio.com credentials
+        else
+          li signed into the Factorio client with your Factorio.com credentials
+        li agreed to the code of conduct
+      p
+      details
+        summary Add yourself to the invite list
+        form.panel.panel-border-narrow(method="post")
+          .form-group
+            label.form-label(for="name") Your Factorio.com username
+            input.form-control(name="name",type="text")
+          .form-group
+            input(type="submit",value="Add yourself to the server").button
+      details
+        summary Create a Factorio account
+        .panel.panel-border-narrow
+          p.
+            You need to sign in to your Factorio client with your Factorio.com credentials.
+            If you&rsquo;ve played multiplayer Factorio before, you have probably already done this.
+            Otherwise:
+          ol.list.list-number
+            li Create an account at #[a(href="https://factorio.com/signup") factorio.com]
+            li Either buy Factorio on that website, or associate the account with your Steam profile
+            li Log in with your account on the Factorio client
+
+      h2.heading-large Code of conduct
+      p.
+        By requesting an invitation to this server you agree to the code of conduct.
+        If you don&rsquo;t agree, don&rsquo;t join.
+      details
+        summary View code of conduct
+        .panel.panel-border-narrow
+          p.
+            The sysadmin of this Factorio server is zuzak.
+          h3.heading-small Conduct
+          p We want to provide a friendly, safe and welcoming environment for all.
+          p Examples of behaviour that contributes to creating a positive environment include:
+          ul.list.list-bullet
+            li being kind and courteous to others
+            li using welcoming and inclusive language
+            li being respectful of differing viewpoints and experiences
+            li collaborating with other community members
+            li gracefully accepting constructive criticism
+            li focusing on what is best for the community
+            li showing empathy towards other community members
+          p Examples of unacceptable behaviour by participants include:
+          ul.list.list-bullet
+            li the use of sexualized language or imagery and sexual attention or advances
+            li any spamming, flaming, baiting or other attention-seeking behaviour
+            li trolling, insulting/derogatory comments, and personal or political attacks
+            li promoting or spreading disinformation
+            li private or public harrassment
+            li publishing others' private information without explicit permission
+            li other conduct that could reasonably be considered inappropriate
+          h3.heading-small Our responsibilities
+          p.
+            Community leaders have the right and responsibility to remove, edit, or reject
+            comments and contributions that are not aligned to this Code of Conduct, or to
+            ban temporarily or permanently any community member for other behaviours they
+            deem inappropriate, threatening, offensive, or harmful.
+          h3.heading-small Moderation
+          p.
+            Instances of behaviours that violate this Code of Conduct may be reported by
+            any member of the community. Community members aer encouraged to report these
+            situations, including situations they witness involving other community members.
+          p You may report in the following ways:
+          ul.list.list-bullet
+            li emailing conduct@zuzakistan.com
+            li contacting zuzak by any means (#[code zuzak] on freenode; @zuzakistan on Twitter; zuzak#8250 on Discord)
+          p.
+            All reports will be reviewed and investigated.
+            If the behaviour is an egregious violation, the community member who committed
+            the violation may be banned immediately without warning.
+            Otherwise, in the first instance a warning will be issued.
+            Repeat offences will result in the community member being banned.
+          h3.heading-small Scope
+          p.
+            This Code of Conduct and its policies apply to all Zuzakistan.com activities,
+            public and private, including the Factorio server and the IRC and Discord channels.
+          details
+            summary Attribution
+            p.
+              This Code of Conduct is adapted from the
+              Adafruit Code of Conduct, which in turn is adapted from the
+              Rust Contributor Covenant and the Contributor Covenant, version 1.4.
+
+      hr
+      h2.heading-large Server information
+      p.
+        The server is running at #[strong= serverAddress] on port 34197
+        (the standard Factorio port).
+      if stats && stats.seed
+        p.
+          We&rsquo;re using seed #[code #{stats.seed}].
+      p.
+        Adding your username to the invite list via this page will only work temporarily.
+        If the server restarts, you&rsquo;ll need to request a fresh invitation.
+      p.
+        Use the backtick key (usually located above the tab button) to chat to other players.
+        Bear in mind that chat is logged forever, publicly, in save files.
+      //- p.
+        The server&rsquo;s saves are copied every 2 hours to #[a(href="https://files.zuzakistan.com/factorio/saves") somewhere public].
+        You can also create a savefile at any time yourself through the in-game menu.
+      p.
+        Placing terrain (landfill) is currently disabled.
+      h3.heading-medium Installed mods
+      p.
+        When you first join the server, Factorio will ask you to synchronize your mods
+        with those running on the server, and will then restart.
+      p.
+        The download list can be intimidating, but don&rsquo;t worry:
+        all these changes are subtle and don&rsquo;t really affect gameplay.
+        You can play on this server without having to learn what all these mods do.
+      p.
+        If you get a &ldquo;Mods mismatch detected!&rdquo; message, deselect &ldquo;Enable Walls and Gates&rdquo; under &ldquo;Dectorio&rdquo;
+        in Settings &rarr; Mod Settings &rarr; Startup.
+      h3.heading-small Major gameplay changes
+      ul
+        li
+          a(href="https://mods.factorio.com/mod/TrainNetworkForPlayers") Train Network For Players
+          span : makes riding trains nicer by designating taxi-trains
+        li
+          a(href="https://mods.factorio.com/mod/Dectorio") Dectorio
+          span : adds extra types of concrete (the rest of this mod is disabled)
+        li
+          a(href="https://mods.factorio.com/mods/lovely_santa/CorpseFlare") CorpseFlare
+          span : corpses emit a distress flare
+        li
+          a(href="https://mods.factorio.com/mod/beautiful_bridge_railway") Beautiful Bridge Railway
+          span : allows you to build rail, big electric poles, and signals on water
+      h3.heading-small Quality-of-life changes
+      ul
+        li
+          a(href="https://mods.factorio.com/mod/Concreep") Concreep
+          span : idle robots automatically place concrete within roboport range
+        li
+          a(href="https://mods.factorio.com/mods/Supercheese/Squeak%20Through") Squeak Through
+          span : slightly reduces collision boxes so you can walk past things
+      h3.heading-small HUD changes
+      ul
+        li
+          a(href="https://mods.factorio.com/mods/321freddy/even-distribution") Even distribution
+          span : makes ctrl+clickdrag less awful
+        li
+          a(href="https://mods.factorio.com/mod/attach-notes") Attach Notes
+          span : allow you to annotate almost everything (button in top right)
+        li
+          a(href="https://mods.factorio.com/mods/JasonMiles/Todo-List") Todo-List
+          span : adds a backlog to Factorio. Even now, you cannot escape Jira
+        li
+          a(href="https://mods.factorio.com/mods/Zaflis/VehicleSnap") VehicleSnap
+          span : snaps vehicle rotation when driving (shift+V to toggle)
+        li
+          a(href="https://mods.factorio.com/mod/MaxRateCalculator") MaxRateCalculator
+          span : adds calulator for maximum consumption (ctrl+n)
+        li
+          a(href="https://mods.factorio.com/mods/trold/Bottleneck") Bottleneck
+          span : adds blinkenlights to machines to show their status
+      h3.heading-small Cosmetic changes
+      ul
+        li
+          a(href="https://mods.factorio.com/mod/uranium_geiger") Uranium Geiger
+          span : Adds a (non-gameplay) Geiger click when near uranium
+        li
+          a(href="https://mods.factorio.com/mods/Earendel/alien-biomes") Alien Biomes
+          span : pretty new terrain because you&rsquo;re bored of the vanilla stuff
+        li
+          a(href="https://mods.factorio.com/mod/Automatic_Train_Painter") Automatic Train Painter
+          span : automatically colours train engines based on contents
+    .column-one-third
+      .grid-row
+      h2.visually-hidden.heading-medium Timelapse
+      figure
+        video(autoplay,muted,playsinline,loop,controls,poster="/factorio/784676572_end.png")
+          source(type="video/mp4",src="/factorio/784676572.mp4")
+        figcaption
+          strong Timelapse
+          .right
+            a(href="/factorio/784676572.mp4") download
+            span &nbsp;&middot;&nbsp;
+            a(href="/factorio/784676572_end.png") view map
+
+      if stats
+        if stats.playerList
+          .grid-row
+          if req.user
+            h2.heading-medium Players
+          else
+            h2.heading-medium Players currently online
+          ul.list.list-bullet
+            each play in stats.playerList
+              - let player = play.split('(')
+              if player.length > 0 && player[0] !== ''
+                li
+                  span= player.shift().trim()
+                  if player.length > 0
+                    span.phase-tag.margin ONLINE
+            else
+              .text-secondary (no active players)
+              .text-secondary (log in for full player list)
+        if stats.evolution
+          hr
+          .grid-row
+            .data
+              if stats.evolution == 100
+                span.data-item.bold-xlarge Max
+              else
+                span.data-item.bold-xlarge= stats.evolution + '%'
+              span.data-item.bold-xsmall evolution factor
+        if stats.time
+          .grid-row
+            .data
+              span.data-item.bold-xlarge= stats.time
+              span.data-item.bold-xsmall elapsed time

@@ -20,14 +20,27 @@ app.use(sass({
     path.join(__dirname, 'node_modules', 'govuk-elements-sass', 'public', 'sass')
   ]
 }))
-app.use('/', express.static(path.join(__dirname, 'public')))
-app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend_toolkit', 'images')))
+app.use('/', express.static(path.join(__dirname, 'public'),
+  {
+    setHeaders: (res, path) => {
+      if (express.static.mime.lookup(path) === 'video/mp4') {
+        res.setHeader('Cache-Control', 'public, max-age=1200')
+      } else {
+        res.setHeader('Cache-Control', 'public, max-age=86400')
+      }
+    }
+  }
+))
+app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend_toolkit', 'images'), { maxAge: 86400, immutable: true }))
 
 app.use(require('cookie-parser')())
 app.use(require('body-parser')())
 app.use(session({
   secret: 'jkshdjakhsjdhajskdhjsakk',
   resave: false,
+  cookie: {
+    domain: 'zuzakistan.com'
+  },
   saveUninitialized: false,
   store: new JsonSession()
 }))
