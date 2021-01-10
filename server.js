@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var express = require('express')
 var path = require('path') // core
 var sass = require('node-sass-middleware')
@@ -36,7 +37,7 @@ app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend
 app.use(require('cookie-parser')())
 app.use(require('body-parser')())
 app.use(session({
-  secret: 'jkshdjakhsjdhajskdhjsakk',
+  secret: process.env.SESSION_SECRET || 'jkshdjakhsjdhajskdhjsakk',
   resave: false,
   cookie: {
     domain: 'zuzakistan.com'
@@ -61,13 +62,13 @@ i18n.configure({
   cookie: 'i18nlang',
   defaultLocale: 'en',
   directory: path.join(__dirname, '/i18n'),
-  fallbacks: {'cy': 'en'},
+  fallbacks: { cy: 'en' },
   queryParameter: 'uselang',
   register: global,
   syncFiles: false,
   updateFiles: false,
   api: {
-    '__': 't'
+    __: 't'
   }
 })
 
@@ -81,14 +82,14 @@ global.__ = function (phrase, args) {
   var translation = t(phrase, args)
 
   if (translation === phrase && !translation.startsWith('/')) {
-    translation = t({phrase, locale: 'en'}, args)
+    translation = t({ phrase, locale: 'en' }, args)
     if (translation === phrase) {
       if (args) {
         return '⟪' + phrase + '|' + Object.keys(args).join('·') + '⟫'
       }
       return '⟪' + phrase + '⟫'
     }
-    return __('fallback', {content: translation})
+    return __('fallback', { content: translation })
   }
   return translation
 }
