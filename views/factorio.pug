@@ -21,7 +21,38 @@ block content
         .error-summary(role="alert")
           h2.heading-medium.error-summary-heading Server offline
           p The server isn&rsquo;t running right now. Contact zuzak if this isn&rsquo;t expected.
-      h1.heading-xlarge Festive Factorio
+      else if stats.version
+        if stats.version == stats.versions.experimental.headless
+          .error-summary.notification
+            h2.heading-medium.error-summary-heading
+              span Server updated
+              if stats && stats.version
+                span &nbsp; to version #{stats.version}&nbsp;
+            if stats && stats.version
+              span You need to opt into the experimental version (
+              a(href="https://wiki.factorio.com/Version_history/1.1.0#"+stats.version) changelog
+              span ) of Factorio to play.
+            else
+             span You need to opt into the experimental version of Factorio to play.
+            +upgrade
+        else if stats.version == stats.versions.stable.headless
+          //- stable
+        else
+          .error-summary
+            h2.heading-medium.error-summary-heading Server outdated
+            p The server is running #{stats.version} but the latest version is #{stats.versions.experimental.headless}.
+            p You need to opt-in to version #{stats.versions.experimental.headless} on Steam to play, until the server is updated.
+            p
+              details
+                summary Opt in to a specific Factorio version
+                .panel.panel-border-narrow
+                  p On Steam, you should:
+                  ol.list.list-number
+                    li Right-click the entry for &ldquo;Factorio&rdquo; in your Steam library and click &ldquo;Properties&rdquo;
+                    li On the &ldquo;Betas&rdquo; tab, select &ldquo;#{stats.version} - Factorio Outdated Experimental #{stats.version}&rdquo;
+                  p.
+                    Alternatively, you can download version #{stats.version} from the #[a(href="https://factorio.com/download") official site].
+      h1.heading-xlarge Factorio
       p.
         Factorio is a game in which you build and maintain factories.
         You mine resources, research technologies, build infrastructure, automate production and fight enemies.
@@ -38,12 +69,13 @@ block content
       p You can&rsquo;t join until you have:
       ul.list.list-bullet
         li added yourself to the invite list (below)
+        if stats && stats.version && stats.version != stats.versions.stable.headless
+          li opted into the right version of Factorio
         if stats && stats.version
-          li signed into the Factorio #{stats.version} client with your Factorio.com credentials
+          //li signed into the Factorio #{stats.version} client with your Factorio.com credentials
         else
-          li signed into the Factorio client with your Factorio.com credentials
+          //li signed into the Factorio client with your Factorio.com credentials
         li agreed to the code of conduct
-      p
       details
         summary Add yourself to the invite list
         form.panel.panel-border-narrow(method="post")
@@ -52,7 +84,7 @@ block content
             input.form-control(name="name",type="text")
           .form-group
             input(type="submit",value="Add yourself to the server").button
-      details
+      //- details
         summary Create a Factorio account
         .panel.panel-border-narrow
           p.
@@ -63,7 +95,8 @@ block content
             li Create an account at #[a(href="https://factorio.com/signup") factorio.com]
             li Either buy Factorio on that website, or associate the account with your Steam profile
             li Log in with your account on the Factorio client
-
+      if stats && stats.version && stats.version !== "1.0.0"
+        +upgrade
       h2.heading-large Code of conduct
       p.
         By requesting an invitation to this server you agree to the code of conduct.
@@ -253,3 +286,13 @@ block content
             .data
               span.data-item.bold-xlarge= stats.time
               span.data-item.bold-xsmall elapsed time
+mixin upgrade
+  details
+    summary Opt in to the latest experimental branch
+    .panel.panel-border-narrow
+      p On Steam, you should:
+      ol.list.list-number
+        li Right-click the entry for &ldquo;Factorio&rdquo; in your Steam library and click &ldquo;Properties&rdquo;
+        li On the &ldquo;Betas&rdquo; tab, select &ldquo;1.1.x - Latest 1.1 Experimental&rdquo;
+      p.
+        Alternatively, you can download version #{stats.version} from the #[a(href="https://factorio.com/download") official site].

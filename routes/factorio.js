@@ -1,9 +1,15 @@
 const app = require('..')
+const request = require('request-promise')
 
 const librcon = require('librcon')
 const serverAddress = process.env.FACTORIO_HOST || 'factorio.zuzakistan.com'
 const rconPassword = process.env.FACTORIO_PASSWORD
 const rcon = (command) => librcon.send(command, rconPassword, serverAddress, 25575)
+
+const versions = request({
+  url: 'https://factorio.com/api/latest-releases',
+  json: true
+})
 
 app.get('/factorio', async function (req, res) {
   const stats = await getStats(req.user)
@@ -11,7 +17,11 @@ app.get('/factorio', async function (req, res) {
   let serverAddr = serverAddress
   if (serverAddress === 'factorio.zuzakistan.com') serverAddr = 'factorio.' + req.hostname
 
-  res.render('factorio.pug', { playerList: stats.playerList, req, stats, serverAddress: serverAddr})
+  res.render('factorio.pug', { playerList: stats.playerList, req, stats, serverAddress: serverAddr })
+})
+
+app.get('/factorio.json', async function (req, res) {
+  res.json(await getStats())
 })
 
 const getStats = async (loggedIn) => {
@@ -42,7 +52,7 @@ const getStats = async (loggedIn) => {
     return days + ' days'
   })
   // const seed = rcon('/seed').then((x) => x.split('\n')[0])
-  const version = null// rcon('/version').then((x) => x.split('\n')[0])
+  const version = rcon('/version').then((x) => x.split('\n')[0])
 
   try {
     return {
@@ -50,11 +60,12 @@ const getStats = async (loggedIn) => {
       evolution: await evolution,
       time: await time,
       // seed: await seed,
-      version: await version
+      version: await version,
+      versions: await versions
     }
   } catch (err) {
     if (err.code === 'ECONNREFUSED') return { serverDown: true }
-    console.log(err.code)
+    console.log('>>>> ' + err.code)
     return {}
   }
 }

@@ -13,6 +13,7 @@ app.all('*', function (req, res, next) {
       '/stellaris',
       '/factorio',
       '/factorio/',
+      '/factorio.json',
       '/civilservant/scram.json'
     ]
     if (whitelist.includes(req.params[0])) return next()
