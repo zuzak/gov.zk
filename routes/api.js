@@ -4,6 +4,11 @@ var fs = require('fs')
 var hat = require('hat')
 
 app.all('*', function (req, res, next) {
+  if (req.host === 'zuzakistan.com') {
+    res.locals.zuzakistan = true
+  } else {
+    res.locals.zuzakistan = false
+  }
   if (!req.query.key) return next()
   if (req.user) return next()
 

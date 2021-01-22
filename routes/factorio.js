@@ -7,7 +7,11 @@ const rcon = (command) => librcon.send(command, rconPassword, serverAddress, 255
 
 app.get('/factorio', async function (req, res) {
   const stats = await getStats(req.user)
-  res.render('factorio.pug', { playerList: stats.playerList, req, stats, serverAddress })
+
+  let serverAddr = serverAddress
+  if (serverAddress === 'factorio.zuzakistan.com') serverAddr = 'factorio.' + req.hostname
+
+  res.render('factorio.pug', { playerList: stats.playerList, req, stats, serverAddress: serverAddr})
 })
 
 const getStats = async (loggedIn) => {

@@ -9,6 +9,8 @@ var session = require('express-session')
 var JsonSession = require('express-session-json')(session) // TODO something better
 var i18n = require('i18n')
 
+app.set('trust proxy', 'loopback')
+
 app.set('view engine', 'pug')
 app.set('json spaces', 2)
 app.locals.pretty = true

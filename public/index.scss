@@ -1,17 +1,23 @@
 $path: "/";
-$toolkit-font-stack: "nta", "Raleway";
-$accent-color: #4b92db;
-$accent-color: #843B68;
+$toolkit-font-stack: "nta", "Palanquin";//"Raleway";
+$accent-color: #3b6884; // blue
+//$accent-color: #68843b; // green
+$accent-color-zk: #843B68; // purple
 
 
-@import 'https://fonts.googleapis.com/css?family=Raleway';
+@import 'https://fonts.googleapis.com/css?family=Palanquin';
 
 @import 'govuk-elements';
 @import '_conditionals';
 @import 'elements/govuk-template-base';
 
+.zuzakistan .phase-tag { background-color: $accent-color-zk !important;}
 .phase-tag { background-color: $accent-color !important;}
-a:visited { color: $accent-color }
+.white-label a:visited { color: $accent-color }
+.zuzakistan a:visited { color: $accent-color-zk }
+
+.notification { border-color: $accent-color }
+.zuzakistan .notification { border-color: $accent-color-zk }
 
 header {
 	background-color: $text-colour;
@@ -19,7 +25,7 @@ header {
   min-height: 3em;
 }
 .header .logo {
-	color: inherit;
+	color: inherit !important;
 	text-decoration: inherit;
 	text-transform: uppercase;
 }
@@ -52,6 +58,11 @@ footer a:hover {
 
 .accent-bar {
 	background-color: $accent-color;
+}
+.zuzakistan .accent-bar {
+	background-color: $accent-color-zk !important;
+}
+.accent-bar {
 	height: 0.5em;
 	width: 100%;
 }

@@ -3,17 +3,21 @@ doctype html
 html
   head
     block title
-      title #{__('gov-zk')}
+      if zuzakistan
+        title #{__('gov-zk')}
+      title= req.hostname.toUpperCase()
     block css
       link(rel='stylesheet', href='/index.css')
     block js
     if req
-      if req.user
+      // if req.user
+      //- if req.user
+      if true
         link(rel="shortcut icon" href="/figroll.png")
         link(rel="stylesheet", href="https://govuk-elements.herokuapp.com/public/stylesheets/fonts.css")
       else
         link(rel="shortcut icon" href="/favicon.png")
-  body
+  body(class=zuzakistan ? 'zuzakistan' : 'white-label')
     if req && req.get('DNT') !== '1'
       if req.user
         script.
@@ -40,7 +44,10 @@ html
         .grid-row
           .column-two-thirds.font-large
             block header
-              a.logo(href='/') &#9819; #{__('gov-zk')}
+              if zuzakistan
+                a.logo(href='/') &#9819; #{__('gov-zk')}
+              else
+                a.logo(href='/') &#9819; #{req.hostname.replace(/\..*\./, '.').toUpperCase()}
           .columns-one-third
             block login
               if req
