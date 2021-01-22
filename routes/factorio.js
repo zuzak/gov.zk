@@ -6,6 +6,7 @@ const serverAddress = process.env.FACTORIO_HOST || 'factorio.zuzakistan.com'
 const rconPassword = process.env.FACTORIO_PASSWORD
 const rcon = (command) => librcon.send(command, rconPassword, serverAddress, 25575)
 
+const randomFile = require('select-random-file')
 const versions = request({
   url: 'https://factorio.com/api/latest-releases',
   json: true
@@ -26,6 +27,13 @@ app.get('/factorio.json', async function (req, res) {
 
 const getStats = async (loggedIn) => {
   const playerCommand = loggedIn ? '/p' : '/p o'
+  const getImage = new Promise((resolve, reject) => {
+    const path = '/home/zuzak/public_html/zuzakistan.com/public/factorio/map/d-c277191a/zoom_5'
+    randomFile(path, (err, file) => {
+      if (err) reject(err)
+      resolve(file)
+    })
+  })
   const playerList = rcon(playerCommand).then((x) => {
     x = x
       .trim()
@@ -58,6 +66,7 @@ const getStats = async (loggedIn) => {
     return {
       playerList: await playerList,
       evolution: await evolution,
+      img: await getImage,
       time: await time,
       // seed: await seed,
       version: await version,

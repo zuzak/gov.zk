@@ -54,6 +54,7 @@
     "passport": "^0.3.2",
     "pug": "^2.0.0-beta6",
     "request-promise": "^4.2.4",
+    "select-random-file": "^1.1.0",
     "shuffle-array": "^1.0.1",
     "snyk": "^1.124.0",
     "sort-object": "^3.0.2"

@@ -10,6 +10,7 @@ block append css
     .ballot .form-group {margin-bottom: 0}
     p.wrap { white-space: pre-line }
     .right { float: right }
+    img.map { width: 100%; }
     .button { margin-right: 1em; }
     .button-secondary { background-color: #f3f2f1 !important; color: black !important;  box-shadow: 0 2px 0 #929191; }
     .server-info { background-color: #f3f2f1;  padding: 1em; font-size: 1.5em; display: inline-block; }
@@ -243,16 +244,24 @@ block content
           span : automatically colours train engines based on contents
     .column-one-third
       .grid-row
-      h2.visually-hidden.heading-medium Timelapse
-      figure
-        video(autoplay,muted,playsinline,loop,controls,poster="/factorio/784676572_end.png")
-          source(type="video/mp4",src="/factorio/784676572.mp4")
-        figcaption
-          strong Timelapse
-          .right
-            a(href="/factorio/784676572.mp4") download
-            span &nbsp;&middot;&nbsp;
-            a(href="/factorio/784676572_end.png") view map
+        if stats && stats.img
+          - var link_x = parseInt(stats.img.split('_')[1]) * 32
+          - var link_y = parseInt(stats.img.split('_')[2].split('.')[0]) * 32
+          a(href="/factorio/map/?x=" + link_x + '&y=' + link_y + '&z=4')
+            img(src="https://zuzakistan.com/factorio/map/d-c277191a/zoom_5/" + stats.img).map
+        a(href="map/?x=918.0&y=2089.6&z=2") View map
+        .right.text-secondary &nbsp;(generated 11 January)
+      //-
+        h2.visually-hidden.heading-medium Timelapse
+        figure
+          video(autoplay,muted,playsinline,loop,controls,poster="/factorio/784676572_end.png")
+            source(type="video/mp4",src="/factorio/784676572.mp4")
+          figcaption
+            strong Timelapse
+            .right
+              a(href="/factorio/784676572.mp4") download
+              span &nbsp;&middot;&nbsp;
+              a(href="/factorio/784676572_end.png") view map
 
       if stats
         if stats.playerList
