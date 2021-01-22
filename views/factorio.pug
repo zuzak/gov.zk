@@ -176,8 +176,6 @@ block content
       //- p.
         The server&rsquo;s saves are copied every 2 hours to #[a(href="https://files.zuzakistan.com/factorio/saves") somewhere public].
         You can also create a savefile at any time yourself through the in-game menu.
-      p.
-        Placing terrain (landfill) is currently disabled.
       h3.heading-medium Installed mods
       p.
         When you first join the server, Factorio will ask you to synchronize your mods
@@ -186,9 +184,6 @@ block content
         The download list can be intimidating, but don&rsquo;t worry:
         all these changes are subtle and don&rsquo;t really affect gameplay.
         You can play on this server without having to learn what all these mods do.
-      p.
-        If you get a &ldquo;Mods mismatch detected!&rdquo; message, deselect &ldquo;Enable Walls and Gates&rdquo; under &ldquo;Dectorio&rdquo;
-        in Settings &rarr; Mod Settings &rarr; Startup.
       h3.heading-small Major gameplay changes
       ul
         li
@@ -267,9 +262,9 @@ block content
         if stats.playerList
           .grid-row
           if req.user
-            h2.heading-medium Players
+            h3.heading-small Players
           else
-            h2.heading-medium Players currently online
+            h3.heading-small Players currently online
           ul.list.list-bullet
             each play in stats.playerList
               - let player = play.split('(')
