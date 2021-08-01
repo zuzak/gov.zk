@@ -29,7 +29,7 @@
     "supertest": "^2.0.0"
   },
   "dependencies": {
-    "ansi_up": "^4.0.4",
+    "ansi_up": "^5.0.0",
     "body-parser": "^1.17.1",
     "classify2": "0.0.3",
     "cookie-parser": "^1.4.3",
@@ -50,10 +50,10 @@
     "irc": "^0.5.2",
     "librcon": "^1.0.3",
     "node-isbn": "^1.2.0",
-    "node-sass": "^5.0.0",
-    "node-sass-middleware": "^0.9.8",
+    "node-sass": "^6.0.1",
+    "node-sass-middleware": "^0.10.1",
     "passport": "^0.3.2",
-    "pug": "^2.0.0-beta6",
+    "pug": "^3.0.1",
     "request-promise": "^4.2.4",
     "select-random-file": "^1.1.0",
     "shuffle-array": "^1.0.1",
