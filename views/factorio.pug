@@ -290,6 +290,16 @@ block content
             .data
               span.data-item.bold-xlarge= stats.time
               span.data-item.bold-xsmall elapsed time
+        if stats.numberOfIronPlates
+          .grid-row
+            .data
+              span.data-item.bold-xlarge= stats.numberOfIronPlates.toLocaleString()
+              span.data-item.bold-xsmall iron plates manufactured
+        if stats.rocketsLaunched || stats.rocketsLaunched === 0
+          .grid-row
+            .data
+              span.data-item.bold-xlarge= stats.rocketsLaunched.toLocaleString()
+              span.data-item.bold-xsmall rockets launched
 mixin upgrade
   details
     summary Opt in to the latest experimental branch

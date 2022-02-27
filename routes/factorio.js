@@ -62,6 +62,9 @@ const getStats = async (loggedIn) => {
   // const seed = rcon('/seed').then((x) => x.split('\n')[0])
   const version = rcon('/version').then((x) => x.split('\n')[0])
 
+  const numberOfIronPlates = rcon('/c rcon.print(game.forces["player"].item_production_statistics.get_input_count("iron-plate"))').then((x) => parseInt(x.trim()))
+  const rocketsLaunched = rcon('/c rcon.print(game.forces["player"].rockets_launched)').then((x) => parseInt(x.trim()))
+
   try {
     return {
       playerList: await playerList,
@@ -69,6 +72,8 @@ const getStats = async (loggedIn) => {
       img: await getImage,
       time: await time,
       // seed: await seed,
+      numberOfIronPlates: await numberOfIronPlates,
+      rocketsLaunched: await rocketsLaunched,
       version: await version,
       versions: await versions
     }
