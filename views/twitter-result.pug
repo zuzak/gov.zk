@@ -1,0 +1,33 @@
+extends skeleton
+block title
+  title BBCBweaking
+block languages
+block login
+block breadcrumb
+  li: a(href="/unblock") Appeal a block
+  li #{user.name}
+block append css
+  style.
+    .upheld { background-color: #DF3034; }
+    .referred { background-color: #2B8CC4; }
+
+block content
+  .grid-row
+    .column-two-thirds
+      if verdict.verdict === 'already_unblocked'
+        .govuk-box-highlight.alreay_unblocked
+          h1.heading-xlarge You&rsquo;re already unblocked.
+          p.lede We&rsquo;ve checked your account and you&rsquo;re not blocked by the bot. There&rsquo;s no action we need to take.
+      if verdict.verdict === 'overturned'
+        .govuk-box-highlight.overturned
+          h1.heading-xlarge You&rsquo;re unblocked.
+          p.lede We&rsquo;ve automatically unblocked you because #{verdict.because}
+      if verdict.verdict === 'upheld'
+        .govuk-box-highlight.upheld
+          h1.heading-xlarge We won&rsquo;t unblock you.
+          p.lede We&rsquo;ve checked your account and decided not to unblock you because #{verdict.because}
+      if verdict.verdict === 'referred'
+        .govuk-box-highlight.referred
+          h1.heading-xlarge We can&rsquo;t unblock you.
+          p.lede We&rsquo;ve checked your account and it looks like you were blocked manually, so you can&rsquo;t use this service to get unblocked.
+

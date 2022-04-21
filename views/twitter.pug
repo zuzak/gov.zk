@@ -1,0 +1,22 @@
+extends skeleton
+block title
+  title BBCBweaking
+block languages
+block login
+block breadcrumb
+  li: a(href="/unblock") Appeal a block
+block content
+  .grid-row
+    .column-two-thirds
+        h1.heading-large Appeal a block from @BBCBweaking
+        p.lede.
+          Use this form to get unblocked by the bot if you were
+          automatically blocked by moderation tools.
+        p It won&rsquo;t unblock you if you were blocked manually, or if the reason you were blocked still holds true.
+        form(method="post")
+          .form-group
+            label.form-label(for="username") Your Twitter.com username
+            span.form-hint For example, &ldquo;jack&rdquo;.
+            input.form-control(name="username",type="text")
+          .form-group
+            input(type="submit",value="Request unblock").button
