@@ -6,6 +6,7 @@ var app = module.exports = express()
 var passport = require('passport')
 
 var session = require('express-session')
+require('express-async-errors')
 var JsonSession = require('express-session-json')(session) // TODO something better
 var i18n = require('i18n')
 

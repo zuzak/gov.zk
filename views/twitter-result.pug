@@ -29,5 +29,5 @@ block content
       if verdict.verdict === 'referred'
         .govuk-box-highlight.referred
           h1.heading-xlarge We can&rsquo;t unblock you.
-          p.lede We&rsquo;ve checked your account and it looks like you were blocked manually, so you can&rsquo;t use this service to get unblocked.
+          p.lede We&rsquo;ve checked your account but we can&rsquo;t unblock you because #{verdict.because}
 

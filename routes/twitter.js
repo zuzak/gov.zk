@@ -75,14 +75,14 @@ const getVerdict = async (user) => {
 
   const friendship = await getUserFriendship(username)
   if (friendship.length === 0) return { verdict: 'upheld', because: 'we can\'t find you on Twitter' }
+  if (!friendship[0].connections.includes('blocking')) return { verdict: 'referred', because: 'you are already unblocked' }
+
   if (await isFollowing(username, 'ALLIANCELGB')) return { verdict: 'upheld', because: 'the reason you were originally blocked is still true' }
-  // if (await isFollowing('ALLIANCELGB', username)) return {verdict: 'upheld', because: 'the reason you were originally blocked is still true'}}
   if (await isFollowing(username, 'countdankulatv')) return { verdict: 'upheld', because: 'the reason you were originally blocked is still true' }
-  // if (await isFollowing('countdankulatv', username)) return {verdict: 'upheld', because: 'the reason you were originally blocked is still true'}
   if (await isFollowing(username, 'lgballiance')) return { verdict: 'overturned', because: 'you were likely blocked in error' }
   if (await isFollowing('lgballiance', username)) return { verdict: 'overturned', because: 'you have been vouched for' }
   if (await isFollowing('zuzakistan', username)) return { verdict: 'overturned', because: 'you have been vouched for' }
-  return { verdict: 'referred', because: 'we cannot unblock you automatically' }
+  return { verdict: 'referred', because: 'you were probably blocked manually' }
 }
 
 app.get('/unblock/:username', limited, async function (req, res) {

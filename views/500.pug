@@ -6,10 +6,14 @@ block content
     h1.heading-xlarge #{__('error-500-heading')}
     p #{__('error-500-prose')}
     if err
-      details(open)
-        summary
-          span.summary #{__('error-500-stack-dropdown')}
-        pre.code.stack= err.stack
+      if err.stack
+        details(open)
+          summary
+            span.summary #{__('error-500-stack-dropdown')}
+          pre.code.stack= err.stack
+      else
+        details(open)
+          pre.code= JSON.stringify(err, 4, null)
     else
       p #{__('error-500-stack-nostack')}
     a.link-back(href='/') #{__('error-500-back')}
