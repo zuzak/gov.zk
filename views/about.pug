@@ -119,23 +119,24 @@ block content
                 .bold-xsmall #{__('about-stat-ahead')}
       else
         p #{__('about-nochanges')}
-      h3.heading-medium #{__('about-i18n-header')}
       - catalog = getCatalog()
-      table
-        thead
-          tr
-            th #{__('about-i18n-table-language')}
-            th #{__('about-i18n-table-keys')}
-            th(colspan="2") #{__('about-i18n-table-progress')}
-        - max = Object.keys(catalog['en']).length
-        for lang, code in catalog
-          - curr = Object.keys(lang).length
-          tr
-            td
-              a(href=__('/about-this-website/internationalization/:code').replace(':code',code)) #{__('about-i18n-language', {name: __('about-i18n-lang-'+code), code})}
-            td #{__('about-i18n-progress', {curr, max})}
-            td
-              meter(min=0,max=max,value=curr)
-            td.numeric #{__('about-i18n-percentage', {percentage: Math.round(100*curr/max)})}
+      if catalog && catalog['en']
+        h3.heading-medium #{__('about-i18n-header')}
+        table
+          thead
+            tr
+              th #{__('about-i18n-table-language')}
+              th #{__('about-i18n-table-keys')}
+              th(colspan="2") #{__('about-i18n-table-progress')}
+          - max = Object.keys(catalog['en']).length
+          for lang, code in catalog
+            - curr = Object.keys(lang).length
+            tr
+              td
+                a(href=__('/about-this-website/internationalization/:code').replace(':code',code)) #{__('about-i18n-language', {name: __('about-i18n-lang-'+code), code})}
+              td #{__('about-i18n-progress', {curr, max})}
+              td
+                meter(min=0,max=max,value=curr)
+              td.numeric #{__('about-i18n-percentage', {percentage: Math.round(100*curr/max)})}
     .column-one-third
       img(src='/arms.png')
