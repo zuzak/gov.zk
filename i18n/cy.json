@@ -3,6 +3,7 @@
   "/about-this-website/internationalization/:code": "/am-y-gwefan-hwn/rhyngwladoli/:code",
   "/book-club": "/clwb-llyfr",
   "/civilservant": "/gwassifil",
+  "/connect": "/cysylltu",
   "/book-club/admin": "/book-club/admin",
   "/book-club/book/:isbn": "/clwb-llyfr/llyfr/:isbn",
   "/book-club/book/:isbn/:user": "/clwb-llyfr/llyfr/:isbn/:user",
@@ -207,5 +208,11 @@
   "stat-readinglist-count": "llyfrau ar rhestr ddarllen",
   "stat-shortlist-votes": "pleidleisiau a fwriwyd",
   "welcome": "Croeso i Sŵsacistan",
+  "wifi-ssid": "SSID",
+  "wifi-header": "Manylion rhwydwaith",
+  "wifi-password": "Cyfrinair",
+  "wifi-external-ip": "Eich IP allanol",
+  "wifi-quota": "Cwota data yn weddill",
+  "wifi-fromconnected": "o ddyfais gysylltiedig",
   "zuzakistan": "Sŵsacistan"
 }
