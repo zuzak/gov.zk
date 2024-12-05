@@ -2,7 +2,7 @@ var irc = require('irc')
 var auth = require('./auth')
 
 var networks = [
-  'chat.freenode.net'
+  'irc.libera.chat'
 ]
 
 var bots = module.exports = []
