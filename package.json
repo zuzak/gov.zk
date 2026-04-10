@@ -30,7 +30,6 @@
     "express": "^4.21.0",
     "express-async-errors": "^3.1.1",
     "express-list-endpoints": "^7.0.0",
-    "express-rate-limit": "^7.0.0",
     "express-session": "^1.18.0",
     "express-session-json": "0.0.8",
     "git-state": "^4.0.0",
@@ -47,8 +46,7 @@
     "pug": "^3.0.0",
     "select-random-file": "^1.1.0",
     "shuffle-array": "^1.0.1",
-    "sort-object": "^3.0.2",
-    "twitter": "^1.7.1"
+    "sort-object": "^3.0.2"
   },
   "private": true,
   "bugs": {

@@ -1,6 +1,5 @@
 // interstitials
 require('./api.js')
-require('./twitter.js')
 require('./auth.js')
 
 require('./login.js')
