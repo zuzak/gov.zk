@@ -63,7 +63,6 @@ app.use(__l('/book-club').map((x) => x + '/*'), function (req, res, next) {
 
 app.get(__l('/book-club'), function (req, res) {
   const books = booklist.load()
-  const longlist = books.length
   let longlistProblemCount = 0
   const longlistParticipants = []
   let readingListCount = 0
