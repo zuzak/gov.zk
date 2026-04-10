@@ -1,11 +1,11 @@
-var app = require('..')
-var isbn = require('node-isbn')
-var shuffle = require('shuffle-array')
-var fs = require('fs')
-var irc = require('../irc.js')
-var classify = require('classify2')
+const app = require('..')
+const isbn = require('node-isbn')
+const shuffle = require('shuffle-array')
+const fs = require('fs')
+const irc = require('../irc.js')
+const classify = require('classify2')
 
-var state
+let state
 try {
   state = JSON.parse(fs.readFileSync('data/admin.json')).state
 } catch (e) {
@@ -18,18 +18,18 @@ try {
   }
 }
 
-var booklist = {
+const booklist = {
   KEYSTORE: 'data/books.json',
-  load: function () {
+  load () {
     try {
       return JSON.parse(fs.readFileSync(this.KEYSTORE))
     } catch (e) {
-      if (e.code === 'ENOENT') { // 404
+      if (e.code === 'ENOENT') {
         return []
       }
     }
   },
-  save: function (data) {
+  save (data) {
     try {
       fs.writeFileSync(this.KEYSTORE, JSON.stringify(data, null, '  '))
     } catch (e) {
@@ -41,16 +41,16 @@ var booklist = {
   }
 }
 
-app.use(__l('/book-club').map(function (x) { return x + '/*' }), function (req, res, next) {
+app.use(__l('/book-club').map((x) => x + '/*'), function (req, res, next) {
   if (!state.allowVoting) return next()
-  var books = booklist.load()
-  var count = 0
-  for (var i = 0; i < books.length; i++) {
-    if (!books[i].approve) {
+  const books = booklist.load()
+  let count = 0
+  for (const book of books) {
+    if (!book.approve) {
       count++
       continue
     }
-    if (books[i].approve.concat(books[i].disapprove).indexOf(req.user) === -1) {
+    if (book.approve.concat(book.disapprove).indexOf(req.user) === -1) {
       count++
       continue
     }
@@ -62,24 +62,24 @@ app.use(__l('/book-club').map(function (x) { return x + '/*' }), function (req, 
 })
 
 app.get(__l('/book-club'), function (req, res) {
-  var books = booklist.load()
-  var longlist = books.length
-  var longlistProblemCount = 0
-  var longlistParticipants = []
-  var readingListCount = 0
-  var shortlistVotes = 0
-  for (var i = 0; i < longlist; i++) {
-    if (longlistParticipants.indexOf(books[i].longlistedBy) === -1) {
-      longlistParticipants.push(books[i].longlistedBy)
+  const books = booklist.load()
+  const longlist = books.length
+  let longlistProblemCount = 0
+  const longlistParticipants = []
+  let readingListCount = 0
+  let shortlistVotes = 0
+  for (const book of books) {
+    if (!longlistParticipants.includes(book.longlistedBy)) {
+      longlistParticipants.push(book.longlistedBy)
     }
-    if (!books[i].upstream || !books[i].upstream.imageLinks || !books[i].upstream.description || !books[i].upstream.imageLinks.thumbnail) {
+    if (!book.upstream || !book.upstream.imageLinks || !book.upstream.description || !book.upstream.imageLinks.thumbnail) {
       longlistProblemCount++
     }
-    if (books[i].approve) {
-      shortlistVotes += books[i].approve.length
-      shortlistVotes += books[i].disapprove.length
+    if (book.approve) {
+      shortlistVotes += book.approve.length
+      shortlistVotes += book.disapprove.length
     }
-    if (books[i].readingList) {
+    if (book.readingList) {
       readingListCount++
     }
   }
@@ -89,7 +89,7 @@ app.get(__l('/book-club'), function (req, res) {
 })
 
 app.get(__l('/book-club/admin'), function (req, res) {
-  var admin = { admins: [], state: {} }
+  let admin = { admins: [], state: {} }
   try {
     admin = JSON.parse(fs.readFileSync('data/admin.json'))
   } catch (e) {
@@ -98,15 +98,15 @@ app.get(__l('/book-club/admin'), function (req, res) {
   if (!admin.admins || admin.admins.length === 0) {
     return res.status(403).render('error.pug', { err: __('admin-noadmins'), req })
   }
-  if (admin.admins.indexOf(req.user) === -1) {
+  if (!admin.admins.includes(req.user)) {
     return res.status(403).render('403.pug', { req })
   }
-  res.render('books/admin.pug', { req: req, state, books: booklist.load() })
+  res.render('books/admin.pug', { req, state, books: booklist.load() })
 })
 
 app.post(__l('/book-club/admin'), function (req, res) {
-  var admin = JSON.parse(fs.readFileSync('data/admin.json'))
-  if (admin.admins.indexOf(req.user) === -1) {
+  const admin = JSON.parse(fs.readFileSync('data/admin.json'))
+  if (!admin.admins.includes(req.user)) {
     return res.status(403).render('403.pug', { req })
   }
   if (req.body.changeState) {
@@ -120,13 +120,13 @@ app.post(__l('/book-club/admin'), function (req, res) {
     return res.redirect('/book-club')
   }
   if (req.body.readingList) {
-    var books = booklist.load()
-    for (var i = 0; i < books.length; i++) {
-      if (req.body.title !== books[i].title) continue
-      if (req.body.author !== books[i].author) continue
-      if (req.body.isbn !== books[i].isbn) continue
+    const books = booklist.load()
+    for (const book of books) {
+      if (req.body.title !== book.title) continue
+      if (req.body.author !== book.author) continue
+      if (req.body.isbn !== book.isbn) continue
 
-      books[i].readingList = true
+      book.readingList = true
       booklist.save(books)
       return res.redirect('/book-club/reading-list')
     }
@@ -135,85 +135,76 @@ app.post(__l('/book-club/admin'), function (req, res) {
 })
 
 app.get(__l('/book-club/long-list'), function (req, res) {
-  var books = booklist.load()
-  books.sort(function (x, y) {
-    x = x.author.split(' ')
-    x = x[x.length - 1]
-
-    y = y.author.split(' ')
-    y = y[y.length - 1]
-
-    if (x < y) return -1
-    if (x > y) return 1
+  const books = booklist.load()
+  books.sort((x, y) => {
+    const xLast = x.author.split(' ').pop()
+    const yLast = y.author.split(' ').pop()
+    if (xLast < yLast) return -1
+    if (xLast > yLast) return 1
     return 0
   })
   res.render('books/longlist.pug', { req, books, state })
 })
 
 app.get(__l('/book-club/short-list'), function (req, res) {
-  var books = booklist.load()
-  var slate = []
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].approve || books[i].disapprove) {
-      if (books[i].approve.indexOf(req.user) !== -1) continue
-      if (books[i].disapprove.indexOf(req.user) !== -1) continue
+  const books = booklist.load()
+  const slate = []
+  for (const book of books) {
+    if (book.approve || book.disapprove) {
+      if (book.approve.includes(req.user)) continue
+      if (book.disapprove.includes(req.user)) continue
     }
-    slate.push(books[i])
+    slate.push(book)
   }
   if (slate.length > 0 && state.allowVoting) {
     shuffle(slate)
     res.render('books/shortlist-ballot.pug', { req, books: slate, total: books.length })
   } else {
-    var results = [] // list of books that have been voted on
-    var electorate = {} // stats on each voter
-    for (var j = 0; j < books.length; j++) { // probably worth merging with the other loop?
-      var currentBook = books[j]
-      if (!currentBook.approve) continue
-      if (!currentBook.disapprove) continue
+    const results = []
+    const electorate = {}
+    for (const book of books) {
+      if (!book.approve) continue
+      if (!book.disapprove) continue
 
-      for (var k = 0; k < currentBook.approve.length; k++) {
-        if (!electorate[currentBook.approve[k]]) {
-          electorate[currentBook.approve[k]] = { total: 1, approve: 1, disapprove: 0 }
+      for (const voter of book.approve) {
+        if (!electorate[voter]) {
+          electorate[voter] = { total: 1, approve: 1, disapprove: 0 }
         } else {
-          electorate[currentBook.approve[k]].approve++
-          electorate[currentBook.approve[k]].total++
+          electorate[voter].approve++
+          electorate[voter].total++
         }
       }
-      for (var n = 0; n < currentBook.disapprove.length; n++) {
-        if (!electorate[currentBook.disapprove[n]]) {
-          electorate[currentBook.disapprove[n]] = { total: 1, approve: 0, disapprove: 1 }
+      for (const voter of book.disapprove) {
+        if (!electorate[voter]) {
+          electorate[voter] = { total: 1, approve: 0, disapprove: 1 }
         } else {
-          electorate[currentBook.disapprove[n]].disapprove++
-          electorate[currentBook.disapprove[n]].total++
+          electorate[voter].disapprove++
+          electorate[voter].total++
         }
       }
-      results.push(books[j])
+      results.push(book)
     }
 
-    var maxSAV = 0
-    for (var voter in electorate) {
-      if (electorate.hasOwnProperty(voter)) {
-        maxSAV += 1 / electorate[voter].approve
+    let maxSAV = 0
+    for (const voter of Object.keys(electorate)) {
+      maxSAV += 1 / electorate[voter].approve
+    }
+
+    for (const result of results) {
+      result.sav = 0
+      for (const voter of result.approve) {
+        result.sav += (1 / electorate[voter].approve)
       }
+      result.scaledSav = Math.round((result.sav / maxSAV) * 100)
     }
 
-    for (i = 0; i < results.length; i++) {
-      results[i].sav = 0
-      for (var approveIndex = 0; approveIndex < results[i].approve.length; approveIndex++) {
-        results[i].sav += (1 / electorate[results[i].approve[approveIndex]].approve)
-      }
-      results[i].scaledSav = Math.round((results[i].sav / maxSAV) * 100)
-    }
-
-    results.sort(function (a, b) {
-      var count = 0
-      // count -= a.approve.length * 1000
+    results.sort((a, b) => {
+      let count = 0
       count -= a.sav * 1000
       if (a.alreadyRead) count += a.alreadyRead.length / 10
       if (a.difficult) count += 1 / 100
       if (a.readingList) count -= 1 / 100
 
-      // count += b.approve.length * 1000
       count += b.sav * 1000
       if (b.alreadyRead) count -= b.alreadyRead.length / 10
       if (b.difficult) count -= 1 / 100
@@ -223,7 +214,6 @@ app.get(__l('/book-club/short-list'), function (req, res) {
       if (a.title > b.title) count += 1 / 1000
 
       return count
-      // return b.approve.length - a.approve.length
     })
 
     res.render('books/shortlist-results.pug', { req, results, electorate, books, state })
@@ -234,38 +224,37 @@ app.post(__l('/book-club/short-list'), function (req, res) {
   if (!state.allowVoting) {
     return res.status(403).render('403.pug', req)
   }
-  var bl = booklist.load()
-  for (var i = 0; i < bl.length; i++) {
-    if (bl[i].author !== req.body.author) continue
-    if (bl[i].title !== req.body.title) continue
+  const bl = booklist.load()
+  for (const book of bl) {
+    if (book.author !== req.body.author) continue
+    if (book.title !== req.body.title) continue
 
-    if (!bl[i].approve) bl[i].approve = []
-    if (!bl[i].disapprove) bl[i].disapprove = []
+    if (!book.approve) book.approve = []
+    if (!book.disapprove) book.disapprove = []
 
-    if ((bl[i].approve.indexOf(req.user) !== -1) ||
-        (bl[i].disapprove.indexOf(req.user) !== -1)) {
+    if (book.approve.includes(req.user) || book.disapprove.includes(req.user)) {
       return res.status(400).render('error.pug', { err: __('shortlist-doublevote'), req })
     }
 
     if (req.body.verdict === 'yes') {
-      bl[i].approve.push(req.user)
+      book.approve.push(req.user)
     } else if (req.body.verdict === 'no') {
-      bl[i].disapprove.push(req.user)
+      book.disapprove.push(req.user)
     }
 
     if (req.body.alreadyRead === 'on') {
-      if (!bl[i].alreadyRead) {
-        bl[i].alreadyRead = [req.user]
+      if (!book.alreadyRead) {
+        book.alreadyRead = [req.user]
       } else {
-        bl[i].alreadyRead.push(req.user)
+        book.alreadyRead.push(req.user)
       }
     }
 
     if (req.body.haveCopy === 'on') {
-      if (!bl[i].haveCopy) {
-        bl[i].haveCopy = [req.user]
+      if (!book.haveCopy) {
+        book.haveCopy = [req.user]
       } else {
-        bl[i].haveCopy.push(req.user)
+        book.haveCopy.push(req.user)
       }
     }
     booklist.save(bl)
@@ -273,7 +262,6 @@ app.post(__l('/book-club/short-list'), function (req, res) {
   }
 
   res.status(404)
-  // resend the ballot anyway I guess?
 })
 
 app.get(__l('/book-club/long-list/add-a-book'), function (req, res) {
@@ -285,12 +273,12 @@ app.get(__l('/book-club/long-list/add-a-book'), function (req, res) {
 })
 
 function replaceIsbn (books, author, title, newIsbn) {
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].author !== author) continue
-    if (books[i].title !== title) continue
+  for (const book of books) {
+    if (book.author !== author) continue
+    if (book.title !== title) continue
 
-    delete books[i].upstream
-    books[i].isbn = newIsbn
+    delete book.upstream
+    book.isbn = newIsbn
 
     return books
   }
@@ -298,8 +286,7 @@ function replaceIsbn (books, author, title, newIsbn) {
 }
 
 app.post(__l('/book-club/long-list'), function (req, res) {
-  // ISBN editing
-  var books = booklist.load()
+  let books = booklist.load()
   books = replaceIsbn(books, req.body.author, req.body.title, req.body.isbn)
   if (books) {
     booklist.save(books)
@@ -312,13 +299,13 @@ app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
   if (!state.addToLonglist) {
     return res.status(403).render('403.pug', req)
   }
-  var book = req.body
+  const book = req.body
   book.difficult = book.difficult === 'on'
   book.longlistedBy = req.user
   if (!book.author || !book.title) {
     res.status(400).render('error.pug', { req, msg: __('longlist-add-book-fail') })
   } else {
-    var bl = booklist.load()
+    const bl = booklist.load()
     bl.push(book)
     booklist.save(bl)
     res.redirect('/book-club/long-list')
@@ -326,53 +313,52 @@ app.post(__l('/book-club/long-list/add-a-book'), function (req, res) {
 })
 
 app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
-  var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].isbn && books[i].isbn === req.params.isbn) {
-      if (books[i].upstream) {
-        if (!books[i].upstream.oclc) {
-          classify.get(req.params.isbn, function (data) {
-            books[i].upstream.oclc = data
+  const books = booklist.load()
+  for (const book of books) {
+    if (book.isbn && book.isbn === req.params.isbn) {
+      if (book.upstream) {
+        if (!book.upstream.oclc) {
+          classify.get(req.params.isbn, (data) => {
+            book.upstream.oclc = data
             booklist.save(books)
           })
         }
-        res.render('books/book-view.pug', { req, isbn: req.params.isbn, book: books[i] })
+        return res.render('books/book-view.pug', { req, isbn: req.params.isbn, book })
       } else {
-        isbn.resolve(req.params.isbn, function (err, book) {
+        return isbn.resolve(req.params.isbn, (err, resolved) => {
           if (err) {
-            var newbooks = replaceIsbn(books, books[i].author, books[i].title, null)
+            const newbooks = replaceIsbn(books, book.author, book.title, null)
             if (newbooks) booklist.save(books)
             return res.status(404).render('error.pug', { req, err })
           }
-          books.oclc = classify.get(req.params.isbn, function (data) {
-            books[i].upstream = book
+          classify.get(req.params.isbn, (data) => {
+            book.upstream = resolved
             booklist.save(books)
           })
-          res.render('books/book-view.pug', { req, isbn: req.params.isbn, book: books[i] })
+          res.render('books/book-view.pug', { req, isbn: req.params.isbn, book })
         })
       }
-      return
     }
   }
   next()
 })
 
 app.get(__l('/book-club/book/:isbn.json'), function (req, res, next) {
-  var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].isbn && books[i].isbn === req.params.isbn) {
-      return res.json(books[i])
+  const books = booklist.load()
+  for (const book of books) {
+    if (book.isbn && book.isbn === req.params.isbn) {
+      return res.json(book)
     }
   }
   return next()
 })
 
 app.get(__l('/book-club/book/:isbn/:user'), function (req, res, next) {
-  var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].isbn === req.params.isbn) {
-      if (books[i].status && books[i].status[req.params.user]) {
-        return res.render('books/book-history.pug', { req: req, book: books[i], user: req.params.user })
+  const books = booklist.load()
+  for (const book of books) {
+    if (book.isbn === req.params.isbn) {
+      if (book.status && book.status[req.params.user]) {
+        return res.render('books/book-history.pug', { req, book, user: req.params.user })
       }
     }
   }
@@ -380,18 +366,18 @@ app.get(__l('/book-club/book/:isbn/:user'), function (req, res, next) {
 })
 
 app.get(__l('/book-club/book/:isbn/edit'), function (req, res) {
-  var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].isbn === req.params.isbn) {
-      res.render('books/book-desc.pug', { book: books[i], req })
+  const books = booklist.load()
+  for (const book of books) {
+    if (book.isbn === req.params.isbn) {
+      res.render('books/book-desc.pug', { book, req })
     }
   }
 })
 app.post(__l('/book-club/book/:isbn/edit'), function (req, res) {
-  var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].isbn === req.params.isbn) {
-      if (req.body.desc) books[i].desc = req.body.desc
+  const books = booklist.load()
+  for (const book of books) {
+    if (book.isbn === req.params.isbn) {
+      if (req.body.desc) book.desc = req.body.desc
       booklist.save(books)
       res.redirect('/book-club/book/' + req.params.isbn)
     }
@@ -399,12 +385,12 @@ app.post(__l('/book-club/book/:isbn/edit'), function (req, res) {
 })
 
 app.post(__l('/book-club/book/:isbn/add-comment'), function (req, res) {
-  var books = booklist.load()
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].isbn === req.params.isbn) {
+  const books = booklist.load()
+  for (const book of books) {
+    if (book.isbn === req.params.isbn) {
       if (!req.body.comment) return res.status(400).render('error.pug', { req })
-      if (!books[i].comments) books[i].comments = []
-      books[i].comments.push({
+      if (!book.comments) book.comments = []
+      book.comments.push({
         user: req.user,
         text: req.body.comment,
         ts: Date.now()
@@ -416,23 +402,20 @@ app.post(__l('/book-club/book/:isbn/add-comment'), function (req, res) {
 })
 
 app.get(__l('/book-club/reading-list'), function (req, res) {
-  var books = booklist.load()
-  var readingList = []
-  for (var i = 0; i < books.length; i++) {
-    if (books[i].readingList) readingList.push(books[i])
-  }
+  const books = booklist.load()
+  const readingList = books.filter((book) => book.readingList)
   res.render('books/reading-index.pug', { req, books: readingList })
 })
 
 app.post(__l('/book-club/reading-list'), function (req, res) {
-  var b = booklist.load()
-  for (var i = 0; i < b.length; i++) {
-    if (b[i].isbn !== req.body.isbn) continue
+  const b = booklist.load()
+  for (const book of b) {
+    if (book.isbn !== req.body.isbn) continue
 
-    if (!b[i].status) b[i].status = {}
-    if (!b[i].status[req.user]) b[i].status[req.user] = []
+    if (!book.status) book.status = {}
+    if (!book.status[req.user]) book.status[req.user] = []
 
-    b[i].status[req.user].push({
+    book.status[req.user].push({
       status: req.body.status,
       pages: req.body.pages,
       freeform: req.body.freeform,

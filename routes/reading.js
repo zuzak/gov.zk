@@ -1,18 +1,18 @@
-var app = require('..')
-var fs = require('fs')
+const app = require('..')
+const fs = require('fs')
 
-var books = {
+const books = {
   KEYSTORE: 'data/reading.json',
-  load: function () {
+  load () {
     try {
       return JSON.parse(fs.readFileSync(this.KEYSTORE))
     } catch (e) {
-      if (e.code === 'ENOENT') { // 404
+      if (e.code === 'ENOENT') {
         return {}
       }
     }
   },
-  save: function (data) {
+  save (data) {
     fs.writeFileSync(this.KEYSTORE, JSON.stringify(data, null, '  '))
   }
 }
@@ -22,15 +22,14 @@ app.get(__l('/book-club/reading-list'), function (req, res) {
 })
 
 app.post(__l('/book-club/reading-list'), function (req, res) {
-  var b = books.load()
-  console.log(req.body)
-  for (var i = 0; i < b.length; i++) {
-    if (b[i].isbn !== req.body.isbn) continue
+  const b = books.load()
+  for (const book of b) {
+    if (book.isbn !== req.body.isbn) continue
 
-    if (!b[i].status) b[i].status = {}
-    if (!b[i].status[req.user]) b[i].status[req.user] = []
+    if (!book.status) book.status = {}
+    if (!book.status[req.user]) book.status[req.user] = []
 
-    b[i].status[req.user].push({
+    book.status[req.user].push({
       status: req.body.status,
       pages: req.body.pages,
       ts: Date.now()

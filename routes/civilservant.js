@@ -1,28 +1,15 @@
-var app = require('..')
+const app = require('..')
 const cors = require('cors')
 const AU = require('ansi_up')
-const request = require('request-promise')
 
 let scram = 'ok'
 
 app.get(__l('/civilservant'), async function (req, res, next) {
   const [inventory, ofn, quotes, scrabble] = await Promise.all([
-    request({
-      url: 'https://files.chippy.ch/cs/inventory.json',
-      json: true
-    }),
-    request({
-      url: 'https://files.chippy.ch/cs/ofn.json',
-      json: true
-    }),
-    request({
-      url: 'https://files.chippy.ch/cs/quotes.json',
-      json: true
-    }),
-    request({
-      url: 'https://files.chippy.ch/cs/scrabble.json',
-      json: true
-    })
+    fetch('https://files.chippy.ch/cs/inventory.json').then((r) => r.json()),
+    fetch('https://files.chippy.ch/cs/ofn.json').then((r) => r.json()),
+    fetch('https://files.chippy.ch/cs/quotes.json').then((r) => r.json()),
+    fetch('https://files.chippy.ch/cs/scrabble.json').then((r) => r.json())
   ]).catch((e) => { next(e) })
 
   return res.render('bucket.pug', {
@@ -35,11 +22,9 @@ app.get(__l('/civilservant'), async function (req, res, next) {
   })
 })
 
-app.get('/civilservant/console', async function (req, res, next) {
+app.get('/civilservant/console', async function (req, res, next) { // eslint-disable-line no-unused-vars
   const ansify = new AU.default() // eslint-disable-line new-cap
-  const stdout = await request({
-    url: 'https://files.chippy.ch/cs/stdout.txt'
-  })
+  const stdout = await fetch('https://files.chippy.ch/cs/stdout.txt').then((r) => r.text())
   let splat = stdout.trim().split('======')
   splat = splat.map((x) => x.split('------'))
   splat = splat.map((x) => {
@@ -48,14 +33,12 @@ app.get('/civilservant/console', async function (req, res, next) {
   })
   return res.render('console.pug', {
     req,
-    stdout: splat// JSON.stringify(splat, null, 4)
+    stdout: splat
   })
 })
 
-app.get('/civilservant/notes', async function (req, res, next) {
-  const stdout = await request({
-    url: 'https://files.chippy.ch/cs/notes.txt'
-  })
+app.get('/civilservant/notes', async function (req, res, next) { // eslint-disable-line no-unused-vars
+  const stdout = await fetch('https://files.chippy.ch/cs/notes.txt').then((r) => r.text())
   const notes = stdout.trim().split('\n')
   return res.render('notes.pug', {
     req,
@@ -72,4 +55,3 @@ app.post('/civilservant/scram', (req, res) => {
   }
   return res.render('scram.pug', { req, scram })
 })
-app.get('/civilservant/scram.json', (req, res) => res.json(scram))
