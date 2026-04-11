@@ -330,9 +330,13 @@ app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
             if (newbooks) booklist.save(books)
             return res.status(404).render('error.pug', { req, err })
           }
+          book.upstream = resolved
+          booklist.save(books)
           classify.get(req.params.isbn, (data) => {
-            book.upstream = resolved
-            booklist.save(books)
+            if (data) {
+              book.upstream.oclc = data
+              booklist.save(books)
+            }
           })
           res.render('books/book-view.pug', { req, isbn: req.params.isbn, book })
         })

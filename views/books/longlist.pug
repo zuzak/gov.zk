@@ -57,7 +57,7 @@ block content
             tr
               if book.isbn
                 td.numeric
-                  a(href='book/'+book.isbn)
+                  a(href='/book-club/book/'+book.isbn)
                     if book.upstream && book.upstream.imageLinks && book.upstream.imageLinks.smallThumbnail
                       img(src=book.upstream.imageLinks.smallThumbnail.replace('http://','//'), style="height:2em")
                     else
@@ -96,7 +96,7 @@ block content
                   //- no upstream
                   td.red(title=__('longlist-metadata-bad')) ✗
                   td(colspan="2")
-                    a(href='book/'+book.isbn) #{__('longlist-getdata')}
+                    a(href='/book-club/book/'+book.isbn) #{__('longlist-getdata')}
               else
                   td.red(title=__('longlist-metadata-bad')) ✗
                   td(colspan="2")
