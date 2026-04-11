@@ -9,7 +9,7 @@ const packagejson = require('../package.json')
 app.get(__l('/about-this-website'), async function (req, res) {
   const coreDeps = Object.keys(packagejson.dependencies)
   const stdout = await new Promise((resolve, reject) => {
-    exec('git log --format="%cN" | sort -u', (err, stdout) => {
+    exec('git log --format="%aN" | sort -u', (err, stdout) => {
       if (err) return reject(err)
       resolve(stdout)
     })
