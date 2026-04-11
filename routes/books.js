@@ -3,7 +3,6 @@ const isbn = require('node-isbn')
 const shuffle = require('shuffle-array')
 const fs = require('fs')
 const irc = require('../irc.js')
-const classify = require('classify2')
 
 let state
 try {
@@ -316,12 +315,6 @@ app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
   for (const book of books) {
     if (book.isbn && book.isbn === req.params.isbn) {
       if (book.upstream) {
-        if (!book.upstream.oclc) {
-          classify.get(req.params.isbn, (data) => {
-            book.upstream.oclc = data
-            booklist.save(books)
-          })
-        }
         return res.render('books/book-view.pug', { req, isbn: req.params.isbn, book })
       } else {
         return isbn.resolve(req.params.isbn, (err, resolved) => {
@@ -332,12 +325,6 @@ app.get(__l('/book-club/book/:isbn'), function (req, res, next) {
           }
           book.upstream = resolved
           booklist.save(books)
-          classify.get(req.params.isbn, (data) => {
-            if (data) {
-              book.upstream.oclc = data
-              booklist.save(books)
-            }
-          })
           res.render('books/book-view.pug', { req, isbn: req.params.isbn, book })
         })
       }
