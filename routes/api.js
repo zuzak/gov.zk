@@ -4,7 +4,7 @@ const fs = require('fs')
 const hat = require('hat')
 
 app.all('*', function (req, res, next) {
-  if (req.host === 'zuzakistan.com') {
+  if (req.hostname === 'zuzakistan.com') {
     res.locals.zuzakistan = true
   } else {
     res.locals.zuzakistan = false

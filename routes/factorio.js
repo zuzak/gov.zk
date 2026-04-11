@@ -23,10 +23,11 @@ app.get('/factorio.json', async function (req, res) {
 
 const getStats = async (loggedIn) => {
   const playerCommand = loggedIn ? '/p' : '/p o'
+  const noop = () => {}
   const getImage = new Promise((resolve, reject) => {
     const path = '/home/zuzak/public_html/zuzakistan.com/public/factorio/map/d-c277191a/zoom_5'
     randomFile(path, (err, file) => {
-      if (err) reject(err)
+      if (err) return reject(err)
       resolve(file)
     })
   })
@@ -59,6 +60,10 @@ const getStats = async (loggedIn) => {
   const numberOfIronPlates = rcon('/c rcon.print(game.forces["player"].item_production_statistics.get_input_count("iron-plate"))').then((x) => parseInt(x.trim()))
   const rocketsLaunched = rcon('/c rcon.print(game.forces["player"].rockets_launched)').then((x) => parseInt(x.trim()))
 
+  // Prevent unhandled rejections — all promises must be caught before any is awaited
+  const allPromises = [getImage, playerList, evolution, time, version, numberOfIronPlates, rocketsLaunched, versions]
+  allPromises.forEach((p) => p.catch(noop))
+
   try {
     return {
       playerList: await playerList,
@@ -71,8 +76,8 @@ const getStats = async (loggedIn) => {
       versions: await versions
     }
   } catch (err) {
-    if (err.code === 'ECONNREFUSED') return { serverDown: true }
-    console.log('>>>> ' + err.code)
+    if (err.code === 'ECONNREFUSED' || err.code === 'ENOENT') return { serverDown: true }
+    console.log('>>>> ' + err.code + ' ' + err.message)
     return {}
   }
 }
