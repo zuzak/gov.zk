@@ -36,7 +36,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'jkshdjakhsjdhajskdhjsakk',
   resave: false,
   cookie: {
-    domain: 'zuzakistan.com'
+    domain: process.env.COOKIE_DOMAIN || undefined
   },
   saveUninitialized: false,
   store: new JsonSession()
@@ -100,5 +100,8 @@ if (app.get('env') === 'test') {
 }
 
 process.on('SIGINT', () => {
+  process.exit(0)
+})
+process.on('SIGTERM', () => {
   process.exit(0)
 })
