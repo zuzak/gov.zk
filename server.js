@@ -32,6 +32,9 @@ app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend
 app.use(require('cookie-parser')())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+if (!process.env.SESSION_SECRET && app.get('env') !== 'test') {
+  console.warn('WARNING: SESSION_SECRET is not set. Using insecure default.')
+}
 app.use(session({
   secret: process.env.SESSION_SECRET || 'jkshdjakhsjdhajskdhjsakk',
   resave: false,

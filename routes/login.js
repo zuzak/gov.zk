@@ -35,8 +35,9 @@ app.post(__l('/log-in'), function (req, res) {
         if (err) {
           throw err
         }
-        if (req.body.returnTo) {
-          res.redirect(req.body.returnTo)
+        const returnTo = req.body.returnTo
+        if (returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//')) {
+          res.redirect(returnTo)
         } else {
           res.redirect('/')
         }

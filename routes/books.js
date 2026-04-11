@@ -260,7 +260,7 @@ app.post(__l('/book-club/short-list'), function (req, res) {
     return res.redirect(__('/book-club/short-list'))
   }
 
-  res.status(404)
+  res.status(404).render('error.pug', { req })
 })
 
 app.get(__l('/book-club/long-list/add-a-book'), function (req, res) {

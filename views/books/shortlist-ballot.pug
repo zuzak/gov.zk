@@ -16,7 +16,6 @@ block content
       - title = book.title
       - author = book.author
       if book.upstream
-        - title = book.upstream.title
         - author = book.upstream.authors && book.upstream.authors.length ? book.upstream.authors.join(' & ') : book.author
       .grid-row
         .column-full
