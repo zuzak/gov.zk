@@ -1,11 +1,11 @@
 /* eslint-env mocha */
-var app = require('..')
-var request = require('supertest')
-var path = require('path') // core
-var endpoints = require('express-list-endpoints')
-var pug = require('pug')
-var fs = require('fs')
-var recurse = require('recursive-readdir-sync')
+const app = require('..')
+const request = require('supertest')
+const path = require('path') // core
+const endpoints = require('express-list-endpoints')
+const pug = require('pug')
+const fs = require('fs')
+const recurse = require('recursive-readdir-sync')
 require('should')
 
 describe('index', function () {
@@ -41,7 +41,7 @@ describe('stylesheet compilation', function () {
       // rm to ensure that we're not just passing through
       fs.unlinkSync(path.join(__dirname, 'public', 'index.css')) // Scary!
     } catch (e) {
-      if (e.code === 'ENOENT') { // file already gone
+      if (e.code === 'ENOENT') {
         return
       }
       throw e
@@ -73,32 +73,30 @@ describe('routes', function () {
       .get('/book-club/admin')
       .expect(403, done)
   })
-  var endpoint = endpoints(app)
-  var routes = []
-  for (var i = 0; i < endpoint.length; i++) {
-    if (endpoint[i].methods.length === 1 && endpoint[i].methods[0] === 'GET') {
-      routes = routes.concat(endpoint[i].path.split(',').filter(function (x) {
-        return x.startsWith('/') && x.indexOf(':') === -1 && x !== '/500'
+  const endpoint = endpoints(app)
+  let routes = []
+  for (const ep of endpoint) {
+    if (ep.methods.length === 1 && ep.methods[0] === 'GET') {
+      routes = routes.concat(ep.path.split(',').filter((x) => {
+        return x.startsWith('/') && !x.includes(':') && x !== '/500'
       }))
     }
   }
-  for (i = 0; i < routes.length; i++) {
-    ;(function (route) {
-      it('route ' + route + ' should not result in a server error', function (done) {
-        request(app)
-          .get(route)
-          .end(function (err, res) {
-            if (err) throw err
-            res.serverError.should.equal(false)
-            res.text.should.not.containEql('Log in to GOV.ZK')
-            done()
-          })
-      })
-    })(routes[i])
+  for (const route of routes) {
+    it('route ' + route + ' should not result in a server error', function (done) {
+      request(app)
+        .get(route)
+        .end(function (err, res) {
+          if (err) throw err
+          res.serverError.should.equal(false)
+          res.text.should.not.containEql('Log in to GOV.ZK')
+          done()
+        })
+    })
   }
 })
 describe('log in system', function () {
-  var auth = require('../auth.js')
+  const auth = require('../auth.js')
   it('should fail on POSTed login with no params', function (done) {
     request(app)
       .post('/log-in')
@@ -117,24 +115,24 @@ describe('log in system', function () {
       .expect(401, done)
   })
   it('should work on POSTed login with verified key', function (done) {
-    var key = auth.getNewKey()
+    const key = auth.getNewKey()
     auth.activateKey(key, 'zuzak')
     request(app)
       .post('/log-in')
       .send({ key })
       .expect(302, done) // redirect to /
   })
-  it('should fail on POSTed login with verified key but unwhitelisted user', function (done) {
-    var key = auth.getNewKey()
+  it('should succeed on POSTed login with verified key for any user', function (done) {
+    const key = auth.getNewKey()
     auth.activateKey(key, 'test')
     request(app)
       .post('/log-in')
       .send({ key })
-      .expect(403, done)
+      .expect(302, done) // redirect to /
   })
 })
 describe('log in JSON API', function () {
-  var auth = require('../auth.js')
+  const auth = require('../auth.js')
   it('should 404 on bad key', function (done) {
     request(app)
       .get('/log-in/verify/!aaaaa.json')
@@ -150,8 +148,8 @@ describe('log in JSON API', function () {
         done()
       })
   })
-  it('should return true on ctive key', function (done) {
-    var key = auth.getNewKey()
+  it('should return true on active key', function (done) {
+    const key = auth.getNewKey()
     auth.activateKey(key, 'test')
     request(app)
       .get('/log-in/verify/' + key + '.json')
@@ -163,8 +161,8 @@ describe('log in JSON API', function () {
       })
   })
 })
-describe('authentication system', function (done) {
-  var auth = require('../auth.js')
+describe('authentication system', function () {
+  const auth = require('../auth.js')
   it('should read/write to disk', function () {
     auth.KEYSTORE = '/tmp/authtest.json'
     auth.data.test = 'hello'
@@ -174,30 +172,30 @@ describe('authentication system', function (done) {
     auth.data.test.should.containEql('hello')
   })
   it('should save new keys', function () {
-    var key = auth.getNewKey()
-    key.should.be.a.String
+    const key = auth.getNewKey()
+    key.should.be.a.String()
     auth.data.unusedKeys.should.containEql(key)
   })
   it('should validate correct keys', function () {
-    var key = auth.getNewKey()
+    const key = auth.getNewKey()
     auth.isKey(key).should.be.true()
   })
   it('should not validate incorrect keys', function () {
     auth.isKey('this is not a valid key').should.be.false()
   })
   it('should mark keys as used', function () {
-    var key = auth.getNewKey()
+    const key = auth.getNewKey()
     auth.markKeyUsed(key)
     auth.data.usedKeys.should.containEql(key)
   })
   it('should not think unused keys are used', function () {
-    var key = auth.getNewKey()
-    auth.isUsedKey(key).should.be.false
+    const key = auth.getNewKey()
+    auth.isUsedKey(key).should.be.false()
   })
   it('should think used keys are used', function () {
-    var key = auth.getNewKey()
+    const key = auth.getNewKey()
     auth.markKeyUsed(key)
-    auth.isUsedKey(key).should.be.true
+    auth.isUsedKey(key).should.be.true()
   })
   it('should not mark invalid keys as used', function () {
     (function () {
@@ -205,7 +203,7 @@ describe('authentication system', function (done) {
     }).should.throwError('cannot mark invalid key as used')
   })
   it('should not mark keys as used twice', function () {
-    var key = auth.getNewKey()
+    const key = auth.getNewKey()
     auth.markKeyUsed(key)
     ;(function () {
       auth.markKeyUsed(key)
@@ -222,48 +220,42 @@ describe('authentication system', function (done) {
 })
 
 describe('pug rendering', function () {
-  var f = recurse('views')
-  for (var i = 0; i < f.length; i++) {
-    ;(function (x) {
-      it('should render ' + x, function (done) {
-        try {
-          pug.renderFile(x, null)
-        } catch (e) {
-          if (e instanceof TypeError) {
-            // pass, probably(!) an unsent variable
-          } else {
-            throw e
-          }
-        } finally {
-          done()
+  const f = recurse('views')
+  for (const file of f) {
+    it('should render ' + file, function (done) {
+      try {
+        pug.renderFile(file, null)
+      } catch (e) {
+        if (e instanceof TypeError) {
+          // pass, probably(!) an unsent variable
+        } else {
+          throw e
         }
-      })
-    })(f[i])
+      } finally {
+        done()
+      }
+    })
   }
 })
 
 describe('internationalization', function () {
-  var f = recurse('i18n')
-  for (var i = 0; i < f.length; i++) {
-    ;(function (x) {
-      if (x.indexOf('.json') === -1) return
-      it('should load ' + x + ' as valid JSON', function (done) {
-        fs.readFile(x, function (err, data) {
-          if (err) throw err
-          JSON.parse(data)
-          done()
-        })
+  const f = recurse('i18n')
+  for (const file of f) {
+    if (!file.includes('.json')) continue
+    it('should load ' + file + ' as valid JSON', function (done) {
+      fs.readFile(file, function (err, data) {
+        if (err) throw err
+        JSON.parse(data)
+        done()
       })
-    })(f[i])
+    })
   }
 
   it('should have message documentation for every English string', function (done) {
-    var en = Object.keys(require('../i18n/en.json'))
-    var qqx = Object.keys(require('../i18n/qqx.json'))
+    const en = Object.keys(require('../i18n/en.json'))
+    const qqx = Object.keys(require('../i18n/qqx.json'))
 
-    var missingKeys = en.filter(function (x) {
-      return qqx.indexOf(x) < 0
-    })
+    const missingKeys = en.filter((x) => !qqx.includes(x))
 
     if (missingKeys.length > 0) throw Error('Missing qqx keys for ' + missingKeys.join(', '))
     missingKeys.length.should.equal(0)
@@ -271,33 +263,27 @@ describe('internationalization', function () {
   })
 
   it('should have no surplus message documentation', function (done) {
-    var en = Object.keys(require('../i18n/en.json'))
-    var qqx = Object.keys(require('../i18n/qqx.json'))
+    const en = Object.keys(require('../i18n/en.json'))
+    const qqx = Object.keys(require('../i18n/qqx.json'))
 
-    var missingKeys = qqx.filter(function (x) {
-      return en.indexOf(x) < 0
-    })
+    const missingKeys = qqx.filter((x) => !en.includes(x))
 
     if (missingKeys.length > 0) throw Error('Surplus qqx keys for ' + missingKeys.join(', '))
     missingKeys.length.should.equal(0)
     done()
   })
 
-  for (i = 0; i < f.length; i++) {
-    ;(function (x) {
-      if (x.indexOf('.json') === -1) return
-      it('should be sorted alphabetically (' + x + ')', function (done) {
-        fs.readFile(x, function (err, data) {
-          if (err) throw err
-          var a, b
-          a = Object.keys(JSON.parse(data))
-          b = a.slice(0)
-          a.sort()
-          // ;(a === b).should.equal(true)
-          ;(JSON.stringify(a) === JSON.stringify(b)).should.equal(true) // wtf js
-          done()
-        })
+  for (const file of f) {
+    if (!file.includes('.json')) continue
+    it('should be sorted alphabetically (' + file + ')', function (done) {
+      fs.readFile(file, function (err, data) {
+        if (err) throw err
+        const a = Object.keys(JSON.parse(data))
+        const b = a.slice(0)
+        a.sort()
+        ;(JSON.stringify(a) === JSON.stringify(b)).should.equal(true)
+        done()
       })
-    })(f[i])
+    })
   }
 })

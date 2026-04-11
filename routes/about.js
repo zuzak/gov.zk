@@ -1,32 +1,40 @@
-var app = require('..')
-var exec = require('child_process').exec
-var creditsto = require('credits-to')
-var sortObj = require('sort-object')
-var gstate = require('git-state')
-var gitHash = require('githash')
-var packagejson = require('../package.json')
+const app = require('..')
+const { exec } = require('child_process')
+const creditsto = require('credits-to')
+const sortObj = require('sort-object')
+const gstate = require('git-state')
+const gitHash = require('githash')
+const packagejson = require('../package.json')
 
-app.get(__l('/about-this-website'), function (req, res) {
-  var coreDeps = Object.keys(packagejson.dependencies)
-  exec('git log --format="%cN" | sort -u', function (err, stdout, stderr) {
-    if (err) throw err
-    var contributors = stdout.split('\n').filter(String)
-    creditsto(function (err, dependencies) {
-      if (err) throw err
-      dependencies = sortObj(dependencies.npm)
-      gstate.check('.', function (err, state) {
-        if (err) throw err
-        res.render('about.pug', { contributors, dependencies, state, hash: gitHash(), coreDeps, req })
-      })
+app.get(__l('/about-this-website'), async function (req, res) {
+  const coreDeps = Object.keys(packagejson.dependencies)
+  const stdout = await new Promise((resolve, reject) => {
+    exec('git log --format="%aN" | sort -u', (err, stdout) => {
+      if (err) return reject(err)
+      resolve(stdout)
     })
   })
+  const contributors = stdout.split('\n').filter(String)
+  const dependencies = await new Promise((resolve, reject) => {
+    creditsto((err, deps) => {
+      if (err) return reject(err)
+      resolve(sortObj(deps.npm))
+    })
+  })
+  const state = await new Promise((resolve, reject) => {
+    gstate.check('.', (err, state) => {
+      if (err) return reject(err)
+      resolve(state)
+    })
+  })
+  res.render('about.pug', { contributors, dependencies, state, hash: gitHash(), coreDeps, req })
 })
 
 app.get(__l('/about-this-website/internationalization/:code'), function (req, res) {
-  var english = getCatalog('en')
-  var foreign = getCatalog(req.params.code)
+  const english = getCatalog('en')
+  const foreign = getCatalog(req.params.code)
   if (foreign === false) {
-    res.status(404).render('error.pug', { msg: __('about-i18n-invalidcode'), req })
+    return res.status(404).render('error.pug', { msg: __('about-i18n-invalidcode'), req })
   }
   res.render('i18n.pug', { english, foreign, req, code: req.params.code })
 })

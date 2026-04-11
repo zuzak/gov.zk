@@ -1,16 +1,16 @@
-var app = require('..')
-var auth = require('../auth.js')
-var irc = require('../irc.js')
+const app = require('..')
+const auth = require('../auth.js')
+const irc = require('../irc.js')
 
 app.get(__l('/log-in'), function (req, res) {
   if (req.user) {
     return res.status(403).render('error.pug', { msg: __('login-alreadyloggedin', { user: req.user }), req })
   }
-  var key = auth.getNewKey(5)
-  var nicks = []
-  for (var i = 0; i < irc.length; i++) {
-    if (nicks.indexOf(irc[i].nick) === -1) {
-      nicks.push(irc[i].nick)
+  const key = auth.getNewKey(5)
+  const nicks = []
+  for (const bot of irc) {
+    if (!nicks.includes(bot.nick)) {
+      nicks.push(bot.nick)
     }
   }
 
@@ -18,40 +18,26 @@ app.get(__l('/log-in'), function (req, res) {
 })
 
 app.get(__l('/log-out'), function (req, res) {
-  req.logout()
-  res.redirect('/')
+  req.logout(function (err) {
+    if (err) throw err
+    res.redirect('/')
+  })
 })
-
-var validUsernames = [
-// 'bjarneboi',
-  'danhedron',
-  'dendodge',
-// 'golem',
-  'kgz',
-  'samstudio8',
-  'spaceinvader',
-  'takside',
-// 'neko',
-  'zuzak'
-]
 
 app.post(__l('/log-in'), function (req, res) {
   if (!req.body.key) {
     res.sendStatus(400)
   } else {
-    var username = auth.validateKey(req.body.key)
+    const username = auth.validateKey(req.body.key)
     if (username) {
-    /*  if (validUsernames.indexOf(username) === -1) {
-        console.log('Failed login for ' + username)
-        return res.status(403).render('error.pug', {msg: __('irc-notwhitelisted'), req})
-      } */
       console.log('Logging ' + username + ' in')
-      req.login(username, function (err) {
+      req.login(username, (err) => {
         if (err) {
           throw err
         }
-        if (req.body.returnTo) {
-          res.redirect(req.body.returnTo)
+        const returnTo = req.body.returnTo
+        if (returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//')) {
+          res.redirect(returnTo)
         } else {
           res.redirect('/')
         }

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-var express = require('express')
-var path = require('path') // core
-var app = module.exports = express()
-var passport = require('passport')
+const express = require('express')
+const path = require('path') // core
+const app = module.exports = express()
+const passport = require('passport')
 
-var session = require('express-session')
+const session = require('express-session')
 require('express-async-errors')
-var JsonSession = require('express-session-json')(session) // TODO something better
-var i18n = require('i18n')
+const JsonSession = require('express-session-json')(session) // TODO something better
+const i18n = require('i18n')
 
 app.set('trust proxy', 'loopback')
 
@@ -16,17 +16,10 @@ app.set('json spaces', 2)
 app.locals.pretty = true
 
 /* Static & SCSS setup */
-/*app.use(sass({
-  src: path.join(__dirname, 'public'),
-  includePaths: [
-    path.join(__dirname, 'node_modules', 'govuk_frontend_toolkit', 'stylesheets'),
-    path.join(__dirname, 'node_modules', 'govuk-elements-sass', 'public', 'sass')
-  ]
-}))*/
 app.use('/', express.static(path.join(__dirname, 'public'),
   {
-    setHeaders: (res, path) => {
-      if (express.static.mime.lookup(path) === 'video/mp4') {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.mp4')) {
         res.setHeader('Cache-Control', 'public, max-age=1200')
       } else {
         res.setHeader('Cache-Control', 'public, max-age=86400')
@@ -37,12 +30,16 @@ app.use('/', express.static(path.join(__dirname, 'public'),
 app.use('/', express.static(path.join(__dirname, 'node_modules', 'govuk_frontend_toolkit', 'images'), { maxAge: 86400, immutable: true }))
 
 app.use(require('cookie-parser')())
-app.use(require('body-parser')())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+if (!process.env.SESSION_SECRET && app.get('env') !== 'test') {
+  console.warn('WARNING: SESSION_SECRET is not set. Using insecure default.')
+}
 app.use(session({
   secret: process.env.SESSION_SECRET || 'jkshdjakhsjdhajskdhjsakk',
   resave: false,
   cookie: {
-    domain: 'zuzakistan.com'
+    domain: process.env.COOKIE_DOMAIN || undefined
   },
   saveUninitialized: false,
   store: new JsonSession()
@@ -51,10 +48,10 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
   done(null, user)
 })
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser((user, done) => {
   done(null, user)
 })
 
@@ -77,21 +74,21 @@ i18n.configure({
 global.__ = function (phrase, args) {
   if (getLocale() === 'qqx') {
     if (args) {
-      return '⟨' + phrase + '|' + Object.keys(args).join('·') + '⟩'
+      return '\u27E8' + phrase + '|' + Object.keys(args).join('\u00B7') + '\u27E9'
     }
-    return '⟨' + phrase + '⟩'
+    return '\u27E8' + phrase + '\u27E9'
   }
-  var translation = t(phrase, args)
+  const translation = t(phrase, args)
 
   if (translation === phrase && !translation.startsWith('/')) {
-    translation = t({ phrase, locale: 'en' }, args)
-    if (translation === phrase) {
+    const fallback = t({ phrase, locale: 'en' }, args)
+    if (fallback === phrase) {
       if (args) {
-        return '⟪' + phrase + '|' + Object.keys(args).join('·') + '⟫'
+        return '\u27EA' + phrase + '|' + Object.keys(args).join('\u00B7') + '\u27EB'
       }
-      return '⟪' + phrase + '⟫'
+      return '\u27EA' + phrase + '\u27EB'
     }
-    return __('fallback', { content: translation })
+    return __('fallback', { content: fallback })
   }
   return translation
 }
@@ -105,6 +102,9 @@ if (app.get('env') === 'test') {
   app.listen(8080)
 }
 
-process.on('SIGINT', function () {
+process.on('SIGINT', () => {
+  process.exit(0)
+})
+process.on('SIGTERM', () => {
   process.exit(0)
 })

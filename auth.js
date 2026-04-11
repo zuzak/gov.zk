@@ -1,4 +1,4 @@
-var fs = require('fs') // core
+const fs = require('fs') // core
 module.exports = {
   data: {
     keys: [],
@@ -6,43 +6,43 @@ module.exports = {
     usedKeys: []
   },
   KEYSTORE: '/tmp/keys.json',
-  genKey: function (x) {
-    var o = ''
-    var chars = 'bcdfghjkmnpqrstvwxyz23456789BCDFGHJKLMNPQRSTVWXYZ'
-    for (var i = 0; i < x; i++) {
+  genKey (x) {
+    let o = ''
+    const chars = 'bcdfghjkmnpqrstvwxyz23456789BCDFGHJKLMNPQRSTVWXYZ'
+    for (let i = 0; i < x; i++) {
       o += chars.charAt(Math.floor(Math.random() * chars.length))
     }
     return o
   },
-  getNewKey: function () {
-    var key = this.genKey(6)
-    if (this.data.unusedKeys.indexOf(key) !== -1) {
+  getNewKey () {
+    let key = this.genKey(6)
+    if (this.data.unusedKeys.includes(key)) {
       key = this.getNewKey()
     } else {
       this.data.unusedKeys.push(key)
     }
     return key
   },
-  loadFromDisk: function () {
+  loadFromDisk () {
     try {
       this.data = JSON.parse(fs.readFileSync(this.KEYSTORE))
     } catch (e) {
-      if (e.code === 'ENOENT') { // 404
-        this.saveToDisk(this.KEYSTORE) // initalise with empty
-        this.loadFromDisk(this.KEYSTORE) // try again (scary?)
+      if (e.code === 'ENOENT') {
+        this.saveToDisk()
+        this.loadFromDisk()
       }
     }
   },
-  saveToDisk: function () {
+  saveToDisk () {
     fs.writeFileSync(this.KEYSTORE, JSON.stringify(this.data, null, '    '))
   },
-  isKey: function (key) {
-    if (this.data.usedKeys.indexOf(key) !== -1) {
+  isKey (key) {
+    if (this.data.usedKeys.includes(key)) {
       return true
     }
-    return this.data.unusedKeys.indexOf(key) !== -1
+    return this.data.unusedKeys.includes(key)
   },
-  markKeyUsed: function (key) {
+  markKeyUsed (key) {
     if (!this.isKey(key)) {
       throw new Error('cannot mark invalid key as used')
     }
@@ -51,18 +51,18 @@ module.exports = {
     }
     this.data.usedKeys.push(key)
   },
-  isUsedKey: function (key) {
-    return this.data.usedKeys.indexOf(key) !== -1
+  isUsedKey (key) {
+    return this.data.usedKeys.includes(key)
   },
-  activateKey: function (key, value) {
+  activateKey (key, value) {
     if (!this.isKey(key)) {
       throw new Error('cannot activate invalid key')
     }
     this.data.keys[key] = value
     this.markKeyUsed(key)
   },
-  validateKey: function (key) {
-    var data = this.data.keys[key]
+  validateKey (key) {
+    const data = this.data.keys[key]
     delete this.data.keys[key]
     return data
   }

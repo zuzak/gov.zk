@@ -5,11 +5,14 @@
  *
  * Pass data/books.json into stdin, get purged JSON to stdout.
  */
-const getStdin = require('get-stdin')
+const { stdin } = require('process')
 
 const removeVotes = module.exports = async () => {
-  const stdin = await getStdin()
-  const data = JSON.parse(stdin)
+  const chunks = []
+  for await (const chunk of stdin) {
+    chunks.push(chunk)
+  }
+  const data = JSON.parse(Buffer.concat(chunks).toString())
   const oldFields = ['approve', 'disapprove', 'alreadyRead', 'haveCopy']
   const purgedData = data.map((n) => {
     if (n.oldVotes) throw new Error('won\'t overwrite existing old votes')

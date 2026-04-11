@@ -1,9 +1,9 @@
-var app = require('..')
-var exec = require('child_process').exec
-var fs = require('fs')
+const app = require('..')
+const { exec } = require('child_process')
+const fs = require('fs')
 
 function rollFortune () {
-  exec('/usr/games/fortune -s -n60', function (err, stdout, stderr) {
+  exec('/usr/games/fortune -s -n60', (err, stdout) => {
     if (err) {
       stdout = __('home-defaultfortune')
     }
@@ -31,6 +31,6 @@ app.get(__l('/hello-world'), function (req, res) {
 })
 
 app.get('/500', function (req, res) {
-  var err = new Error(__('err-dryrun'))
+  const err = new Error(__('err-dryrun'))
   throw err
 })

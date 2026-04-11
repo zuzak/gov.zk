@@ -1,21 +1,18 @@
-var irc = require('irc')
-var auth = require('./auth')
+const irc = require('irc')
+const auth = require('./auth')
 
-var networks = [
+const networks = [
   'irc.libera.chat'
 ]
 
-var bots = module.exports = []
-for (var i = 0; i < networks.length; i++) {
-  bots.push(new irc.Client(
-    networks[i],
-    'gov-zk'
-  ))
+const bots = module.exports = []
+for (const network of networks) {
+  bots.push(new irc.Client(network, 'gov-zk'))
 }
 
-var cmds = {
+const cmds = {
   VERIFY: function (nick, args, lang) {
-    var slug = args[0]
+    const slug = args[0]
     if (!auth.isKey(slug)) {
       return __({ phrase: 'irc-unrecognized', locale: lang })
     }
@@ -27,30 +24,26 @@ var cmds = {
   }
 }
 
-for (var j = 0; j < bots.length; j++) {
-  bots[j].addListener('pm', function (nick, message) {
-    var msg = message.split(' ')
-    var cmd = msg.shift().toUpperCase()
-    var lang = 'en'
+for (const bot of bots) {
+  bot.addListener('pm', function (nick, message) {
+    const msg = message.split(' ')
+    let cmd = msg.shift().toUpperCase()
+    let lang = 'en'
 
-    var str = 'Unrecognized command.'
+    let str = 'Unrecognized command.'
 
-    var verifyCommands = __h('irc-verify')
-    for (var i = 0; i < verifyCommands.length; i++) {
-      var curr = verifyCommands[i]
-      lang = Object.keys(curr)[0]
-      if (cmd === curr[lang]) {
+    const verifyCommands = __h('irc-verify')
+    for (const entry of verifyCommands) {
+      lang = Object.keys(entry)[0]
+      if (cmd === entry[lang]) {
         cmd = 'VERIFY'
         break
       }
     }
 
     if (cmds[cmd]) {
-      console.log('d')
       str = cmds[cmd](nick, msg, lang)
-    } else if (__l('irc-verify').indexOf(cmd) !== -1) {
-      console.log('e')
-
+    } else if (__l('irc-verify').includes(cmd)) {
       str = cmds.VERIFY(nick, msg, lang)
     }
     this.notice(nick, str)

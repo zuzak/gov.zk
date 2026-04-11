@@ -1,5 +1,4 @@
 const app = require('..')
-const request = require('request-promise')
 
 const librcon = require('librcon')
 const serverAddress = process.env.FACTORIO_HOST || 'factorio.zuzakistan.com'
@@ -7,10 +6,7 @@ const rconPassword = process.env.FACTORIO_PASSWORD
 const rcon = (command) => librcon.send(command, rconPassword, serverAddress, 25575)
 
 const randomFile = require('select-random-file')
-const versions = request({
-  url: 'https://factorio.com/api/latest-releases',
-  json: true
-})
+const versions = fetch('https://factorio.com/api/latest-releases').then((r) => r.json())
 
 app.get('/factorio', async function (req, res) {
   const stats = await getStats(req.user)
@@ -27,10 +23,11 @@ app.get('/factorio.json', async function (req, res) {
 
 const getStats = async (loggedIn) => {
   const playerCommand = loggedIn ? '/p' : '/p o'
+  const noop = () => {}
   const getImage = new Promise((resolve, reject) => {
     const path = '/home/zuzak/public_html/zuzakistan.com/public/factorio/map/d-c277191a/zoom_5'
     randomFile(path, (err, file) => {
-      if (err) reject(err)
+      if (err) return reject(err)
       resolve(file)
     })
   })
@@ -39,7 +36,7 @@ const getStats = async (loggedIn) => {
       .trim()
       .replace(/\0/g, '')
       .split('\n')
-    x.shift() // remove header
+    x.shift()
     return x
   })
   const evolution = rcon('/evolution').then((x) => parseInt(x.trim().split('.')[1]) / 100)
@@ -53,17 +50,19 @@ const getStats = async (loggedIn) => {
     if (hrs) {
       if (days) {
         return days + 'd' + hrs + 'h'
-        // return ((parseInt(days) * 24) + parseInt(hrs)) + ' hrs'
       }
       return hrs + ' hrs'
     }
     return days + ' days'
   })
-  // const seed = rcon('/seed').then((x) => x.split('\n')[0])
   const version = rcon('/version').then((x) => x.split('\n')[0])
 
   const numberOfIronPlates = rcon('/c rcon.print(game.forces["player"].item_production_statistics.get_input_count("iron-plate"))').then((x) => parseInt(x.trim()))
   const rocketsLaunched = rcon('/c rcon.print(game.forces["player"].rockets_launched)').then((x) => parseInt(x.trim()))
+
+  // Prevent unhandled rejections — all promises must be caught before any is awaited
+  const allPromises = [getImage, playerList, evolution, time, version, numberOfIronPlates, rocketsLaunched, versions]
+  allPromises.forEach((p) => p.catch(noop))
 
   try {
     return {
@@ -71,22 +70,19 @@ const getStats = async (loggedIn) => {
       evolution: await evolution,
       img: await getImage,
       time: await time,
-      // seed: await seed,
       numberOfIronPlates: await numberOfIronPlates,
       rocketsLaunched: await rocketsLaunched,
       version: await version,
       versions: await versions
     }
   } catch (err) {
-    if (err.code === 'ECONNREFUSED') return { serverDown: true }
-    console.log('>>>> ' + err.code)
+    if (err.code === 'ECONNREFUSED' || err.code === 'ENOENT') return { serverDown: true }
+    console.log('>>>> ' + err.code + ' ' + err.message)
     return {}
   }
 }
 
 app.post('/factorio', function (req, res) {
-  // factorio usernames must be fewer than 30 characters
-  // and alphanumeric characters and .-
   const name = req.body.name
   if (!name) return res.status(400).send('No username specified')
   if (name.length > 30) return res.status(400).send('Username too long')

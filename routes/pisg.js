@@ -1,4 +1,4 @@
-var app = require('..')
+const app = require('..')
 const path = require('path')
 const fs = require('fs')
 
